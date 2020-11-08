@@ -1,0 +1,166 @@
+<template>
+  <aside id="tabs-container">
+      <div id="logo-container">
+          {{ navName }}
+      </div>
+      <ul id="tabs">
+          <li class="tab tab-search">
+              <i class="fas fa-search tab-icon"/>
+              <span>快速搜索</span>
+          </li>
+          <li class="tab" @click="showSaveConfigAlert">
+              <i class="fas fa-cog tab-icon"></i>
+              <span>保存配置</span>
+          </li>
+          <li class="tab" @click="showImportConfigAlert">
+              <i class="fas fa-share-square tab-icon"></i>
+              <span>导入配置</span>
+          </li>
+          <br>
+          <li v-for="(item, index) in catalogue" 
+              :key="index"
+              class="tab">
+              <a :href="`#${item.id}`" class="to-id">
+                  <i :class="['fas', `fa-${item.icon}`, 'tab-icon']" />
+                  <span>{{ item.name }}</span>
+                  <i class="fas fa-angle-right tab-icon tab-angle-right"/>
+              </a>
+          </li>
+          <li class="tab add-tab" @click="addTabShow">
+              <i class="fas fa-plus"/>
+          </li>
+      </ul>
+      <!--    添加标签弹框     -->
+      <addTabAlert ref="addAlert"/>
+      <!--    保存配置弹框     -->
+      <save-config @closeSaveConfigAlert="closeSaveConfigAlert" :isShow="isShowSaveAlert"/>
+      <!--    导入配置弹框     -->
+      <import-config @closeImportConfigAlert="closeImportConfigAlert" :isShow="isShowImportAlert"/>
+  </aside>
+</template>
+
+<script>
+import {ref, reactive, onMounted} from 'vue'
+import {useStore} from 'vuex'
+import {addClass} from '../../utils/utils'
+import addTabAlert from './childCpn/addTabAlert'
+import saveConfig from './childCpn/saveConfig'
+import importConfig from './childCpn/importConfig'
+export default {
+    name: 'tabs',
+    components: {
+        addTabAlert,
+        saveConfig,
+        importConfig
+    },
+    setup() {
+        const store = useStore()      // Vuex实例
+        let navInfos = store.state    // Vuex的state对象
+        let navName = ref(navInfos.navName)      // 响应式navName
+        let catalogue = reactive(navInfos.catalogue)    // 响应式的标签、URL信息
+        let isShowSaveAlert = ref(false)           // 保存配置弹框是否展示
+        let isShowImportAlert = ref(false)         // 导入配置弹框是否展示
+
+        let addAlert = ref(null)      // "添加标签弹框"的标签元素
+
+        let addTabIsShow = ref(false) // 判断"添加标签弹框"是否显示
+        
+        // 展示"添加标签弹框"
+        function addTabShow() {
+            addTabIsShow.value = true
+            let el = addAlert.value.$el
+            el.style.display = 'block'
+            addClass(el, ` animate__fadeIn`)
+        }
+
+        // 关闭"保存配置弹框"
+        function closeSaveConfigAlert(value) {
+            isShowSaveAlert.value = value
+        }
+
+        // 展示"保存配置弹框"
+        function showSaveConfigAlert() {
+            isShowSaveAlert.value = true
+        }
+
+        // 展示"导入配置弹框"
+        function showImportConfigAlert() {
+            isShowImportAlert.value = true
+        }
+
+        // 关闭"导入配置弹框"
+        function closeImportConfigAlert(value) {
+            isShowImportAlert.value = value
+        }
+        
+        return {
+            navName, 
+            catalogue, 
+            addAlert, 
+            addTabShow, 
+            addTabIsShow, 
+            isShowSaveAlert, 
+            closeSaveConfigAlert, 
+            showSaveConfigAlert,
+            isShowImportAlert,
+            showImportConfigAlert,
+            closeImportConfigAlert
+        }
+    }
+}
+</script>
+
+<style scoped>
+#tabs-container{
+    width: 250px;
+    height: 100vh;
+    float: left;
+    background-color: rgb(44, 42, 42);
+}
+#logo-container{
+    height: 79px;
+    color: white;
+    text-align: center;
+    line-height: 80px;
+    border-bottom: 1px solid rgb(68, 67, 67);
+}
+#tabs{
+    height: calc(100% - 80px);
+    overflow: auto;
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+}
+#tabs::-webkit-scrollbar{
+    display: none;
+    width: 0 !important;
+}
+
+.tab{
+    cursor: pointer;
+    height: 50px;
+    color: rgb(185, 164, 164);
+    line-height: 50px;
+    text-align: center;
+    position: relative;
+}
+.to-id{
+    display: block;
+    height: 100%;
+    color: rgb(134, 125, 125);
+}
+.tab-search{
+    margin-top: 20px;
+}
+.tab:hover .to-id, .tab:hover{
+    color: white;
+}
+.tab-icon{
+    margin: 0 15px 0 -30px;
+}
+.tab-angle-right{
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 0;
+}
+</style>
