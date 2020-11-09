@@ -39,10 +39,12 @@ const moduleAddUrl = {
     state: {
         url: '',            // URL地址
         icon: '',           // URL图标
+        otherIcon: '',      // 网址的默认icon地址
         isShow: false,      // 是否显示
         isLoadingIcon: false,  // 是否正在获取Icon
         isLoadingName: false,  // 是否正在获取Name
         name: '',           // 网址名称
+        imgErr: false,      // 图片是否显示异常
         whichTag: -1,       // 添加到哪个标签中去
     },
     mutations: {
@@ -140,14 +142,14 @@ const store = Vuex.createStore({
         },
         // 添加
         add(state, payload) {
-            console.log(payload);
             let {key, value} = payload
             const catalogue = state.catalogue
             let length1 = catalogue.length
             // 添加标签
             if(key == '1') {
+                let _id = length1 == 0 ? '1' : (+catalogue[length1 - 1].id + 1).toString()
                 catalogue.push({
-                    id: (+catalogue[length1 - 1].id + 1).toString(),
+                    id: _id,
                     name: value.name,
                     icon: value.icon,
                     URLS: []
@@ -177,7 +179,6 @@ const store = Vuex.createStore({
                             icon: value.icon,
                             name: value.name
                         })
-                        console.log('添加成功');
                         updateLocal(store)
                         break;
                     }    

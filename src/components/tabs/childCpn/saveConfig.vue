@@ -24,7 +24,7 @@ export default {
     components: {
         lpButton
     },
-    setup(props, context) {
+    setup(props, {emit}) {
         let result = ref('none')     // 保存的结果
         let a_save = ref(null)
 
@@ -41,7 +41,7 @@ export default {
 
         // 关闭弹窗
         function closeAlert() {
-          context.emit('closeSaveConfigAlert', false)
+          emit('closeSaveConfigAlert', false)
         }
 
         return {result, a_save, saveConfig, closeAlert}

@@ -5,10 +5,14 @@
       <div class="import-config-alert-title">导入配置</div>
       <div class="import-config-alert-remind">说明：需要上传之前保存导出的xxx.json配置文件，文件中的信息会完全覆盖当前信息</div>
       <form action="" class="form">
-        <label for="import_config_input" class="import-config-label">上传配置文件</label>
-        <input id="import_config_input" type="file" class="select-file" ref="inputFile">
+        <label for="import_config_input" class="import-config-label">
+          上传配置文件
+          <i v-if="hasFile == 1" class="fas fa-times-circle uploadErr uploadIcon"/>
+          <i v-else-if="hasFile == 2" class="fas fa-check-circle uploadSuccess uploadIcon"/>
+        </label>
+        <input id="import_config_input" type="file" class="select-file" ref="inputFile" @change="fileChange">
       </form>
-      <lp-button type="primary" class="import-config-btn" @btnClick="importConfig">确认上传</lp-button>
+      <lp-button type="primary" class="import-config-btn" @_click="importConfig">确认上传</lp-button>
     </div>
   </div>
 </template>
@@ -26,19 +30,21 @@ export default {
     components: {
         lpButton
     },
-    setup(props, context) {
+    setup(props, {emit}) {
         let result = ref('none')     // 导入的结果
         let isUpload = ref(false)    // 判断是否上传配置文件
         let isImport = ref(false)    // 判断配置是否导入成功
         let isLoading = ref(false)   // 判断按钮是否处于加载状态
         let inputFile = ref(null)    // 获取文件标签
+        let hasFile = ref(0)         // 判断文件的传入情况。0：未传入  1: 格式错误  2：格式正确
 
         // 导入配置
         function importConfig() {
           let reader = new FileReader()
           let files = inputFile.value.files
-          if(files.length === 0) alert('请上传配置文件');
-          else {
+          if(hasFile.value == 0) alert('请先上传配置文件');
+          else if(hasFile.value == 1) alert('请上传正确格式的文件，例如xx.json');
+          else if(hasFile.value == 2) {
             reader.readAsText(files[0])
             reader.onload = function() {
               let data = this.result
@@ -50,7 +56,21 @@ export default {
 
         // 关闭弹窗
         function closeAlert() {
-          context.emit('closeImportConfigAlert', false)
+          emit('closeImportConfigAlert', false)
+        }
+
+        function fileChange(e) {
+          let files = e.target.files
+          if(files.length === 0) alert('请先上传配置文件');
+          else {
+            let targetFile = files[0]
+            if(!/\.json$/.test(targetFile.name)) {
+              hasFile.value = 1
+              alert('请确认文件格式是否正确')
+            } else {
+              hasFile.value = 2
+            }
+          }
         }
         
         return {
@@ -61,6 +81,8 @@ export default {
           importConfig, 
           closeAlert,
           inputFile,
+          fileChange,
+          hasFile
         }
     }
 }
@@ -127,9 +149,23 @@ export default {
   font-size: 13px;
   border: 1px solid rgb(209, 203, 203);
   display: inline-block;
+  position: relative;
 }
 .import-config-label:hover{
   background-color: rgba(179, 165, 165, 0.2);
+}
+.uploadIcon{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(150%, -50%);
+  font-size: 1.2em;
+}
+.uploadErr{
+  color: rgb(209, 16, 16);
+}
+.uploadSuccess{
+  color: green;
 }
 .import-config-btn{
   height: 40px;

@@ -49,13 +49,13 @@ export default {
         function inputValue(e) {
             if(!isVirtual.value) {
                 let value = e.target.value
-                context.emit('cpnInput', value)
+                context.emit('_input', value)
             }     
         }
 
         // 清除输入框内容
         function clearValue() {
-            context.emit('cpnInput', '')
+            context.emit('_input', '')
         }
 
         // 虚拟输入开始事件
@@ -66,7 +66,7 @@ export default {
         // 虚拟输入结束事件
         function virtualInputEnd(e) {
             isVirtual.value = false
-            context.emit('cpnInput', e.target.value)
+            context.emit('_input', e.target.value)
         }
 
         return {

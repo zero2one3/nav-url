@@ -4,12 +4,12 @@
           <span class="close-add-tab-alert" @click="cancel"/>
           <div class="alert-title">新增标签</div>
           <div class="operating-space">
-              <lp-input class="lp-input-container" :value="state.tagName" @cpnInput="input" maxlength="10"></lp-input>
+              <lp-input class="lp-input-container" :value="state.tagName" @_input="input" maxlength="10"></lp-input>
               <select-icon></select-icon>
           </div>
           <div class="btn-group">
-              <lp-button @btnClick="cancel" type="danger" class="btn-cancel">取消</lp-button>
-              <lp-button @btnClick="confirm" type="success" class="btn-confirm">确认</lp-button>
+              <lp-button @_click="cancel" type="danger" class="btn-cancel">取消</lp-button>
+              <lp-button @_click="confirm" type="success" class="btn-confirm">确认</lp-button>
           </div>
       </div>
   </div>

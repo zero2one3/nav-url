@@ -4,13 +4,13 @@
           <span class="close-add-url-alert" @click="cancel"/>
           <div class="alert-title">新增网址</div>
           <div class="operating-space">
-              <lp-input class="lp-input-container" :value="state.url" @cpnInput="inputUrl" placeholder="请输入URL"></lp-input>
-              <lp-input class="lp-input-container" :value="state.name" @cpnInput="inputName" placeholder="请输入名称"></lp-input>
+              <lp-input class="lp-input-container" :value="state.url" @_input="inputUrl" placeholder="请输入URL"></lp-input>
+              <lp-input class="lp-input-container" :value="state.name" @_input="inputName" placeholder="请输入名称"></lp-input>
               <selectIcon></selectIcon>
           </div>
           <div class="btn-group">
-              <lp-button @btnClick="cancel" type="danger" class="btn-cancel">取消</lp-button>
-              <lp-button @btnClick="confirm" type="success" class="btn-confirm">确认</lp-button>
+              <lp-button @_click="cancel" type="danger" class="btn-cancel">取消</lp-button>
+              <lp-button @_click="confirm" type="success" class="btn-confirm">确认</lp-button>
           </div>
       </div>
   </div>
@@ -46,6 +46,8 @@ export default {
                 {key: 'isLoadingIcon', value: false},
                 {key: 'isLoadingName', value: false},
                 {key: 'whichTag', value: -1},
+                {key: 'imgErr', value: false},
+                {key: 'otherIcon', value: ''},
             ])
         }
 

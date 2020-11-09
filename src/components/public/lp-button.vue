@@ -59,7 +59,7 @@
             let el = ref(null)
             function btnClick() {
                 if(props.disabled || props.loading) return;
-                context.emit('btnClick', el)
+                context.emit('_click', el)
             }
             return {btnClick, el}
         }

@@ -15,8 +15,8 @@
           </span>
       </div>
       <div class="btn-group">
-            <lp-button @btnClick="cancel" type="warning" plain class="btn-cancel">取消</lp-button>
-            <lp-button @btnClick="confirm" type="success" plain class="btn-confirm">确认</lp-button>
+            <lp-button @_click="cancel" type="warning" plain class="btn-cancel">取消</lp-button>
+            <lp-button @_click="confirm" type="success" plain class="btn-confirm">确认</lp-button>
       </div>
   </div>
 </template>
@@ -29,7 +29,7 @@ export default {
     components: {
         lpButton
     },
-    setup(props, context) {
+    setup(props) {
         // 存储所有icon的样式
         let iconStr = `ad
 address-book
