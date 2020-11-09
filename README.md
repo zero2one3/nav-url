@@ -8,11 +8,16 @@ There are many social networking sites and tool websites on the Internet now. If
 
 现在的互联网上有很多社交网站、工具网站，如果觉得网站还不错，我会把它收藏起来，但是浏览器的收藏夹实在太杂乱了，而且特别小，所以用起来特别得不方便，同时因为我爱整理东西，所以一直想有个类似 **图1** 的网站导航栏。综合上述原因，再加上Vue3近几个月刚发布，就用 `Vue3` 做了这样一个项目
 
-![图1:设想效果图](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/origin.png)
+![image](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/origin.png)
+
+**图1: 设想效果图**
 
 **图2**是我该项目当前的预览图
 
-![图2:当前效果图](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/current.png)
+![image](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/current.png)
+
+**图2: 当前效果图**
+
 
 过段时间等功能稍微完善了，我把 `gif` 动图放上来供大家观看，并提供使用方法
 
