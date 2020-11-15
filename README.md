@@ -43,7 +43,7 @@ There are many social networking sites and tool websites on the Internet now. If
 ### 中文
 
 还有一些未完善的功能，会陆续完成：
-1. 标签的**删除 、编辑**功能以及网址的**删除、编辑**功能
+1. 标签的**删除 、编辑**功能以及网址的**删除、编辑**功能（已初步完成，还需做更多的交互样式处理）
 2. 搜索功能
 3. 页面滚动的动画效果 
 4. ……更多

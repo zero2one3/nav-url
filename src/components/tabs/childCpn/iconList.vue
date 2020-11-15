@@ -1033,7 +1033,7 @@ window-restore`.split('\n')
 }
 </script>
 
-<style>
+<style scoped>
 .icon-list-box{
     z-index: 1000;
     position: fixed;
@@ -1050,6 +1050,7 @@ window-restore`.split('\n')
     line-height: 50px;
     font-size: 18px;
     font-weight: 600;
+    color: black !important;
 }
 .icon-list{
     height: 270px;
@@ -1064,6 +1065,7 @@ window-restore`.split('\n')
     line-height: 80px;
     text-align: center;
     position: relative;
+    color: black;
 }
 .icon-container:hover{
     background-color: rgba(180, 160, 160, .2);

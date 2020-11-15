@@ -9,7 +9,8 @@ const moduleAddTab = {
         currentIcon: '',        // 当前用户选择了的icon,但未确认
         isSelected: false,      // 用户是否选择了
         isShowIconList: false,  // icon列表是否展示
-        isShowAddTabAlert: false // 添加标签弹框是否显示
+        isShowAddTabAlert: false, // 添加标签弹框是否显示
+        id: ''
     },
     mutations: {
         // 修改增加标签弹框内的信息
@@ -46,6 +47,8 @@ const moduleAddUrl = {
         name: '',           // 网址名称
         imgErr: false,      // 图片是否显示异常
         whichTag: -1,       // 添加到哪个标签中去
+        id: -1,             // 记录id
+        alertType: '新增网址'
     },
     mutations: {
         // 修改增加URL弹框内的信息
@@ -64,6 +67,17 @@ const moduleAddUrl = {
                 value = payload.value
                 state[key] = value
             }
+        }
+    }
+}
+
+const moduleEdit = {
+    state: {
+        isEditwhich: -1,    // 正在编辑哪块内容
+    },
+    mutations: {
+        changeEditInfo(state, payload) {
+            state.isEditwhich = payload
         }
     }
 }
@@ -88,7 +102,7 @@ const store = Vuex.createStore({
                         // 修改的是标签信息
                         if(current.id == value.id) {
                             current.name = value.name
-                            current.icon = current.icon
+                            current.icon = value.icon
                             updateLocal(store)
                         } else {
                             let URLS = current.URLS
@@ -188,7 +202,8 @@ const store = Vuex.createStore({
     },
     modules: {
         moduleAddTab,
-        moduleAddUrl
+        moduleAddUrl,
+        moduleEdit
     }
 })
 

@@ -1,8 +1,8 @@
 <template>
-  <div class="add-tab-alert-container animate__animated" ref="alertBox">
+  <div class="add-tab-alert-container animate__animated" ref="alertBox" v-show="state.isShowAddTabAlert">
       <div class="add-tab-alert">
           <span class="close-add-tab-alert" @click="cancel"/>
-          <div class="alert-title">新增标签</div>
+          <div class="alert-title">{{ name }}</div>
           <div class="operating-space">
               <lp-input class="lp-input-container" :value="state.tagName" @_input="input" maxlength="10"></lp-input>
               <select-icon></select-icon>
@@ -28,7 +28,13 @@ export default {
         lpInput,
         selectIcon
     },
-    setup() {
+    props: {
+        name: {
+            type: String,
+            default: '新增标签'
+        }
+    },
+    setup(props) {
         let store = useStore()    // 使用Vuex
         let state = reactive(store.state.moduleAddTab)
         let alertBox = ref(null)  // 获取弹框根标签元素
@@ -50,13 +56,24 @@ export default {
 
         // 确认添加标签
         function sure() {
-            store.commit('add', {
-                key: '1',
-                value: {
-                    name: state.tagName,
-                    icon: state.trueIcon
-                }
-            })
+            if(props.name == '新增标签') {
+                store.commit('add', {
+                    key: '1',
+                    value: {
+                        name: state.tagName,
+                        icon: state.trueIcon
+                    }
+                })
+            } else if(props.name == '修改标签') {
+                store.commit('update', {
+                    key: 'catalogue',
+                    value: {
+                        id: state.id,
+                        icon: state.trueIcon,
+                        name: state.tagName
+                    }
+                })
+            }
             cancel()
         }
         // 防抖处理过后的 “确认添加标签” 函数
@@ -81,15 +98,15 @@ export default {
 }
 </script>
 
-<style>
+<style scpoed>
 .add-tab-alert-container{
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, .2);
     width: 100vw;
     height: 100vh;
+    z-index: 999;
 }
 .add-tab-alert{
     z-index: 999;
@@ -123,6 +140,7 @@ export default {
     font-size: 18px;
     font-weight: bold;
     text-align: center;
+    color: black;
 }
 .operating-space{
     height: 170px;
@@ -132,7 +150,6 @@ export default {
     width: 300px;
     margin: 10px auto 0;
 }
-
 
 
 .btn-group{

@@ -4,10 +4,21 @@
           <i class="fas fa-bell"></i>
       </div>
       <div id="content">
-          <div v-for="(tab, i) in catalogue" :key="i">
+          <div v-for="(tab, i) in catalogue" :key="i" class="each-content">
               <div :id="tab.id" class="tab-title">
                   <i :class="['fas', `fa-${tab.icon}`, 'tab-icon']"/>
-                  <span class="tab-name">{{tab.name}}</span>
+                  <span class="tab-name">
+                      {{tab.name}}
+                  </span>
+                  <span :class="['edit-tab-name', {'tabIsEdit': tab.id == editWhich.isEditwhich}]">
+                      <i class="fas fa-trash-alt delete-icon" @click="deleteTag(tab.id)"/>
+                      <i class="fas fa-edit edit-icon" @click="editTagAlertShow(tab)"/>
+                  </span>
+                  <span :class="['edit', {'isEdit': tab.id == editWhich.isEditwhich}]" 
+                        @click="enterEdit(tab.id)">
+                    {{ tab.id == editWhich.isEditwhich? '退出' : '编辑' }}
+                  </span>
+                  <editTagAlert name="修改标签"></editTagAlert>
               </div>
               <ul class="url-boxes">
                   <li v-for="(urls, j) in tab.URLS" :key="j" class="each-url-box">
@@ -18,15 +29,19 @@
                           </div>
                           <span class="url-name">{{ urls.name }}</span>
                       </a>
+                      <span :class="['edit-container', {'urlIsEdit': tab.id == editWhich.isEditwhich}]">
+                          <i class="fas fa-trash-alt delete-icon" @click="deleteUrl(urls.id)"/>
+                          <i class="fas fa-edit edit-icon" @click="editUrl(urls)"/>
+                      </span>
                   </li>
                   <li class="each-url-box add-more" @click="addMoreUrl(tab.id)">
                       <i class="fas fa-plus"/>
                   </li>
               </ul>
-              <addUrlAlert v-show="state.isShow"></addUrlAlert>
           </div>
       </div>
   </div>
+  <addUrlAlert v-show="state.isShow"></addUrlAlert>
 </template>
 
 <script>
@@ -34,19 +49,24 @@ import {reactive, ref} from 'vue'
 import {useStore} from 'vuex'
 import {updateLocal} from '../../utils/utils'
 import addUrlAlert from './childCpn/addUrlAlert'
+import editTagAlert from '../tabs/childCpn/addTabAlert'
 export default {
     components: {
-        addUrlAlert
+        addUrlAlert,
+        editTagAlert
     },
     setup() {
         const store = useStore()
         const catalogue = reactive(store.state.catalogue)
         const state = reactive(store.state.moduleAddUrl)
+        const editWhich = reactive(store.state.moduleEdit)
 
+        // 弹出添加URL的框
         function addMoreUrl(id) {
             store.commit('changeAddUrlInfo', [
                 {key: 'isShow', value: true},
-                {key: 'whichTag', value: id}
+                {key: 'whichTag', value: id},
+                {key: 'alertType', value: '新增网址'}
             ])
         }
 
@@ -57,7 +77,65 @@ export default {
             el.nextSibling.style.display = 'inline-block'
         }
 
-        return {catalogue, addMoreUrl, state, imgLoadErr}
+        // 进入编辑状态
+        function enterEdit(id) {
+            if(id != editWhich.isEditwhich) {
+                store.commit('changeEditInfo', id)
+            } else {
+                store.commit('changeEditInfo', -1)
+            }     
+        }
+
+        // 修改标签弹框弹出
+        function editTagAlertShow(tab) {
+            store.commit('changeAddTabInfo', [
+                {key: 'isShowAddTabAlert', value: true},
+                {key: 'tagName', value: tab.name},
+                {key: 'trueIcon', value: tab.icon},
+                {key: 'isSelected', value: true},
+                {key: 'currentIcon', value: tab.icon},
+                {key: 'id', value: tab.id}
+            ])
+        }
+
+        // 删除标签以及标签下的所有网址
+        function deleteTag(id) {
+            // ---------------- 这里要加一个弹框确认 ----------------------
+            store.commit('remove', id)
+            alert('标签删除成功')
+        }
+
+        // 删除某个网址
+        function deleteUrl(id) {
+            // ---------------- 这里要加一个弹框确认 ----------------------
+            store.commit('remove', id)
+            alert('网址删除成功')
+        }
+
+        // 弹出修改URL的弹框
+        function editUrl(url) {
+            store.commit('changeAddUrlInfo', [
+                {key: 'url', value: url.url},
+                {key: 'icon', value: url.icon},
+                {key: 'id', value: url.id},
+                {key: 'name', value: url.name},
+                {key: 'isShow', value: true},
+                {key: 'alertType', value: '修改网址'}
+            ])
+        }
+
+        return {
+            catalogue, 
+            addMoreUrl, 
+            state, 
+            imgLoadErr, 
+            editWhich, 
+            enterEdit, 
+            editTagAlertShow,
+            deleteTag,
+            deleteUrl,
+            editUrl
+        }
     }
 }
 </script>
@@ -87,9 +165,53 @@ export default {
     height: 60px;
     line-height: 60px;
     color: #837c7c;
+    position: relative;
 }
 .tab-icon{
     margin: 0 10px 0 30px;
+}
+.edit-tab-name{
+    display: inline-block;
+    width: 55px;
+    height: 20.8px;
+    line-height: 20.8px;
+    color: #eee;
+    display: none;
+}
+.tabIsEdit{
+    display: inline-block;
+}
+.edit-icon, .delete-icon{
+    margin-left: 10px;
+    color: rgb(112, 106, 106);
+    font-size: 14px;
+    cursor: pointer;
+}
+.edit-icon{
+    margin-right: 5px;
+}
+
+.edit-icon:hover, .delete-icon:hover{
+    color: rgb(194, 96, 4);
+}
+.each-content:hover .edit{
+    display: inline-block;
+}
+.edit{
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translate(0, -50%);
+    color: rgb(172, 161, 161);
+    font-size: .8em;
+    cursor: pointer;
+    display: none;
+}
+.edit:hover{
+    color: #666;
+}
+.isEdit{
+    display: block;
 }
 .url-boxes{
     display: inline-block;
@@ -102,9 +224,28 @@ export default {
     box-shadow: 0 0 3px 3px  rgba(225, 225, 225, .1);
     cursor: pointer;
     overflow: hidden;
-    float: left;
     border-radius: 10px;
     margin: 15px 0 15px 30px;
+    position: relative;
+}
+.edit-container{
+    position: absolute;
+    top: 0;
+    right: -55px;
+    display: inline-block;
+    width: 55px;
+    height: 25px;
+    line-height: 25px;
+    color: #eee;
+    transition: all .5s ease;
+    opacity: 0;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: rgb(248, 237, 237);
+}
+.urlIsEdit{
+    opacity: 1;
+    transform: translate(-55px);
 }
 .each-url-box:hover{
     transform: translate(0, -5px);
@@ -114,6 +255,7 @@ export default {
 .url-link{
     height: 100%;
     width: 100%;
+    position: relative;
 }
 .round-box{
     height: 70%;

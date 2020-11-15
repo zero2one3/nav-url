@@ -2,7 +2,7 @@
   <div class="add-url-alert-container animate__animated" ref="alertBox">
       <div class="add-url-alert">
           <span class="close-add-url-alert" @click="cancel"/>
-          <div class="alert-title">新增网址</div>
+          <div class="alert-title">{{ state.alertType }}</div>
           <div class="operating-space">
               <lp-input class="lp-input-container" :value="state.url" @_input="inputUrl" placeholder="请输入URL"></lp-input>
               <lp-input class="lp-input-container" :value="state.name" @_input="inputName" placeholder="请输入名称"></lp-input>
@@ -48,24 +48,40 @@ export default {
                 {key: 'whichTag', value: -1},
                 {key: 'imgErr', value: false},
                 {key: 'otherIcon', value: ''},
+                {key: 'id', value: -1}
             ])
         }
 
-        // 确认添加URL
+        // 确认添加URL 或 确认修改URL
         function sure() {
             if(state.url == '') {
-                alert('请先输入URL')
+                alert('URL不能为空')
                 return;
             }
-            store.commit('add', {
-                key: '2',
-                value: {
-                    name: state.name,
-                    icon: state.icon,
-                    url: state.url,
-                    whichTag: state.whichTag
-                }
-            })
+            if(state.alertType == '新增网址') {
+                store.commit('add', {
+                    key: '2',
+                    value: {
+                        name: state.name,
+                        icon: state.icon,
+                        url: state.url,
+                        whichTag: state.whichTag
+                    }
+                })
+                alert('添加成功')
+            } else if(state.alertType == '修改网址') {
+                store.commit('update', {
+                    key: 'catalogue',
+                    value: {
+                        id: state.id,
+                        name: state.name,
+                        icon: state.icon,
+                        url: state.url,
+                    }
+                })
+                alert('修改成功')
+            }
+            
             cancel()
         }
         // 防抖处理过后的 “确认添加标签” 函数
