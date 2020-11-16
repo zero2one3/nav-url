@@ -23,7 +23,7 @@ There are many social networking sites and tool websites on the Internet now. If
 
 ### 中文
 
-1. 通过最新的 `Vue3` 框架实现，同时也用到了 `Vuex4`
+1. 通过最新的 `Vue3` 框架实现，同时也用到了 `Vuex4` 进行数据的状态管理
 2. 无需远程服务器储存，依靠 `localstorage` 作为本地数据库
 3. 支持**一键保存导出数据** 、**一键导入数据**
 4. 页面简单大方
@@ -42,11 +42,11 @@ There are many social networking sites and tool websites on the Internet now. If
 
 ### 中文
 
+
 还有一些未完善的功能，会陆续完成：
-1. 标签的**删除 、编辑**功能以及网址的**删除、编辑**功能（已初步完成，还需做更多的交互样式处理）
-2. 搜索功能
-3. 页面滚动的动画效果 
-4. ……更多
+1. 搜索功能
+2. 页面滚动的动画效果 
+3. ……更多
 
 ### English
 There are still some imperfect functions that will be completed one after another:
