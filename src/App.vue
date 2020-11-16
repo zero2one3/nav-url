@@ -12,12 +12,14 @@ import {writeToVuex} from './utils/utils'
 import tabs from './components/tabs/tabs'
 import content from './components/main/main'
 import axios from 'axios'
+import installAlert from './components/public/lp-alert/lp-alert'
+import {getCurrentInstance, provide} from 'vue'
 
 export default {
   name: 'App',
   components: {
     tabs,
-    content,
+    content
   },
   setup() {
     // 设置网页导航的信息
@@ -46,6 +48,12 @@ export default {
             writeToVuex(store, obj)
         }
     })();   
+
+    const instance = getCurrentInstance()
+    // 全局注册alert组件，并传递给子组件
+    installAlert(instance.ctx)
+
+    console.log(instance);
     
     return {}
   }
