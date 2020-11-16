@@ -4,9 +4,7 @@
       <div class="close-save-config-alert" @click="closeAlert"></div>
       <div class="save-config-alert-title">保存配置</div>
       <div class="save-config-alert-remind">说明：保存下载成功后会生成一个json文件，请注意保存，方便之后一键导入</div>
-      <a class="save-link" ref="a_save" @click="saveConfig">
-        <lp-button type="primary" class="save-config-btn">Save</lp-button>
-      </a>
+      <lp-button type="primary" class="save-config-btn" @_click="saveConfig">Save</lp-button>
     </div>
   </div>
 </template>
@@ -26,17 +24,20 @@ export default {
     },
     setup(props, {emit}) {
         let result = ref('none')     // 保存的结果
-        let a_save = ref(null)
 
-        // 下载json文件
-        function downLoadFile(aLink, fileName, content) {
-          aLink.download = fileName
-          aLink.href = "data:text/plain," + content
+        // 封装的下载数据函数
+        function downLoadFile(fileName, content) {
+            var aTag = document.createElement('a');
+            var blob = new Blob([content]);
+            aTag.download = fileName;
+            aTag.href = URL.createObjectURL(blob);
+            aTag.click();
+            URL.revokeObjectURL(blob);
         }
 
         // 调用下载接口
         function saveConfig() {
-          downLoadFile(a_save.value, 'nav.config.json', window.localStorage.navInfos)
+          downLoadFile('nav.config.json', window.localStorage.navInfos)
         }
 
         // 关闭弹窗
@@ -44,7 +45,7 @@ export default {
           emit('closeSaveConfigAlert', false)
         }
 
-        return {result, a_save, saveConfig, closeAlert}
+        return {result, saveConfig, closeAlert}
     }
 }
 </script>
@@ -94,15 +95,10 @@ export default {
   padding: 5px 20px;
   height: 30px;
 }
-.save-link{
-  height: 40px;
-  width: 100px;
-  margin: 20px auto;
-  display: block;
-}
 .save-config-btn{
   height: 40px;
   width: 100px;
+  margin: 20px auto;
   display: block;
 }
 </style>
