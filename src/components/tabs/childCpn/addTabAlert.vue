@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import {reactive, ref} from 'vue'
+import {reactive, ref, getCurrentInstance} from 'vue'
 import {useStore} from 'vuex'
 import {removeClass, debounce} from '../../../utils/utils'
 import lpButton from '../../public/lp-button'
@@ -38,6 +38,7 @@ export default {
         let store = useStore()    // 使用Vuex
         let state = reactive(store.state.moduleAddTab)
         let alertBox = ref(null)  // 获取弹框根标签元素
+        const instance = getCurrentInstance().root.ctx
 
         // 关闭弹框
         function cancel() {
@@ -56,6 +57,22 @@ export default {
 
         // 确认添加标签
         function sure() {
+            // 判断标签名是否为空
+            if(state.tagName == '') {
+                instance.$alert({
+                    type: 'warning',
+                    content: '标签名称不能为空'
+                })
+                return;
+            }
+            // 判断icon是否为空
+            if(!state.isSelected) {
+                instance.$alert({
+                    type: 'warning',
+                    content: '请选择合适的图标'
+                })
+                return;
+            }
             if(props.name == '新增标签') {
                 store.commit('add', {
                     key: '1',
@@ -63,6 +80,10 @@ export default {
                         name: state.tagName,
                         icon: state.trueIcon
                     }
+                })
+                instance.$alert({
+                    type: 'success',
+                    content: '标签添加成功'
                 })
             } else if(props.name == '修改标签') {
                 store.commit('update', {
@@ -72,6 +93,10 @@ export default {
                         icon: state.trueIcon,
                         name: state.tagName
                     }
+                })
+                instance.$alert({
+                    type: 'success',
+                    content: '标签修改成功'
                 })
             }
             cancel()
