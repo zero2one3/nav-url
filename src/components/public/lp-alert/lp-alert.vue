@@ -1,0 +1,144 @@
+<template>
+    <div class="alert_container"
+         :class="[
+            {'show': isShow},
+            {'hide': !isShow},
+            {'enter': isEnter},
+            {'leave': isLeave},
+            type
+         ]" 
+         :style="{
+             'top': `${seed * 70}px`
+         }">
+        <div class="content">
+
+            <i :class="[
+                    `lp-alert-${type}`, 
+                    'icon', 
+                    'fa', 
+                    {'fa-info-circle': type == 'info'},
+                    {'fa-check-circle': type == 'success'},
+                    {'fa-times-circle': type == 'err'},
+                    {'fa-exclamation-triangle': type == 'warning'},
+                ]"/>
+
+            <div class="txt"
+                 :class="[`txt_${type}`]">
+                {{content}}
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "lp-alert",
+        props: {
+            type: {
+                type: String,
+                default: 'info'
+            },
+            lastTime: {
+                type: Number,
+                default: 2500
+            },
+            content: {
+                type: String,
+                default: '这是一条提示信息'
+            },
+            isShow: {
+                type: Boolean,
+                default: false
+            },
+            isLeave: {
+                type: Boolean,
+                default: false
+            },
+            isEnter: {
+                type: Boolean,
+                default: false
+            },
+            seed: {
+                type: Number,
+                default: 0
+            }
+        }
+    }
+</script>
+
+<style scoped>
+    .alert_container{
+        width: 400px;
+        height: 50px;
+        border-radius: 8px;
+        position: fixed;
+        transition: all 500ms ease;
+        opacity: 0;
+        filter:alpha(opacity=0);
+        z-index: 1000;
+        left: 50%;
+        transform: translate(-50%, 20px);
+    }
+    .show{
+        opacity: 1;
+        filter:alpha(opacity=100);
+    }
+    .alert_container.leave{
+        top: 0;
+    }
+    .hide{
+        opacity: 0;
+        filter:alpha(opacity=0);
+    }
+    .content{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+    .icon, .txt{
+        float: left;
+    }
+    .icon{
+        height: 20px;
+        width: 20px;
+        margin-left: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .txt{
+        margin-left: 10px;
+        font-size: 15px;
+    }
+    .txt_info, .lp-alert-info{
+        color: #909399;
+    }
+    .txt_success, .lp-alert-success{
+        color: #3BC965;
+    }
+    .txt_warning, .lp-alert-warning{
+        color: #eea832;
+    }
+    .txt_err, .lp-alert-err{
+        color: #de3c3c;
+    }
+    .info{
+        background-color: #eBEEF5;
+        border: 1px solid #e5e8ee;
+    }
+    .success{
+        background-color: #e7f6e3;
+        border: 1px solid #e3f1df
+    }
+    .err{
+        background-color: #f6ecec;
+        border: 1px solid #f5e3e3;
+    }
+    .warning{
+        background-color: #f8f2ec;
+        border: 1px solid #f3e5da;
+    }
+</style>
