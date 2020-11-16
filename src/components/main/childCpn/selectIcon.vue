@@ -127,7 +127,7 @@ export default {
         }
         // 图片加载错误
         function imgloadErr() {
-            console.log('图片加载错误');
+            // console.log('图片加载错误');
             // 先测试一下备用的icon网址，如果还不行，就使用默认的图标
             if(state.otherIcon == '') {
                 state.imgErr = true

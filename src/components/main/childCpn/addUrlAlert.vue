@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import {reactive, ref} from 'vue'
+import {reactive, ref, getCurrentInstance} from 'vue'
 import {useStore} from 'vuex'
 import {removeClass, debounce} from '../../../utils/utils'
 import lpButton from '../../public/lp-button'
@@ -33,6 +33,7 @@ export default {
         let store = useStore()    // 使用Vuex
         let state = reactive(store.state.moduleAddUrl)
         let alertBox = ref(null)  // 获取弹框根标签元素
+        const instance = getCurrentInstance().root.ctx
 
         // 关闭弹框
         function cancel() {
@@ -68,7 +69,10 @@ export default {
                         whichTag: state.whichTag
                     }
                 })
-                alert('添加成功')
+                instance.$alert({
+                    type: 'success',
+                    content: '网址添加成功'
+                })
             } else if(state.alertType == '修改网址') {
                 store.commit('update', {
                     key: 'catalogue',
@@ -79,7 +83,10 @@ export default {
                         url: state.url,
                     }
                 })
-                alert('修改成功')
+                instance.$alert({
+                    type: 'success',
+                    content: '网址修改成功'
+                })
             }
             
             cancel()
