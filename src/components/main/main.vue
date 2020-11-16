@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import {reactive, ref} from 'vue'
+import {reactive, ref, getCurrentInstance} from 'vue'
 import {useStore} from 'vuex'
 import {updateLocal} from '../../utils/utils'
 import addUrlAlert from './childCpn/addUrlAlert'
@@ -60,6 +60,8 @@ export default {
         const catalogue = reactive(store.state.catalogue)
         const state = reactive(store.state.moduleAddUrl)
         const editWhich = reactive(store.state.moduleEdit)
+        const instance = getCurrentInstance().root.ctx
+        
 
         // 弹出添加URL的框
         function addMoreUrl(id) {
@@ -102,14 +104,20 @@ export default {
         function deleteTag(id) {
             // ---------------- 这里要加一个弹框确认 ----------------------
             store.commit('remove', id)
-            alert('标签删除成功')
+            instance.$alert({
+                type: 'success',
+                content: '标签页及子网址删除成功'
+            })
         }
 
         // 删除某个网址
         function deleteUrl(id) {
             // ---------------- 这里要加一个弹框确认 ----------------------
             store.commit('remove', id)
-            alert('网址删除成功')
+            instance.$alert({
+                type: 'success',
+                content: '网址删除成功'
+            })
         }
 
         // 弹出修改URL的弹框
