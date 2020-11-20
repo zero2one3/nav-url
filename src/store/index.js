@@ -1,90 +1,14 @@
 import Vuex from '../../node_modules/vuex/dist/vuex.cjs'
 import {updateLocal} from '../utils/utils'
+import moduleTab from './module/tab'
+import moduleUrl from './module/url'
+import moduleEdit from './module/edit'
 
-// 存储用户的添加标签情况
-const moduleAddTab = {
-    state: {
-        tagName: '',            // 标签名称
-        trueIcon : 'plus',      // 真正选好了的icon
-        currentIcon: '',        // 当前用户选择了的icon,但未确认
-        isSelected: false,      // 用户是否选择了
-        isShowIconList: false,  // icon列表是否展示
-        isShowAddTabAlert: false, // 添加标签弹框是否显示
-        id: ''
-    },
-    mutations: {
-        // 修改增加标签弹框内的信息
-        changeAddTabInfo(state, payload) {
-            let key, value, current
-            if(Array.isArray(payload)) {
-                let length = payload.length
-                for(let i = 0; i < length; i++) {
-                    current = payload[i]
-                    key = current.key
-                    value = current.value
-                    state[key] = value
-                }
-            } else {
-                key = payload.key
-                value = payload.value
-                state[key] = value
-            }
-
-            
-        }
-    }
-}
-
-// 存储用户的添加URL情况
-const moduleAddUrl = {
-    state: {
-        url: '',            // URL地址
-        icon: '',           // URL图标
-        otherIcon: '',      // 网址的默认icon地址
-        isShow: false,      // 是否显示
-        isLoadingIcon: false,  // 是否正在获取Icon
-        isLoadingName: false,  // 是否正在获取Name
-        name: '',           // 网址名称
-        imgErr: false,      // 图片是否显示异常
-        whichTag: -1,       // 添加到哪个标签中去
-        id: -1,             // 记录id
-        alertType: '新增网址'
-    },
-    mutations: {
-        // 修改增加URL弹框内的信息
-        changeAddUrlInfo(state, payload) {
-            let key, value, current
-            if(Array.isArray(payload)) {
-                let length = payload.length
-                for(let i = 0; i < length; i++) {
-                    current = payload[i]
-                    key = current.key
-                    value = current.value
-                    state[key] = value
-                }
-            } else {
-                key = payload.key
-                value = payload.value
-                state[key] = value
-            }
-        }
-    }
-}
-
-const moduleEdit = {
-    state: {
-        isEditwhich: -1,    // 正在编辑哪块内容
-    },
-    mutations: {
-        changeEditInfo(state, payload) {
-            state.isEditwhich = payload
-        }
-    }
-}
 
 const store = Vuex.createStore({
     state: {
-
+        navName: '',
+        catalogue: null
     },
     mutations: {
         // 更新
@@ -201,8 +125,8 @@ const store = Vuex.createStore({
         }
     },
     modules: {
-        moduleAddTab,
-        moduleAddUrl,
+        moduleTab,
+        moduleUrl,
         moduleEdit
     }
 })

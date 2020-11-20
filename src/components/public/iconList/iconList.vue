@@ -24,7 +24,7 @@
 <script>
 import {ref, reactive} from 'vue'
 import {useStore} from 'vuex'
-import lpButton from '../../public/lp-button'
+import lpButton from '../../public/lp-button/lp-button'
 export default {
     components: {
         lpButton
@@ -987,7 +987,7 @@ window-restore`.split('\n')
         const iconList = reactive(iconStr)   // 存储所有icon在一个列表中
 
         let store = useStore()
-        let state = reactive(store.state.moduleAddTab)
+        let state = reactive(store.state.moduleTab)
 
         // 选中某个的icon
         function chooseIcon(e) {
@@ -998,7 +998,7 @@ window-restore`.split('\n')
             } else if(tagName == 'SPAN') {
                 target = e.target
             }
-            store.commit('changeAddTabInfo', {
+            store.commit('changeTabInfo', {
                 key: 'currentIcon',
                 value: target.id
             })
@@ -1006,7 +1006,7 @@ window-restore`.split('\n')
 
         // 取消选择
         function cancel() {
-            store.commit('changeAddTabInfo', [
+            store.commit('changeTabInfo', [
                 {key: 'currentIcon', value: ''},
                 {key: 'isShowIconList', value: false}
             ])
@@ -1014,7 +1014,7 @@ window-restore`.split('\n')
 
         // 确认选择
         function confirm() {
-            store.commit('changeAddTabInfo', [
+            store.commit('changeTabInfo', [
                 {key: 'trueIcon', value: state.currentIcon},
                 {key: 'isShowIconList', value: false},
                 {key: 'isSelected', value: true}

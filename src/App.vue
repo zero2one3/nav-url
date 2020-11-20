@@ -13,8 +13,7 @@ import tabs from './components/tabs/tabs'
 import content from './components/main/main'
 import axios from 'axios'
 import installAlert from './components/public/lp-alert/lp-alert'
-import {getCurrentInstance, provide} from 'vue'
-
+import {getCurrentInstance} from 'vue'
 export default {
   name: 'App',
   components: {
@@ -24,7 +23,7 @@ export default {
   setup() {
     // 设置网页导航的信息
     (function setInfos() {
-      const store = useStore()
+        const store = useStore()
         if(window.localStorage.isSet === 'true') {
             writeToVuex(store, JSON.parse(window.localStorage.navInfos))
         } 
@@ -53,8 +52,6 @@ export default {
     // 全局注册alert组件，并传递给子组件
     installAlert(instance.ctx)
 
-    console.log(instance);
-    
     return {}
   }
   

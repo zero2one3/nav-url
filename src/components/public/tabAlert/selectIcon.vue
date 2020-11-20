@@ -16,7 +16,7 @@
 <script>
 import {ref, reactive} from 'vue'
 import {useStore} from 'vuex'
-import iconList from './iconList'
+import iconList from '../iconList/iconList'
 export default {
     props: {
         boxHeight: {
@@ -33,16 +33,16 @@ export default {
     },
     setup() {
         let store = useStore()  // 使用Vuex
-        let state = reactive(store.state.moduleAddTab)
+        let state = reactive(store.state.moduleTab)
 
         // 弹出icon列表框
         function showIconList() {
-            store.commit('changeAddTabInfo', {
+            store.commit('changeTabInfo', {
                 key: 'isShowIconList',
                 value: true
             })
             if(state.isSelected) {
-                store.commit('changeAddTabInfo', {
+                store.commit('changeTabInfo', {
                     key: 'currentIcon',
                     value: state.trueIcon
                 })

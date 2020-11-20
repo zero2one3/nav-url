@@ -1,6 +1,5 @@
 <template>
   <div class="select-icon-box" :style="{'height': `${boxHeight}px`}">
-      <!-- fa fa-spinner fa-spin -->
         <div :class="['select-icon']" 
              :style="{'width': `${sideLen}px`, 'height': `${sideLen}px`, 'margin': `${(boxHeight - sideLen)/2}px 50px`}">
             <span class="select-icon-inner" 
@@ -32,10 +31,10 @@
 </template>
 
 <script>
-import {ref, reactive, onMounted} from 'vue'
+import {reactive} from 'vue'
 import {useStore} from 'vuex'
 import request from '../../../network/request'
-import lpButton from '../../public/lp-button'
+import lpButton from '../../public/lp-button/lp-button'
 export default {
     components: {
         lpButton
@@ -52,7 +51,7 @@ export default {
     },
     setup() {
         let store = useStore()  // 使用Vuex
-        let state = reactive(store.state.moduleAddUrl)
+        let state = reactive(store.state.moduleUrl)
 
         // 获取网页名称
         function getUrlName() {
@@ -60,7 +59,7 @@ export default {
                 alert('请先输入URL')
                 return;
             }
-            store.commit('changeAddUrlInfo', {
+            store.commit('changeUrlInfo', {
                 key: 'isLoadingName',
                 value: true
             })
@@ -74,14 +73,14 @@ export default {
             })
             .then(res => {
                 /* 成功处理 */
-                store.commit('changeAddUrlInfo', {key: 'name', value: res.data.data})
+                store.commit('changeUrlInfo', {key: 'name', value: res.data.data})
             })
             .catch(err => {
                 /* 失败的弹窗 */
                 console.log(err);
             })
             .finally(() => {
-                store.commit('changeAddUrlInfo', {key: 'isLoadingName', value: false})
+                store.commit('changeUrlInfo', {key: 'isLoadingName', value: false})
             })
         }
         // 获取网页图标
@@ -91,7 +90,7 @@ export default {
                 return;
             }
 
-            store.commit('changeAddUrlInfo', {
+            store.commit('changeUrlInfo', {
                 key: 'isLoadingIcon',
                 value: true
             })
@@ -108,7 +107,7 @@ export default {
                 let icon = res.data.data
                 let otherIcon = res.data.otherIcon
                 if(icon == null) icon = otherIcon;
-                store.commit('changeAddUrlInfo', [
+                store.commit('changeUrlInfo', [
                     {key: 'icon', value: icon},
                     {key: 'otherIcon', value: otherIcon}
                 ])
@@ -118,7 +117,7 @@ export default {
                 console.log(err);
             })
             .finally(() => {
-                store.commit('changeAddUrlInfo', {
+                store.commit('changeUrlInfo', {
                     key: 'isLoadingIcon',
                     value: false
                 })
@@ -132,7 +131,7 @@ export default {
             if(state.otherIcon == '') {
                 state.imgErr = true
             } else {
-                store.commit('changeAddUrlInfo', [
+                store.commit('changeUrlInfo', [
                     {key: 'icon', value: state.otherIcon},
                     {key: 'otherIcon', value: ''}
                 ])

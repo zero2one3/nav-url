@@ -18,7 +18,7 @@
                         @click="enterEdit(tab.id)">
                     {{ tab.id == editWhich.isEditwhich? '退出' : '编辑' }}
                   </span>
-                  <editTagAlert name="修改标签"></editTagAlert>
+                  <tagAlert name="修改标签"></tagAlert>
               </div>
               <ul class="url-boxes">
                   <li v-for="(urls, j) in tab.URLS" :key="j" class="each-url-box">
@@ -41,31 +41,31 @@
           </div>
       </div>
   </div>
-  <addUrlAlert v-show="state.isShow"></addUrlAlert>
+  <urlAlert v-show="state.isShow"></urlAlert>
 </template>
 
 <script>
 import {reactive, ref, getCurrentInstance} from 'vue'
 import {useStore} from 'vuex'
 import {updateLocal} from '../../utils/utils'
-import addUrlAlert from './childCpn/addUrlAlert'
-import editTagAlert from '../tabs/childCpn/addTabAlert'
+import urlAlert from '../public/urlAlert/urlAlert'
+import tagAlert from '../public/tabAlert/tabAlert'
 export default {
     components: {
-        addUrlAlert,
-        editTagAlert
+        urlAlert,
+        tagAlert
     },
     setup() {
         const store = useStore()
         const catalogue = reactive(store.state.catalogue)
-        const state = reactive(store.state.moduleAddUrl)
+        const state = reactive(store.state.moduleUrl)
         const editWhich = reactive(store.state.moduleEdit)
         const instance = getCurrentInstance().root.ctx
         
 
         // 弹出添加URL的框
         function addMoreUrl(id) {
-            store.commit('changeAddUrlInfo', [
+            store.commit('changeUrlInfo', [
                 {key: 'isShow', value: true},
                 {key: 'whichTag', value: id},
                 {key: 'alertType', value: '新增网址'}
@@ -90,7 +90,7 @@ export default {
 
         // 修改标签弹框弹出
         function editTagAlertShow(tab) {
-            store.commit('changeAddTabInfo', [
+            store.commit('changeTabInfo', [
                 {key: 'isShowAddTabAlert', value: true},
                 {key: 'tagName', value: tab.name},
                 {key: 'trueIcon', value: tab.icon},
@@ -122,7 +122,7 @@ export default {
 
         // 弹出修改URL的弹框
         function editUrl(url) {
-            store.commit('changeAddUrlInfo', [
+            store.commit('changeUrlInfo', [
                 {key: 'url', value: url.url},
                 {key: 'icon', value: url.icon},
                 {key: 'id', value: url.id},

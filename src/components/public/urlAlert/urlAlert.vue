@@ -1,7 +1,7 @@
 <template>
-  <div class="add-url-alert-container animate__animated" ref="alertBox">
-      <div class="add-url-alert">
-          <span class="close-add-url-alert" @click="cancel"/>
+  <div class="url-alert-container animate__animated" ref="alertBox">
+      <div class="url-alert">
+          <span class="close-url-alert" @click="cancel"/>
           <div class="alert-title">{{ state.alertType }}</div>
           <div class="operating-space">
               <lp-input class="lp-input-container" :value="state.url" @_input="inputUrl" placeholder="请输入URL"></lp-input>
@@ -20,8 +20,8 @@
 import {reactive, ref, getCurrentInstance} from 'vue'
 import {useStore} from 'vuex'
 import {removeClass, debounce} from '../../../utils/utils'
-import lpButton from '../../public/lp-button'
-import lpInput from '../../public/lp-input'
+import lpButton from '../../public/lp-button/lp-button'
+import lpInput from '../../public/lp-input/lp-input'
 import selectIcon from './selectIcon'
 export default {
     components: {
@@ -31,7 +31,7 @@ export default {
     },
     setup() {
         let store = useStore()    // 使用Vuex
-        let state = reactive(store.state.moduleAddUrl)
+        let state = reactive(store.state.moduleUrl)
         let alertBox = ref(null)  // 获取弹框根标签元素
         const instance = getCurrentInstance().root.ctx
 
@@ -39,7 +39,7 @@ export default {
         function cancel() {
             let el = alertBox.value
             removeClass(el, 'animate__fadeIn')
-            store.commit('changeAddUrlInfo', [
+            store.commit('changeUrlInfo', [
                 {key: 'url', value: ''},
                 {key: 'icon', value: ''},
                 {key: 'isShow', value: false},
@@ -96,7 +96,7 @@ export default {
 
         // URL输入框内容改变事件
         function inputUrl(value) {
-            store.commit('changeAddUrlInfo', {
+            store.commit('changeUrlInfo', {
                 key: 'url',
                 value
             }) 
@@ -105,7 +105,7 @@ export default {
         // Name输入框内容改变事件
         function inputName(value) {
             if(typeof value != 'object') {
-                store.commit('changeAddUrlInfo', {
+                store.commit('changeUrlInfo', {
                     key: 'name',
                     value
                 })
@@ -125,7 +125,7 @@ export default {
 </script>
 
 <style scoped>
-.add-url-alert-container{
+.url-alert-container{
     position: fixed;
     top: 0;
     left: 0;
@@ -133,7 +133,7 @@ export default {
     width: 100vw;
     height: 100vh;
 }
-.add-url-alert{
+.url-alert{
     z-index: 999;
     position: absolute;
     width: 400px;
@@ -145,7 +145,7 @@ export default {
     background-color: white;
     box-shadow: 0 0 2px 2px  rgba(146, 134, 134, 0.1);
 }
-.close-add-url-alert{
+.close-url-alert{
     display: inline-block;
     position: absolute;
     top: 5px;
@@ -153,10 +153,10 @@ export default {
     cursor: pointer;
     color: rgb(133, 122, 122);
 }
-.close-add-url-alert:hover{
+.close-url-alert:hover{
     color: rgb(51, 49, 49);
 }
-.close-add-url-alert::before{
+.close-url-alert::before{
     content: '\2716';
 }
 .alert-title{

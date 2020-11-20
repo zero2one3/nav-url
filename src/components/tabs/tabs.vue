@@ -31,7 +31,7 @@
           </li>
       </ul>
       <!--    添加标签弹框     -->
-      <addTabAlert ref="addAlert"/>
+      <tabAlert ref="addAlert"/>
       <!--    保存配置弹框     -->
       <save-config @closeSaveConfigAlert="closeSaveConfigAlert" :isShow="isShowSaveAlert"/>
       <!--    导入配置弹框     -->
@@ -43,13 +43,13 @@
 import {ref, reactive, onMounted} from 'vue'
 import {useStore} from 'vuex'
 import {addClass} from '../../utils/utils'
-import addTabAlert from './childCpn/addTabAlert'
+import tabAlert from '../public/tabAlert/tabAlert'
 import saveConfig from './childCpn/saveConfig'
 import importConfig from './childCpn/importConfig'
 export default {
     name: 'tabs',
     components: {
-        addTabAlert,
+        tabAlert,
         saveConfig,
         importConfig
     },

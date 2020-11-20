@@ -1,7 +1,7 @@
 <template>
-  <div class="add-tab-alert-container animate__animated" ref="alertBox" v-show="state.isShowAddTabAlert">
-      <div class="add-tab-alert">
-          <span class="close-add-tab-alert" @click="cancel"/>
+  <div class="tab-alert-container animate__animated" ref="alertBox" v-show="state.isShowAddTabAlert">
+      <div class="tab-alert">
+          <span class="close-tab-alert" @click="cancel"/>
           <div class="alert-title">{{ name }}</div>
           <div class="operating-space">
               <lp-input class="lp-input-container" :value="state.tagName" @_input="input" maxlength="10"></lp-input>
@@ -19,8 +19,8 @@
 import {reactive, ref, getCurrentInstance} from 'vue'
 import {useStore} from 'vuex'
 import {removeClass, debounce} from '../../../utils/utils'
-import lpButton from '../../public/lp-button'
-import lpInput from '../../public/lp-input'
+import lpButton from '../../public/lp-button/lp-button'
+import lpInput from '../../public/lp-input/lp-input'
 import selectIcon from './selectIcon'
 export default {
     components: {
@@ -36,7 +36,7 @@ export default {
     },
     setup(props) {
         let store = useStore()    // 使用Vuex
-        let state = reactive(store.state.moduleAddTab)
+        let state = reactive(store.state.moduleTab)
         let alertBox = ref(null)  // 获取弹框根标签元素
         const instance = getCurrentInstance().root.ctx
 
@@ -45,7 +45,7 @@ export default {
             let el = alertBox.value
             removeClass(el, 'animate__fadeIn')
             el.style.display = 'none'
-            store.commit('changeAddTabInfo', [
+            store.commit('changeTabInfo', [
                 {key: 'tagName', value: ''},
                 {key: 'trueIcon', value: 'plus'},
                 {key: 'currentIcon', value: ''},
@@ -106,7 +106,7 @@ export default {
 
         // 输入框内容改变事件
         function input(value) { 
-            store.commit('changeAddTabInfo', {
+            store.commit('changeTabInfo', {
                 key: 'tagName',
                 value
             })
@@ -124,7 +124,7 @@ export default {
 </script>
 
 <style scpoed>
-.add-tab-alert-container{
+.tab-alert-container{
     position: fixed;
     top: 0;
     left: 0;
@@ -133,7 +133,7 @@ export default {
     height: 100vh;
     z-index: 999;
 }
-.add-tab-alert{
+.tab-alert{
     z-index: 999;
     position: absolute;
     width: 400px;
@@ -145,7 +145,7 @@ export default {
     background-color: white;
     box-shadow: 0 0 2px 2px  rgba(0, 0, 0, .1);
 }
-.close-add-tab-alert{
+.close-tab-alert{
     display: inline-block;
     position: absolute;
     top: 5px;
@@ -153,10 +153,10 @@ export default {
     cursor: pointer;
     color: rgb(133, 122, 122);
 }
-.close-add-tab-alert:hover{
+.close-tab-alert:hover{
     color: rgb(51, 49, 49);
 }
-.close-add-tab-alert::before{
+.close-tab-alert::before{
     content: '\2716';
 }
 .alert-title{
