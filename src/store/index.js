@@ -2,7 +2,7 @@ import Vuex from '../../node_modules/vuex/dist/vuex.cjs'
 import {updateLocal} from '../utils/utils'
 import moduleTab from './module/tab'
 import moduleUrl from './module/url'
-import moduleEdit from './module/edit'
+import moduleSearch from './module/search'
 
 
 const store = Vuex.createStore({
@@ -127,7 +127,7 @@ const store = Vuex.createStore({
     modules: {
         moduleTab,
         moduleUrl,
-        moduleEdit
+        moduleSearch
     }
 })
 

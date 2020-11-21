@@ -2,26 +2,33 @@
   <div id="content-container">
       <div id="notice">
           <i class="fas fa-bell"></i>
+          <search></search>
       </div>
       <div id="content">
-          <div v-for="(tab, i) in catalogue" :key="i" class="each-content">
+          <div v-for="(tab, i) in catalogue" 
+               :key="i" 
+               class="each-content" 
+               v-show="!moduleSearch.isSearch || (moduleSearch.isSearch && judgeTabIsShow(i))">
               <div :id="tab.id" class="tab-title">
                   <i :class="['fas', `fa-${tab.icon}`, 'tab-icon']"/>
                   <span class="tab-name">
                       {{tab.name}}
                   </span>
-                  <span :class="['edit-tab-name', {'tabIsEdit': tab.id == editWhich.isEditwhich}]">
+                  <span :class="['edit-tab-name', {'tabIsEdit': tab.id == editWhich}]">
                       <i class="fas fa-trash-alt delete-icon" @click="deleteTag(tab.id)"/>
                       <i class="fas fa-edit edit-icon" @click="editTagAlertShow(tab)"/>
                   </span>
-                  <span :class="['edit', {'isEdit': tab.id == editWhich.isEditwhich}]" 
+                  <span :class="['edit', {'isEdit': tab.id == editWhich}]" 
                         @click="enterEdit(tab.id)">
-                    {{ tab.id == editWhich.isEditwhich? '退出' : '编辑' }}
+                    {{ tab.id == editWhich? '退出' : '编辑' }}
                   </span>
                   <tagAlert name="修改标签"></tagAlert>
               </div>
               <ul class="url-boxes">
-                  <li v-for="(urls, j) in tab.URLS" :key="j" class="each-url-box">
+                  <li v-for="(urls, j) in tab.URLS" 
+                      :key="j" 
+                      class="each-url-box" 
+                      v-show="!moduleSearch.isSearch || (moduleSearch.isSearch && judgeUrlIsShow(i, j))">
                       <a :href="urls.url" target="_blank" class="url-link">
                           <div class="round-box">
                               <img :src="urls.icon" :alt="urls.name" class="url-icon" v-if="urls.icon != ''" @error="imgLoadErr">
@@ -29,7 +36,7 @@
                           </div>
                           <span class="url-name">{{ urls.name }}</span>
                       </a>
-                      <span :class="['edit-container', {'urlIsEdit': tab.id == editWhich.isEditwhich}]">
+                      <span :class="['edit-container', {'urlIsEdit': tab.id == editWhich}]">
                           <i class="fas fa-trash-alt delete-icon" @click="deleteUrl(urls.id)"/>
                           <i class="fas fa-edit edit-icon" @click="editUrl(urls)"/>
                       </span>
@@ -41,7 +48,7 @@
           </div>
       </div>
   </div>
-  <urlAlert v-show="state.isShow"></urlAlert>
+  <urlAlert v-show="moduleUrl.isShow"></urlAlert>
 </template>
 
 <script>
@@ -50,17 +57,20 @@ import {useStore} from 'vuex'
 import {updateLocal} from '../../utils/utils'
 import urlAlert from '../public/urlAlert/urlAlert'
 import tagAlert from '../public/tabAlert/tabAlert'
+import search from './childCpn/search'
 export default {
     components: {
         urlAlert,
-        tagAlert
+        tagAlert,
+        search
     },
     setup() {
         const store = useStore()
-        const catalogue = reactive(store.state.catalogue)
-        const state = reactive(store.state.moduleUrl)
-        const editWhich = reactive(store.state.moduleEdit)
+        const catalogue = store.state.catalogue
+        const moduleUrl = store.state.moduleUrl
+        const moduleSearch = store.state.moduleSearch
         const instance = getCurrentInstance().root.ctx
+        const editWhich = ref(-1)
         
 
         // 弹出添加URL的框
@@ -81,10 +91,10 @@ export default {
 
         // 进入编辑状态
         function enterEdit(id) {
-            if(id != editWhich.isEditwhich) {
-                store.commit('changeEditInfo', id)
+            if(id != editWhich.value) {
+                editWhich.value = id
             } else {
-                store.commit('changeEditInfo', -1)
+                editWhich.value = -1
             }     
         }
 
@@ -132,17 +142,37 @@ export default {
             ])
         }
 
+        
+        function judgeTabIsShow(i) {
+            const URLS = catalogue[i]['URLS']
+            let length = URLS.length
+            for(let j = 0; j < length; j++) {
+                if(moduleSearch.searchWord == '') return false;
+                else if(URLS[j].name.toLowerCase().indexOf(moduleSearch.searchWord.toLowerCase()) !== -1) return true;
+            }
+            return false
+        }
+
+        function judgeUrlIsShow(i, j) {
+            const url = catalogue[i]['URLS'][j]
+            if(url.name.toLowerCase().indexOf(moduleSearch.searchWord.toLowerCase()) !== -1) return true;
+            return false;
+        }
+
         return {
             catalogue, 
             addMoreUrl, 
-            state, 
+            moduleUrl, 
+            moduleSearch,
             imgLoadErr, 
-            editWhich, 
             enterEdit, 
             editTagAlertShow,
             deleteTag,
             deleteUrl,
-            editUrl
+            editUrl,
+            editWhich,
+            judgeTabIsShow,
+            judgeUrlIsShow
         }
     }
 }
@@ -160,6 +190,7 @@ export default {
     height: 80px;
     box-shadow: 1px 1px 5px #eee;
     line-height: 80px;
+    position: relative;
 }
 .fa-bell{
     color: rgb(240, 179, 12);

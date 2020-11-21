@@ -49,7 +49,7 @@ export default {
     })();   
 
     const instance = getCurrentInstance()
-    // 全局注册alert组件，并传递给子组件
+    // 全局注册alert组件
     installAlert(instance.ctx)
 
     return {}
@@ -61,5 +61,5 @@ export default {
 <style>
 @import './assets/css/reset/reset.css';
 @import './assets/css/fontawesome/css/all.min.css';
-@import '../node_modules/animate.css/animate.min.css';
+@import '../node_modules/animate.css/animate.css';
 </style>

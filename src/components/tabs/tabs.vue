@@ -1,10 +1,10 @@
 <template>
   <aside id="tabs-container">
       <div id="logo-container">
-          {{ navName }}
+          {{ navInfos.navName }}
       </div>
       <ul id="tabs">
-          <li class="tab tab-search">
+          <li class="tab tab-search" @click="showSearch">
               <i class="fas fa-search tab-icon"/>
               <span>快速搜索</span>
           </li>
@@ -17,7 +17,7 @@
               <span>导入配置</span>
           </li>
           <br>
-          <li v-for="(item, index) in catalogue" 
+          <li v-for="(item, index) in navInfos.catalogue" 
               :key="index"
               class="tab">
               <a :href="`#${item.id}`" class="to-id">
@@ -56,13 +56,9 @@ export default {
     setup() {
         const store = useStore()      // Vuex实例
         let navInfos = store.state    // Vuex的state对象
-        let navName = ref(navInfos.navName)      // 响应式navName
-        let catalogue = reactive(navInfos.catalogue)    // 响应式的标签、URL信息
         let isShowSaveAlert = ref(false)           // 保存配置弹框是否展示
         let isShowImportAlert = ref(false)         // 导入配置弹框是否展示
-
         let addAlert = ref(null)      // "添加标签弹框"的标签元素
-
         let addTabIsShow = ref(false) // 判断"添加标签弹框"是否显示
         
         // 展示"添加标签弹框"
@@ -92,10 +88,20 @@ export default {
         function closeImportConfigAlert(value) {
             isShowImportAlert.value = value
         }
+
+        // 展示搜索框
+        function showSearch() {
+            if(store.state.moduleSearch.isSearch) {
+                store.commit('changeIsSearch', false)
+                store.commit('changeSearchWord', '')
+            } else {
+                store.commit('changeIsSearch', true)
+            }
+                      
+        }
         
         return {
-            navName, 
-            catalogue, 
+            navInfos,
             addAlert, 
             addTabShow, 
             addTabIsShow, 
@@ -104,7 +110,8 @@ export default {
             showSaveConfigAlert,
             isShowImportAlert,
             showImportConfigAlert,
-            closeImportConfigAlert
+            closeImportConfigAlert,
+            showSearch
         }
     }
 }

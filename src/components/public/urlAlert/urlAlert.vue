@@ -132,9 +132,9 @@ export default {
     background-color: rgba(0, 0, 0, .1);
     width: 100vw;
     height: 100vh;
+        z-index: 999;
 }
 .url-alert{
-    z-index: 999;
     position: absolute;
     width: 400px;
     height: 400px;
