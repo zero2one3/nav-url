@@ -10,7 +10,7 @@
                @compositionstart="virtualInputStart"
                @compositionend="virtualInputEnd"
                :value="value">
-        <span class="clear" v-show="value == '' ? false : true" @click="clearValue"></span>
+        <span class="clear" v-show="value == '' ? false : true" @click="clearValue"/>
     </div>
 </template>
 
@@ -82,7 +82,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .lp-input-container{
     height: 50px;
     position: relative;
@@ -111,5 +111,8 @@ export default {
     right: 0;
     transform: translate(-100%, -50%);
     cursor: pointer;
+    height: 50px;
+    line-height: 50px;
+    color: #666;
 }
 </style>

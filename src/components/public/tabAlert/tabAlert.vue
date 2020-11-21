@@ -1,11 +1,19 @@
 <template>
-  <div class="tab-alert-container animate__animated" ref="alertBox" v-show="state.isShowAddTabAlert">
+  <div :class="[
+            'tab-alert-container', 
+            'animate__animated', 
+            {'animate__fadeIn': state.isShowAddTabAlert}
+        ]" 
+       v-show="state.isShowAddTabAlert">
       <div class="tab-alert">
-          <span class="close-tab-alert" @click="cancel"/>
-          <div class="alert-title">{{ name }}</div>
+          
+          <div class="alert-title">
+              {{ state.alertType }}
+              <span class="close-tab-alert" @click="cancel"/>
+          </div>
           <div class="operating-space">
-              <lp-input class="lp-input-container" :value="state.tagName" @_input="input" maxlength="10"></lp-input>
-              <select-icon></select-icon>
+              <lp-input class="lp-input-container" :value="state.tagName" @_input="input" maxlength="10"/>
+              <select-icon/>
           </div>
           <div class="btn-group">
               <lp-button @_click="cancel" type="danger" class="btn-cancel">取消</lp-button>
@@ -34,17 +42,13 @@ export default {
             default: '新增标签'
         }
     },
-    setup(props) {
+    setup() {
         let store = useStore()    // 使用Vuex
         let state = store.state.moduleTab
-        let alertBox = ref(null)  // 获取弹框根标签元素
         const instance = getCurrentInstance().root.ctx
 
         // 关闭弹框
         function cancel() {
-            let el = alertBox.value
-            removeClass(el, 'animate__fadeIn')
-            el.style.display = 'none'
             store.commit('changeTabInfo', [
                 {key: 'tagName', value: ''},
                 {key: 'trueIcon', value: 'plus'},
@@ -73,7 +77,7 @@ export default {
                 })
                 return;
             }
-            if(props.name == '新增标签') {
+            if(state.alertType == '新增标签') {
                 store.commit('add', {
                     key: '1',
                     value: {
@@ -85,7 +89,7 @@ export default {
                     type: 'success',
                     content: '标签添加成功'
                 })
-            } else if(props.name == '修改标签') {
+            } else if(state.alertType == '修改标签') {
                 store.commit('update', {
                     key: 'catalogue',
                     value: {
@@ -113,7 +117,6 @@ export default {
         }
 
         return {
-            alertBox, 
             cancel, 
             confirm, 
             input,
@@ -123,7 +126,7 @@ export default {
 }
 </script>
 
-<style scpoed>
+<style scoped>
 .tab-alert-container{
     position: fixed;
     top: 0;
@@ -148,9 +151,10 @@ export default {
 .close-tab-alert{
     display: inline-block;
     position: absolute;
-    top: 5px;
+    top: 0;
     right: 10px;
     cursor: pointer;
+    height: 50px;
     color: rgb(133, 122, 122);
 }
 .close-tab-alert:hover{
@@ -174,8 +178,8 @@ export default {
 .lp-input-container{
     width: 300px;
     margin: 10px auto 0;
+    line-height: 0;
 }
-
 
 .btn-group{
     height: 80px;

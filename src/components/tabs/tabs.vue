@@ -31,7 +31,7 @@
           </li>
       </ul>
       <!--    添加标签弹框     -->
-      <tabAlert ref="addAlert"/>
+      <tabAlert name="新增标签"/>
       <!--    保存配置弹框     -->
       <save-config @closeSaveConfigAlert="closeSaveConfigAlert" :isShow="isShowSaveAlert"/>
       <!--    导入配置弹框     -->
@@ -58,15 +58,13 @@ export default {
         let navInfos = store.state    // Vuex的state对象
         let isShowSaveAlert = ref(false)           // 保存配置弹框是否展示
         let isShowImportAlert = ref(false)         // 导入配置弹框是否展示
-        let addAlert = ref(null)      // "添加标签弹框"的标签元素
-        let addTabIsShow = ref(false) // 判断"添加标签弹框"是否显示
         
         // 展示"添加标签弹框"
         function addTabShow() {
-            addTabIsShow.value = true
-            let el = addAlert.value.$el
-            el.style.display = 'block'
-            addClass(el, ` animate__fadeIn`)
+            store.commit('changeTabInfo', [
+                {key: 'isShowAddTabAlert', value: true},
+                {key: 'alertType', value: '新增标签'}
+            ])
         }
 
         // 关闭"保存配置弹框"
@@ -102,9 +100,7 @@ export default {
         
         return {
             navInfos,
-            addAlert, 
             addTabShow, 
-            addTabIsShow, 
             isShowSaveAlert, 
             closeSaveConfigAlert, 
             showSaveConfigAlert,

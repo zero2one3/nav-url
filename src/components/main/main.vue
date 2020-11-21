@@ -72,7 +72,6 @@ export default {
         const instance = getCurrentInstance().root.ctx
         const editWhich = ref(-1)
         
-
         // 弹出添加URL的框
         function addMoreUrl(id) {
             store.commit('changeUrlInfo', [
@@ -106,7 +105,8 @@ export default {
                 {key: 'trueIcon', value: tab.icon},
                 {key: 'isSelected', value: true},
                 {key: 'currentIcon', value: tab.icon},
-                {key: 'id', value: tab.id}
+                {key: 'id', value: tab.id},
+                {key: 'alertType', value: '修改标签'}
             ])
         }
 

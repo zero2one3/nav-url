@@ -7,7 +7,8 @@ const moduleTab = {
         isSelected: false,      // 用户是否选择了
         isShowIconList: false,  // icon列表是否展示
         isShowAddTabAlert: false, // 添加标签弹框是否显示
-        id: ''
+        id: '',
+        alertType: '新增标签'
     },
     mutations: {
         // 修改增加标签弹框内的信息
