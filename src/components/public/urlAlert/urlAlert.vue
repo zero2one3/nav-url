@@ -1,12 +1,12 @@
 <template>
-  <div class="url-alert-container animate__animated" ref="alertBox">
+  <div class="url-alert-container animate__animated">
       <div class="url-alert">
           <span class="close-url-alert" @click="cancel"/>
           <div class="alert-title">{{ state.alertType }}</div>
           <div class="operating-space">
               <lp-input class="lp-input-container" :value="state.url" @_input="inputUrl" placeholder="请输入URL"></lp-input>
               <lp-input class="lp-input-container" :value="state.name" @_input="inputName" placeholder="请输入名称"></lp-input>
-              <selectIcon></selectIcon>
+              <selectIcon/>
           </div>
           <div class="btn-group">
               <lp-button @_click="cancel" type="danger" class="btn-cancel">取消</lp-button>
@@ -17,9 +17,8 @@
 </template>
 
 <script>
-import {reactive, ref, getCurrentInstance} from 'vue'
+import {getCurrentInstance} from 'vue'
 import {useStore} from 'vuex'
-import {removeClass, debounce} from '../../../utils/utils'
 import lpButton from '../../public/lp-button/lp-button'
 import lpInput from '../../public/lp-input/lp-input'
 import selectIcon from './selectIcon'
@@ -32,13 +31,10 @@ export default {
     setup() {
         let store = useStore()    // 使用Vuex
         let state = store.state.moduleUrl
-        let alertBox = ref(null)  // 获取弹框根标签元素
         const instance = getCurrentInstance().root.ctx
 
         // 关闭弹框
         function cancel() {
-            let el = alertBox.value
-            removeClass(el, 'animate__fadeIn')
             store.commit('changeUrlInfo', [
                 {key: 'url', value: ''},
                 {key: 'icon', value: ''},
@@ -54,7 +50,7 @@ export default {
         }
 
         // 确认添加URL 或 确认修改URL
-        function sure() {
+        function confirm() {
             if(state.url == '') {
                 alert('URL不能为空')
                 return;
@@ -91,8 +87,6 @@ export default {
             
             cancel()
         }
-        // 防抖处理过后的 “确认添加标签” 函数
-        let confirm = debounce(sure, 200)
 
         // URL输入框内容改变事件
         function inputUrl(value) {
@@ -114,7 +108,6 @@ export default {
 
         return {
             state,
-            alertBox,
             confirm,
             cancel,
             inputUrl,
