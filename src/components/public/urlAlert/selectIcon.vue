@@ -51,7 +51,7 @@ export default {
     },
     setup() {
         let store = useStore()  // 使用Vuex
-        let state = reactive(store.state.moduleUrl)
+        let state = store.state.moduleUrl
 
         // 获取网页名称
         function getUrlName() {

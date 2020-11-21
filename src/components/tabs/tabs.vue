@@ -9,11 +9,11 @@
               <span>快速搜索</span>
           </li>
           <li class="tab" @click="showSaveConfigAlert">
-              <i class="fas fa-cog tab-icon"></i>
+              <i class="fas fa-share-square tab-icon"></i>
               <span>保存配置</span>
           </li>
           <li class="tab" @click="showImportConfigAlert">
-              <i class="fas fa-share-square tab-icon"></i>
+              <i class="fas fa-cog tab-icon"></i>
               <span>导入配置</span>
           </li>
           <br>

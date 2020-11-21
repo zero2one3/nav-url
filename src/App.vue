@@ -30,7 +30,7 @@ export default {
         // 自动设置默认信息
         else {
             let obj = {
-            navName: "默认网站",
+            navName: "Quick Url",
             catalogue : [
                 {id:'1' , name: "常用网站", icon: "align-justify", URLS: [
                   {id:'1.1' , url: 'http://www.baidu.com', icon: 'http://www.baidu.com/favicon.ico', name: '百度'},

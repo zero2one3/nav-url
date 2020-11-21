@@ -36,7 +36,7 @@ export default {
     },
     setup(props) {
         let store = useStore()    // 使用Vuex
-        let state = reactive(store.state.moduleTab)
+        let state = store.state.moduleTab
         let alertBox = ref(null)  // 获取弹框根标签元素
         const instance = getCurrentInstance().root.ctx
 

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {ref} from 'vue'
+import {ref, getCurrentInstance} from 'vue'
 import lpButton from '../../public/lp-button/lp-button'
 export default {
     props: {
@@ -37,13 +37,24 @@ export default {
         let isLoading = ref(false)   // 判断按钮是否处于加载状态
         let inputFile = ref(null)    // 获取文件标签
         let hasFile = ref(0)         // 判断文件的传入情况。0：未传入  1: 格式错误  2：格式正确
+        const instance = getCurrentInstance().root.ctx
 
         // 导入配置
         function importConfig() {
           let reader = new FileReader()
           let files = inputFile.value.files
-          if(hasFile.value == 0) alert('请先上传配置文件');
-          else if(hasFile.value == 1) alert('请上传正确格式的文件，例如xx.json');
+          if(hasFile.value == 0) {
+            instance.$alert({
+              type: 'warning',
+              content: '请先上传配置文件'
+            })
+          }
+          else if(hasFile.value == 1) {
+            instance.$alert({
+              type: 'warning',
+              content: '请上传正确格式的文件，例如xx.json'
+            })
+          }
           else if(hasFile.value == 2) {
             reader.readAsText(files[0])
             reader.onload = function() {
@@ -57,18 +68,31 @@ export default {
         // 关闭弹窗
         function closeAlert() {
           emit('closeImportConfigAlert', false)
+          hasFile.value = 0
         }
 
         function fileChange(e) {
           let files = e.target.files
-          if(files.length === 0) alert('请先上传配置文件');
+          if(files.length === 0) {
+            instance.$alert({
+              type: 'warning',
+              content: '请先上传配置文件'
+            })
+          }
           else {
             let targetFile = files[0]
             if(!/\.json$/.test(targetFile.name)) {
               hasFile.value = 1
-              alert('请确认文件格式是否正确')
+              instance.$alert({
+                type: 'warning',
+                content: '请确认文件格式是否正确'
+              })
             } else {
               hasFile.value = 2
+              instance.$alert({
+                type: 'success',
+                content: '文件格式正确'
+              })
             }
           }
         }

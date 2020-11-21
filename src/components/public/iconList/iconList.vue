@@ -31,7 +31,7 @@ export default {
     },
     setup(props) {
         // 存储所有icon的样式
-        let iconStr = `ad
+        let iconList = `ad
 address-book
 address-card
 adjust
@@ -984,10 +984,8 @@ window-maximize
 window-minimize
 window-restore`.split('\n')
 
-        const iconList = reactive(iconStr)   // 存储所有icon在一个列表中
-
         let store = useStore()
-        let state = reactive(store.state.moduleTab)
+        let state = store.state.moduleTab
 
         // 选中某个的icon
         function chooseIcon(e) {
