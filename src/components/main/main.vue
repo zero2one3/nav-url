@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import {reactive, ref, getCurrentInstance} from 'vue'
+import {ref, getCurrentInstance} from 'vue'
 import {useStore} from 'vuex'
 import {updateLocal} from '../../utils/utils'
 import urlAlert from '../public/urlAlert/urlAlert'
@@ -69,7 +69,9 @@ export default {
         const catalogue = store.state.catalogue
         const moduleUrl = store.state.moduleUrl
         const moduleSearch = store.state.moduleSearch
-        const instance = getCurrentInstance().root.ctx
+        const root = getCurrentInstance().root.ctx
+        const $message = root.$message
+        const $confirm = root.$confirm
         const editWhich = ref(-1)
         
         // 弹出添加URL的框
@@ -112,22 +114,30 @@ export default {
 
         // 删除标签以及标签下的所有网址
         function deleteTag(id) {
-            // ---------------- 这里要加一个弹框确认 ----------------------
-            store.commit('remove', id)
-            instance.$alert({
-                type: 'success',
-                content: '标签页及子网址删除成功'
+            $confirm({
+                content: '确定删除该标签以及该标签下所有网址吗？'
             })
+            .then(() => {
+                store.commit('remove', id)
+                $message({
+                    type: 'success',
+                    content: '标签页及子网址删除成功'
+                })
+            }) 
         }
 
         // 删除某个网址
         function deleteUrl(id) {
-            // ---------------- 这里要加一个弹框确认 ----------------------
-            store.commit('remove', id)
-            instance.$alert({
-                type: 'success',
-                content: '网址删除成功'
+            $confirm({
+                content: '确定删除该网址吗？'
             })
+            .then(() => {
+                store.commit('remove', id)
+                $message({
+                    type: 'success',
+                    content: '网址删除成功'
+                })
+            })      
         }
 
         // 弹出修改URL的弹框

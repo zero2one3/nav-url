@@ -24,9 +24,8 @@
 </template>
 
 <script>
-import {reactive, ref, getCurrentInstance} from 'vue'
+import {getCurrentInstance} from 'vue'
 import {useStore} from 'vuex'
-import {removeClass, debounce} from '../../../utils/utils'
 import lpButton from '../../public/lp-button/lp-button'
 import lpInput from '../../public/lp-input/lp-input'
 import selectIcon from './selectIcon'
@@ -36,16 +35,10 @@ export default {
         lpInput,
         selectIcon
     },
-    props: {
-        name: {
-            type: String,
-            default: '新增标签'
-        }
-    },
     setup() {
-        let store = useStore()    // 使用Vuex
+        let store = useStore()   
         let state = store.state.moduleTab
-        const instance = getCurrentInstance().root.ctx
+        const $message = getCurrentInstance().root.ctx.$message
 
         // 关闭弹框
         function cancel() {
@@ -60,10 +53,10 @@ export default {
         }
 
         // 确认添加标签
-        function sure() {
+        function confirm() {
             // 判断标签名是否为空
             if(state.tagName == '') {
-                instance.$alert({
+                $message({
                     type: 'warning',
                     content: '标签名称不能为空'
                 })
@@ -71,7 +64,7 @@ export default {
             }
             // 判断icon是否为空
             if(!state.isSelected) {
-                instance.$alert({
+                $message({
                     type: 'warning',
                     content: '请选择合适的图标'
                 })
@@ -85,7 +78,7 @@ export default {
                         icon: state.trueIcon
                     }
                 })
-                instance.$alert({
+                $message({
                     type: 'success',
                     content: '标签添加成功'
                 })
@@ -98,15 +91,13 @@ export default {
                         name: state.tagName
                     }
                 })
-                instance.$alert({
+                $message({
                     type: 'success',
                     content: '标签修改成功'
                 })
             }
             cancel()
         }
-        // 防抖处理过后的 “确认添加标签” 函数
-        let confirm = debounce(sure, 200)
 
         // 输入框内容改变事件
         function input(value) { 

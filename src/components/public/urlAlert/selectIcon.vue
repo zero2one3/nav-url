@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import {reactive} from 'vue'
+import {reactive, getCurrentInstance} from 'vue'
 import {useStore} from 'vuex'
 import request from '../../../network/request'
 import lpButton from '../../public/lp-button/lp-button'
@@ -50,13 +50,17 @@ export default {
         }
     },
     setup() {
-        let store = useStore()  // 使用Vuex
-        let state = store.state.moduleUrl
+        const store = useStore()  
+        const state = store.state.moduleUrl
+        const $message = getCurrentInstance().root.ctx.$message
 
         // 获取网页名称
         function getUrlName() {
             if(state.url == '') {
-                alert('请先输入URL')
+                $message({
+                    type: 'warning',
+                    content: '请先输入URL'
+                })
                 return;
             }
             store.commit('changeUrlInfo', {
@@ -72,12 +76,17 @@ export default {
                 }
             })
             .then(res => {
-                /* 成功处理 */
                 store.commit('changeUrlInfo', {key: 'name', value: res.data.data})
+                $message({
+                    type: 'success',
+                    content: '网页名称获取成功'
+                })
             })
-            .catch(err => {
-                /* 失败的弹窗 */
-                console.log(err);
+            .catch(() => {
+                $message({
+                    type: 'danger',
+                    content: '网络超时或目标网站拒绝此次请求'
+                })
             })
             .finally(() => {
                 store.commit('changeUrlInfo', {key: 'isLoadingName', value: false})
@@ -86,7 +95,10 @@ export default {
         // 获取网页图标
         function getUrlIcon() {
             if(state.url == '') {
-                alert('请先输入URL')
+                $message({
+                    type: 'warning',
+                    content: '请先输入URL'
+                })
                 return;
             }
 
@@ -103,7 +115,6 @@ export default {
                 }
             })
             .then(res => {
-                /* 成功处理 */
                 let icon = res.data.data
                 let otherIcon = res.data.otherIcon
                 if(icon == null) icon = otherIcon;
@@ -111,10 +122,16 @@ export default {
                     {key: 'icon', value: icon},
                     {key: 'otherIcon', value: otherIcon}
                 ])
+                $message({
+                    type: 'success',
+                    content: '图标获取成功'
+                })
             })
-            .catch(err => {
-                /* 失败的弹窗 */
-                console.log(err);
+            .catch(() => {
+                $message({
+                    type: 'danger',
+                    content: '网络超时或目标网站拒绝此次请求'
+                })
             })
             .finally(() => {
                 store.commit('changeUrlInfo', {
@@ -126,8 +143,6 @@ export default {
         }
         // 图片加载错误
         function imgloadErr() {
-            // console.log('图片加载错误');
-            // 先测试一下备用的icon网址，如果还不行，就使用默认的图标
             if(state.otherIcon == '') {
                 state.imgErr = true
             } else {

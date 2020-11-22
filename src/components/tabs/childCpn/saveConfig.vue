@@ -23,7 +23,7 @@ export default {
         lpButton
     },
     setup(props, {emit}) {
-        let result = ref('none')     // 保存的结果
+        const result = ref('none')     // 保存的结果
 
         // 封装的下载数据函数
         function downLoadFile(fileName, content) {

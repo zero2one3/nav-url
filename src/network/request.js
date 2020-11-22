@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 function request(config) {
-    let instance = axios.create({
+    const instance = axios.create({
         timeout: 10000
     })
 
@@ -9,4 +9,3 @@ function request(config) {
 }
 
 export default request
-

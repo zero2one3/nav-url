@@ -29,9 +29,9 @@ export default {
         selectIcon
     },
     setup() {
-        let store = useStore()    // 使用Vuex
-        let state = store.state.moduleUrl
-        const instance = getCurrentInstance().root.ctx
+        const store = useStore()  
+        const state = store.state.moduleUrl
+        const $message = getCurrentInstance().root.ctx.$message
 
         // 关闭弹框
         function cancel() {
@@ -52,7 +52,10 @@ export default {
         // 确认添加URL 或 确认修改URL
         function confirm() {
             if(state.url == '') {
-                alert('URL不能为空')
+                $message({
+                    type: 'warning',
+                    content: 'URL不能为空'
+                })
                 return;
             }
             if(state.alertType == '新增网址') {
@@ -65,7 +68,7 @@ export default {
                         whichTag: state.whichTag
                     }
                 })
-                instance.$alert({
+                $message({
                     type: 'success',
                     content: '网址添加成功'
                 })
@@ -79,7 +82,7 @@ export default {
                         url: state.url,
                     }
                 })
-                instance.$alert({
+                $message({
                     type: 'success',
                     content: '网址修改成功'
                 })

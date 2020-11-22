@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import {ref, reactive} from 'vue'
 import {useStore} from 'vuex'
 import lpButton from '../../public/lp-button/lp-button'
 export default {
@@ -984,8 +983,8 @@ window-maximize
 window-minimize
 window-restore`.split('\n')
 
-        let store = useStore()
-        let state = store.state.moduleTab
+        const store = useStore()
+        const state = store.state.moduleTab
 
         // 选中某个的icon
         function chooseIcon(e) {

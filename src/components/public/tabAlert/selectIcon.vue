@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import {ref, reactive} from 'vue'
 import {useStore} from 'vuex'
 import iconList from '../iconList/iconList'
 export default {
@@ -32,7 +31,7 @@ export default {
         iconList
     },
     setup() {
-        let store = useStore()  // 使用Vuex
+        let store = useStore()
         let state = store.state.moduleTab
 
         // 弹出icon列表框

@@ -11,8 +11,8 @@ import {useStore} from 'vuex'
 import {writeToVuex} from './utils/utils'
 import tabs from './components/tabs/tabs'
 import content from './components/main/main'
-import axios from 'axios'
-import installAlert from './components/public/lp-alert/lp-alert'
+import installMessage from './components/public/lp-message/lp-message.js'
+import installDialog from './components/public/lp-dialog/lp-dialog.js'
 import {getCurrentInstance} from 'vue'
 export default {
   name: 'App',
@@ -48,9 +48,10 @@ export default {
         }
     })();   
 
-    const instance = getCurrentInstance()
-    // 全局注册alert组件
-    installAlert(instance.ctx)
+    const instance = getCurrentInstance().ctx
+    // 全局注册组件
+    installMessage(instance)
+    installDialog(instance)
 
     return {}
   }

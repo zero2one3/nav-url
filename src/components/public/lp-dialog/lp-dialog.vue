@@ -37,7 +37,7 @@ export default {
         const instance = getCurrentInstance().ctx
         const status = ref(-1)       // 存储用户点的状态，-1：未点击；0：取消；1：确定
 
-        function removeElement() {
+        function removeElement() {     
             instance.$el.parentNode.removeChild(instance.$el)
         }
         

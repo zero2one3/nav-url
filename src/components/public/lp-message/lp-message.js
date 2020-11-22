@@ -1,23 +1,23 @@
-import lp_alert from "./lp-alert.vue"
-import { defineComponent, createVNode, render, isVNode } from 'vue'
+import lp_message from "./lp-message.vue"
+import { defineComponent, createVNode, render } from 'vue'
 
-let MessageConstructor = defineComponent(lp_alert)
+let MessageConstructor = defineComponent(lp_message)
 let instance;
 const instances = []
 
 export default function (Vue) {
 
-    const alert_info = (options) => {
+    const createMessage = (options) => {
 
-        let option = options || {}
-        if(!Object.prototype.toString.call(option) === '[object Object]') {
+        if(!Object.prototype.toString.call(options) === '[object Object]') {
             console.error('Please enter an object as a parameter')
-            return;
         }
+
+        options = options ? options : {}
 
         instance = createVNode(
             MessageConstructor,
-            option
+            options
         )
 
         //挂载
@@ -27,10 +27,11 @@ export default function (Vue) {
         document.querySelector('#app').appendChild(instance.el)
 
         const cpn = instance.component
+        const el = instance.el
         const props = cpn.props  
         props.seed = instances.length
         // 初始化参数
-        Object.keys(option).forEach(key => {
+        Object.keys(options).forEach(key => {
             props[key] = options[key]
         })
 
@@ -52,20 +53,19 @@ export default function (Vue) {
 
         // 移除消息框
         setTimeout(() => {
-            close(cpn.$el)
+            close(el)
         }, props.lastTime + 200)
         
     }
     
-
     // 关闭某个弹框
-    const close = (e) => {
+    const close = (el) => {
         instances.shift()
         instances.forEach((v) => {
             v.component.props.seed -= 1
         })
-        document.querySelector('#app').removeChild(e)
+        document.querySelector('#app').removeChild(el)
     }
 
-    Vue.$alert = alert_info
+    Vue.$message = createMessage
 }

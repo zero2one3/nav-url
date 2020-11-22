@@ -1,5 +1,5 @@
 <template>
-    <div class="alert_container"
+    <div class="message_container"
          :class="[
             {'show': isShow},
             {'hide': !isShow},
@@ -13,7 +13,7 @@
         <div class="content">
 
             <i :class="[
-                    `lp-alert-${type}`, 
+                    `lp-message-${type}`, 
                     'icon', 
                     'fa', 
                     {'fa-info-circle': type == 'info'},
@@ -33,7 +33,7 @@
 
 <script>
     export default {
-        name: "lp-alert",
+        name: "lp-message",
         props: {
             type: {
                 type: String,
@@ -68,7 +68,7 @@
 </script>
 
 <style scoped>
-    .alert_container{
+    .message_container{
         width: 400px;
         height: 50px;
         border-radius: 8px;
@@ -84,7 +84,7 @@
         opacity: 1;
         filter:alpha(opacity=100);
     }
-    .alert_container.leave{
+    .message_container.leave{
         top: 0;
     }
     .hide{
@@ -113,16 +113,16 @@
         margin-left: 10px;
         font-size: 15px;
     }
-    .txt_info, .lp-alert-info{
+    .txt_info, .lp-message-info{
         color: #909399;
     }
-    .txt_success, .lp-alert-success{
+    .txt_success, .lp-message-success{
         color: #3BC965;
     }
-    .txt_warning, .lp-alert-warning{
+    .txt_warning, .lp-message-warning{
         color: #eea832;
     }
-    .txt_err, .lp-alert-err{
+    .txt_err, .lp-message-err{
         color: #de3c3c;
     }
     .info{

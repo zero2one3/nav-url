@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import {ref, reactive, onMounted} from 'vue'
+import {ref} from 'vue'
 import {useStore} from 'vuex'
 import {addClass} from '../../utils/utils'
 import tabAlert from '../public/tabAlert/tabAlert'
@@ -54,7 +54,7 @@ export default {
         importConfig
     },
     setup() {
-        const store = useStore()      // Vuex实例
+        const store = useStore()     
         let navInfos = store.state    // Vuex的state对象
         let isShowSaveAlert = ref(false)           // 保存配置弹框是否展示
         let isShowImportAlert = ref(false)         // 导入配置弹框是否展示

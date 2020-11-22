@@ -31,26 +31,26 @@ export default {
         lpButton
     },
     setup(props, {emit}) {
-        let result = ref('none')     // 导入的结果
-        let isUpload = ref(false)    // 判断是否上传配置文件
-        let isImport = ref(false)    // 判断配置是否导入成功
-        let isLoading = ref(false)   // 判断按钮是否处于加载状态
-        let inputFile = ref(null)    // 获取文件标签
-        let hasFile = ref(0)         // 判断文件的传入情况。0：未传入  1: 格式错误  2：格式正确
-        const instance = getCurrentInstance().root.ctx
+        const result = ref('none')     // 导入的结果
+        const isUpload = ref(false)    // 判断是否上传配置文件
+        const isImport = ref(false)    // 判断配置是否导入成功
+        const isLoading = ref(false)   // 判断按钮是否处于加载状态
+        const inputFile = ref(null)    // 获取文件标签
+        const hasFile = ref(0)         // 判断文件的传入情况。0：未传入  1: 格式错误  2：格式正确
+        const $message = getCurrentInstance().root.ctx.$message
 
         // 导入配置
         function importConfig() {
           let reader = new FileReader()
           let files = inputFile.value.files
           if(hasFile.value == 0) {
-            instance.$alert({
+            $message({
               type: 'warning',
               content: '请先上传配置文件'
             })
           }
           else if(hasFile.value == 1) {
-            instance.$alert({
+            $message({
               type: 'warning',
               content: '请上传正确格式的文件，例如xx.json'
             })
@@ -74,7 +74,7 @@ export default {
         function fileChange(e) {
           let files = e.target.files
           if(files.length === 0) {
-            instance.$alert({
+            $message({
               type: 'warning',
               content: '请先上传配置文件'
             })
@@ -83,13 +83,13 @@ export default {
             let targetFile = files[0]
             if(!/\.json$/.test(targetFile.name)) {
               hasFile.value = 1
-              instance.$alert({
+              $message({
                 type: 'warning',
                 content: '请确认文件格式是否正确'
               })
             } else {
               hasFile.value = 2
-              instance.$alert({
+              $message({
                 type: 'success',
                 content: '文件格式正确'
               })
