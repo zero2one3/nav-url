@@ -69,6 +69,7 @@ export default {
     margin: 15vh auto 0;
     width: 30%;
     height: 200px;
+    min-width: 350px;
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0,0,0,.3);
     box-sizing: border-box;

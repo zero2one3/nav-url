@@ -19,12 +19,13 @@
           <br>
           <li v-for="(item, index) in navInfos.catalogue" 
               :key="index"
-              class="tab">
-              <a :href="`#${item.id}`" class="to-id">
+              class="tab"
+              @click="toID(item.id)">
+              <!-- <a :href="`#${item.id}`" class="to-id"> -->
                   <i :class="['fas', `fa-${item.icon}`, 'tab-icon']" />
                   <span>{{ item.name }}</span>
                   <i class="fas fa-angle-right tab-icon tab-angle-right"/>
-              </a>
+              <!-- </a> -->
           </li>
           <li class="tab add-tab" @click="addTabShow">
               <i class="fas fa-plus"/>
@@ -42,7 +43,6 @@
 <script>
 import {ref} from 'vue'
 import {useStore} from 'vuex'
-import {addClass} from '../../utils/utils'
 import tabAlert from '../public/tabAlert/tabAlert'
 import saveConfig from './childCpn/saveConfig'
 import importConfig from './childCpn/importConfig'
@@ -97,6 +97,24 @@ export default {
             }
                       
         }
+
+        // 跳转到指定标签
+        function toID(id) {
+            const content = document.getElementById('content')
+            const el = document.getElementById(`${id}`)
+            let start = content.scrollTop
+            let end = el.offsetTop - 80
+            let each = start > end ? -1 * Math.abs(start - end) / 20 : Math.abs(start - end) / 20
+            let count = 0
+            let timer = setInterval(() => {
+                if(count < 20) {
+                    content.scrollTop += each
+                    count ++
+                } else {
+                    clearInterval(timer)
+                }
+            }, 10) 
+        }
         
         return {
             navInfos,
@@ -107,7 +125,8 @@ export default {
             isShowImportAlert,
             showImportConfigAlert,
             closeImportConfigAlert,
-            showSearch
+            showSearch,
+            toID
         }
     }
 }

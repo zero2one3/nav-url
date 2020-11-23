@@ -123,7 +123,8 @@ export default {
                     type: 'success',
                     content: '标签页及子网址删除成功'
                 })
-            }) 
+            })
+            .catch(() => {})
         }
 
         // 删除某个网址
@@ -137,7 +138,8 @@ export default {
                     type: 'success',
                     content: '网址删除成功'
                 })
-            })      
+            })
+            .catch(() => {})      
         }
 
         // 弹出修改URL的弹框
@@ -168,6 +170,7 @@ export default {
             if(url.name.toLowerCase().indexOf(moduleSearch.searchWord.toLowerCase()) !== -1) return true;
             return false;
         }
+
 
         return {
             catalogue, 
