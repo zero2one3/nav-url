@@ -8,14 +8,15 @@ There are many social networking sites and tool websites on the Internet now. If
 
 现在的互联网上有很多社交网站、工具网站，如果觉得网站还不错，我会把它收藏起来，但是浏览器的收藏夹实在太杂乱了，而且特别小，所以用起来特别得不方便，同时因为我爱整理东西，所以一直想有个类似 **图1** 的网站导航栏。综合上述原因，再加上Vue3近几个月刚发布，就用 `Vue3` 做了这样一个项目
 
+图1：
 ![图1: 设想图](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/origin.png)
 
 
-**图2**是我该项目当前的预览图
+该图是我该项目当前的预览图
 
 ![图2: 当前展示图](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/current.png)
 
-**图3**、**图4** 是该项目一些基本操作
+以下两张图是该项目一些基本操作
 
 ![图3：基本功能预览](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/gif1.gif)
 
@@ -51,14 +52,27 @@ There are many social networking sites and tool websites on the Internet now. If
 
 还有一些未完善的功能，会陆续完成：
 1. 页面账号信息存储
-2. ……更多
+2. URL的随意拖拽
+3. ……更多
 
 ### English
 There are still some imperfect functions that will be completed one after another:
 
 1. Page account information storage
-2. ……more
+2. Random drag and drop of URL
+3. ……more
 
+# Use（使用）
+
+### 中文
+
+1. 可以访问这个地址：[http://lpyexplore.gitee.io/nav-infos/](http://lpyexplore.gitee.io/nav-infos/)
+2. 将该网址设置成浏览器每次打开默认的地址
+
+### English
+
+1. You can access this address: [http://lpyexplore.gitee.io/nav-infos/](http://lpyexplore.gitee.io/nav-infos/)
+2. Set the URL as the default address for every browser opening
 
 # The end（最后）
 
