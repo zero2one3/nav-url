@@ -1018,7 +1018,6 @@ window-restore`.split('\n')
             ])
         }
 
-
         return {
             iconList,
             cancel,

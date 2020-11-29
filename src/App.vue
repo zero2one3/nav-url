@@ -11,9 +11,9 @@ import {useStore} from 'vuex'
 import {writeToVuex} from './utils/utils'
 import tabs from './components/tabs/tabs'
 import content from './components/main/main'
-import installMessage from './components/public/lp-message/lp-message.js'
-import installDialog from './components/public/lp-dialog/lp-dialog.js'
-import {getCurrentInstance} from 'vue'
+import {createMessage} from './components/public/lp-message/lp-message.js'
+import {createDialog} from './components/public/lp-dialog/lp-dialog.js'
+import {provide} from 'vue'
 export default {
   name: 'App',
   components: {
@@ -47,11 +47,10 @@ export default {
             writeToVuex(store, obj)
         }
     })();   
-
-    const instance = getCurrentInstance().ctx
+    
     // 全局注册组件
-    installMessage(instance)
-    installDialog(instance)
+    provide('message', createMessage)
+    provide('confirm', createDialog)
 
     return {}
   }

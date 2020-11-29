@@ -4,7 +4,6 @@ import moduleTab from './module/tab'
 import moduleUrl from './module/url'
 import moduleSearch from './module/search'
 
-
 const store = Vuex.createStore({
     state: {
         navName: '',

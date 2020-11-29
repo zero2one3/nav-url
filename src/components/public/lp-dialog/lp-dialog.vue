@@ -1,5 +1,5 @@
 <template>
-  <div class="lp-confirm-container">
+  <div class="lp-confirm-container" ref="lpConfirmAlert">
       <div class="lp-confirm-box">
           <div class="lp-confirm-title">
               <span class="lp-confirm-title-txt">{{ title }}</span>
@@ -18,7 +18,7 @@
 
 <script>
 import lpButton from '../lp-button/lp-button'
-import {getCurrentInstance, ref} from 'vue'
+import {ref} from 'vue'
 export default {
     components: {
         lpButton
@@ -34,11 +34,11 @@ export default {
         }
     },
     setup() {
-        const instance = getCurrentInstance().ctx
         const status = ref(-1)       // 存储用户点的状态，-1：未点击；0：取消；1：确定
+        const lpConfirmAlert = ref(null)
 
         function removeElement() {     
-            instance.$el.parentNode.removeChild(instance.$el)
+            lpConfirmAlert.value.parentNode.removeChild(lpConfirmAlert.value)
         }
         
         function closeConfirm() {
@@ -51,7 +51,7 @@ export default {
             removeElement()
         }
 
-        return {closeConfirm, sureConfirm, status}
+        return {removeElement, closeConfirm, sureConfirm, status, lpConfirmAlert}
     }
 }
 </script>

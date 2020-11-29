@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import {ref, getCurrentInstance} from 'vue'
+import {ref, inject} from 'vue'
 import {useStore} from 'vuex'
 import {updateLocal} from '../../utils/utils'
 import urlAlert from '../public/urlAlert/urlAlert'
@@ -69,9 +69,8 @@ export default {
         const catalogue = store.state.catalogue
         const moduleUrl = store.state.moduleUrl
         const moduleSearch = store.state.moduleSearch
-        const root = getCurrentInstance().root.ctx
-        const $message = root.$message
-        const $confirm = root.$confirm
+        const $message = inject('message')
+        const $confirm = inject('confirm')
         const editWhich = ref(-1)
         
         // 弹出添加URL的框

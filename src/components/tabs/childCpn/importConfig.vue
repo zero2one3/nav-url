@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {ref, getCurrentInstance} from 'vue'
+import {ref, inject} from 'vue'
 import lpButton from '../../public/lp-button/lp-button'
 export default {
     props: {
@@ -37,7 +37,7 @@ export default {
         const isLoading = ref(false)   // 判断按钮是否处于加载状态
         const inputFile = ref(null)    // 获取文件标签
         const hasFile = ref(0)         // 判断文件的传入情况。0：未传入  1: 格式错误  2：格式正确
-        const $message = getCurrentInstance().root.ctx.$message
+        const $message = inject('message')
 
         // 导入配置
         function importConfig() {

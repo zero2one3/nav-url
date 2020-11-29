@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import {getCurrentInstance} from 'vue'
+import {inject} from 'vue'
 import {useStore} from 'vuex'
 import lpButton from '../../public/lp-button/lp-button'
 import lpInput from '../../public/lp-input/lp-input'
@@ -31,7 +31,7 @@ export default {
     setup() {
         const store = useStore()  
         const state = store.state.moduleUrl
-        const $message = getCurrentInstance().root.ctx.$message
+        const $message = inject('message')
 
         // 关闭弹框
         function cancel() {

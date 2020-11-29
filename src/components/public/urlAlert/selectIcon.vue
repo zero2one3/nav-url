@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import {reactive, getCurrentInstance} from 'vue'
+import {reactive, inject} from 'vue'
 import {useStore} from 'vuex'
 import request from '../../../network/request'
 import lpButton from '../../public/lp-button/lp-button'
@@ -52,7 +52,7 @@ export default {
     setup() {
         const store = useStore()  
         const state = store.state.moduleUrl
-        const $message = getCurrentInstance().root.ctx.$message
+        const $message = inject('message')
 
         // 获取网页名称
         function getUrlName() {
@@ -69,7 +69,6 @@ export default {
             })
 
             request({
-                url: '/api',
                 params: {
                     target: 'name',
                     targetUrl: state.url
@@ -82,9 +81,10 @@ export default {
                     content: '网页名称获取成功'
                 })
             })
-            .catch(() => {
+            .catch((err) => {
+                console.log(err);
                 $message({
-                    type: 'danger',
+                    type: 'err',
                     content: '网络超时或目标网站拒绝此次请求'
                 })
             })
@@ -108,7 +108,6 @@ export default {
             })
 
             request({
-                url: '/api',
                 params: {
                     target: 'icon',
                     targetUrl: state.url
@@ -129,7 +128,7 @@ export default {
             })
             .catch(() => {
                 $message({
-                    type: 'danger',
+                    type: 'err',
                     content: '网络超时或目标网站拒绝此次请求'
                 })
             })
