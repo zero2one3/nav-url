@@ -8,16 +8,18 @@ There are many social networking sites and tool websites on the Internet now. If
 
 现在的互联网上有很多社交网站、工具网站，如果觉得网站还不错，我会把它收藏起来，但是浏览器的收藏夹实在太杂乱了，而且特别小，所以用起来特别得不方便，同时因为我爱整理东西，所以一直想有个类似 **图1** 的网站导航栏。综合上述原因，再加上Vue3近几个月刚发布，就用 `Vue3` 做了这样一个项目
 
-![图1: 设想效果图](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/origin.png)
+![图1: 设想图](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/origin.png)
 
 
 **图2**是我该项目当前的预览图
 
-![图2: 当前效果图](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/current.png)
+![图2: 当前展示图](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/current.png)
 
+**图3**、**图4** 是该项目一些基本操作
 
+![图3：基本功能预览](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/gif1.gif)
 
-过段时间等功能稍微完善了，我把 `gif` 动图放上来供大家观看，并提供使用方法
+![图4：配置导入导出预览](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/gif2.gif)
 
 # Characteristics（特色）
 
@@ -29,6 +31,8 @@ There are many social networking sites and tool websites on the Internet now. If
 4. 页面简单大方
 5. 内部嵌入了独立接口用于自动获取目标网站的 `icon` 图标
 6. 项目中用 `Vue3 API` 封装了 `button` 、`input` 、`message` 组件 
+7. 支持URL搜索功能
+8. 页面滚动动画
 
 ### English
 1. Implemented by the latest `Vue3` and `Vuex4`
@@ -37,23 +41,23 @@ There are many social networking sites and tool websites on the Internet now. If
 4. The page is simple and generous
 5. An independent interface is embedded inside to automatically acquire the `icon` icon of the target website
 6. In the project, `button`, `input` and `message` components are encapsulated with `vue3 API`
+7. Support URL search function
+8. Page scrolling animation
+
 
 # Schedule（进度）
 
 ### 中文
 
-
 还有一些未完善的功能，会陆续完成：
-1. 搜索功能
-2. 页面滚动的动画效果 
-3. ……更多
+1. 页面账号信息存储
+2. ……更多
 
 ### English
 There are still some imperfect functions that will be completed one after another:
-1. The **delete and edit functions of tags** and the **delete and edit functions of websites**
-2. Search function
-3. Animation effect of page scrolling
-4. ……more
+
+1. Page account information storage
+2. ……more
 
 
 # The end（最后）
