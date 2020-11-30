@@ -12,7 +12,7 @@
               <span class="close-tab-alert" @click="cancel"/>
           </div>
           <div class="operating-space">
-              <lp-input class="lp-input-container" :value="state.tagName" @_input="input" maxlength="10"/>
+              <lp-input class="lp-input-container" :value="state.tagName" @_input="input" maxlength="12"/>
               <select-icon/>
           </div>
           <div class="btn-group">
@@ -26,6 +26,7 @@
 <script>
 import {inject} from 'vue'
 import {useStore} from 'vuex'
+import {judgeString} from '../../../utils/utils'
 import lpButton from '../../public/lp-button/lp-button'
 import lpInput from '../../public/lp-input/lp-input'
 import selectIcon from './selectIcon'
@@ -52,7 +53,7 @@ export default {
             ])
         }
 
-        // 确认添加标签
+        // 确认操作标签
         function confirm() {
             // 判断标签名是否为空
             if(state.tagName == '') {
@@ -62,6 +63,14 @@ export default {
                 })
                 return;
             }
+            // 判断标签名长度是否符合要求
+            if(!judgeString(state.tagName)) {
+                $message({
+                    type: 'warning',
+                    content: '标签名最多为6位中文或12位英文'
+                })
+                return;
+            } 
             // 判断icon是否为空
             if(!state.isSelected) {
                 $message({
