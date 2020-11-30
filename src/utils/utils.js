@@ -27,40 +27,18 @@ function updateLocalstorage(store) {
 
 let updateLocal = debounce(updateLocalstorage)
 
-function addClass(el, className) {
-    el.className = el.className + className
-}
-
-function removeClass(el, className) {
-    let elClassName = el.className
-    let arr = elClassName.split(' ')
-    let length = arr.length
-    for(let i = 0; i < length; i++) {
-        if(arr[i] == className) {
-            arr.splice(i, 1)
-            break;
-        }
-    }
-    el.className = arr.join(' ')
-}
-
-function updateClass(el, oldClass, newClass) {
-    let elClassName = el.className
-    let arr = elClassName.split(' ')
-    for(let i in arr) {
-        if(arr[i] === oldClass) {
-            arr[i] = newClass
-            break;
-        }
-    }
-    el.className = arr.join(' ')
+function judgeString(s) {
+    let count = 12
+    let characters = s.match(/\w/g)
+    let words = s.match(/\W/g)
+    count -= characters ? characters.length : 0
+    count -= words ? words.length * 2 : 0
+    return count >= 0 ? true : false
 }
 
 export {
     writeToVuex,  // 将导航所有信息全部重新导入到vuex中
     updateLocal,  // 将Vuex中的信息更新到localstorage中 
-    debounce,
-    addClass,
-    removeClass,
-    updateClass,
+    debounce,     // 防抖
+    judgeString,  // 判断字符串长度是否符合大小规定
 }
