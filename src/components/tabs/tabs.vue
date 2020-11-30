@@ -8,11 +8,11 @@
               <i class="fas fa-search tab-icon"/>
               <span>快速搜索</span>
           </li>
-          <li class="tab" @click="showSaveConfigAlert">
+          <li class="tab tab-save" @click="showSaveConfigAlert">
               <i class="fas fa-share-square tab-icon"></i>
               <span>保存配置</span>
           </li>
-          <li class="tab" @click="showImportConfigAlert">
+          <li class="tab tab-import" @click="showImportConfigAlert">
               <i class="fas fa-cog tab-icon"></i>
               <span>导入配置</span>
           </li>
@@ -21,11 +21,11 @@
               :key="index"
               class="tab"
               @click="toID(item.id)">
-              <!-- <a :href="`#${item.id}`" class="to-id"> -->
+                <span class="li-container">
                   <i :class="['fas', `fa-${item.icon}`, 'tab-icon']" />
                   <span>{{ item.name }}</span>
                   <i class="fas fa-angle-right tab-icon tab-angle-right"/>
-              <!-- </a> -->
+                </span>
           </li>
           <li class="tab add-tab" @click="addTabShow">
               <i class="fas fa-plus"/>
@@ -162,7 +162,6 @@ export default {
     height: 50px;
     color: rgb(185, 164, 164);
     line-height: 50px;
-    text-align: center;
     position: relative;
 }
 .to-id{
@@ -172,12 +171,24 @@ export default {
 }
 .tab-search{
     margin-top: 20px;
+    text-align: center;
+}
+.tab-import, .tab-save{
+    text-align: center;
 }
 .tab:hover .to-id, .tab:hover{
     color: white;
 }
+.li-container{
+    display: inline-block;
+    width: 100%;
+    padding-left: 90px;
+}
 .tab-icon{
     margin: 0 15px 0 -30px;
+}
+.add-tab{
+    text-align: center;
 }
 .tab-angle-right{
     position: absolute;
