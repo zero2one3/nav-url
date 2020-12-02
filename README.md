@@ -53,14 +53,16 @@ There are many social networking sites and tool websites on the Internet now. If
 还有一些未完善的功能，会陆续完成：
 1. 页面账号信息存储
 2. URL的拖拽
-3. ……更多
+3. 更多的常用网站图标供用户选择
+4. ……更多
 
 ### English
 There are still some imperfect functions that will be completed one after another:
 
 1. Page account information storage
 2. Drag and drop of URL
-3. ……more
+3. More common website icons for users to choose
+4. ……more
 
 # Use（使用）
 
