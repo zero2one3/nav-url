@@ -12,7 +12,6 @@
         <div class="close-search">
             <span class="close-search-txt" @click="closeSearch">关闭</span>
         </div>
-        
   </div>
 </template>
 
@@ -36,7 +35,6 @@ export default {
             store.commit('changeIsSearch', false)
             store.commit('changeSearchWord', '')
         }
-
 
         return {store, moduleSearch, input, closeSearch}
     }

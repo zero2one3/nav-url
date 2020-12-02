@@ -61,5 +61,5 @@ export default {
 <style>
 @import './assets/css/reset/reset.css';
 @import './assets/css/fontawesome/css/all.min.css';
-@import '../node_modules/animate.css/animate.css';
+@import './assets/css/animate.css/animate.css';
 </style>

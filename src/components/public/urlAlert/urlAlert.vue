@@ -1,5 +1,10 @@
 <template>
-  <div class="url-alert-container animate__animated">
+  <div :class="[
+            'url-alert-container',
+            'animate__animated',
+            {'animate__fadeIn': state.isShow}
+        ]"
+        v-show="state.isShow">
       <div class="url-alert">
           <span class="close-url-alert" @click="cancel"/>
           <div class="alert-title">{{ state.alertType }}</div>
@@ -125,7 +130,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, .1);
+    background-color: rgba(0, 0, 0, .3);
     width: 100vw;
     height: 100vh;
     z-index: 999;

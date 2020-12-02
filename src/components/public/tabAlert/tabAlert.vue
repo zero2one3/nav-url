@@ -146,7 +146,7 @@ export default {
     border-radius: 10px;
     transform: translate(-50%, -50%);
     background-color: white;
-    box-shadow: 0 0 2px 2px  rgba(0, 0, 0, .1);
+    box-shadow: 0 0 2px 2px  rgba(114, 105, 105, 0.1);
 }
 .close-tab-alert{
     display: inline-block;

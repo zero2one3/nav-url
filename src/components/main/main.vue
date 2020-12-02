@@ -3,7 +3,7 @@
       <div id="notice">
           <i class="fas fa-bell"></i>
           <carousel/>
-          <!-- <search></search> -->
+          <search></search>
       </div>
       <div id="content">
           <div v-for="(tab, i) in catalogue" 
@@ -47,15 +47,14 @@
                   </li>
               </ul>
           </div>
+          <urlAlert/>
       </div>
   </div>
-  <urlAlert v-show="moduleUrl.isShow"></urlAlert>
 </template>
 
 <script>
 import {ref, inject} from 'vue'
 import {useStore} from 'vuex'
-import {updateLocal} from '../../utils/utils'
 import urlAlert from '../public/urlAlert/urlAlert'
 import tagAlert from '../public/tabAlert/tabAlert'
 // import carousel from './childCpn/carousel'

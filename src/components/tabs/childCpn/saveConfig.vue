@@ -57,7 +57,7 @@ export default {
   bottom: 0;
   right: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, .1);
+  background-color: rgba(0, 0, 0, .2);
   z-index: 999;
 }
 .save-config-alert{
