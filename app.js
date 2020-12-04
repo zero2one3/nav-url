@@ -18,38 +18,58 @@ app.all('*', function(req, res, next) {
 
 // 从文档中获取icon地址
 function getIcon(s, obj) {
-    let {protocol, host, port} = obj
+    let {protocol, host, port, targetUrl} = obj
     port = port ? `:${port}` : ''
     let linkList = s.match(/<link.*?>/g) // 所有link标签
     let length = linkList ? linkList.length : 0
-    // console.log(linkList);
+
     for(let i = 0; i < length; i++) {
         let link = linkList[i]
-        let relMatch = link.match(/rel="(.*)"/)
-        let rel = relMatch ? relMatch[1].toLowerCase() : ''
-        let hrefMatch = link.match(/href="(.*)"/)
-        let href = hrefMatch ? hrefMatch[1] : ''
-        /**判断多种icon格式
+        // console.log(link);
+        let rel, href
+        const attrLists = link.split(' ')
+
+        attrLists.forEach(v => {
+            if(/=/.test(v)) {
+                const attr = v.split('=')
+                if(attr[0] == 'rel') rel = attr[1].toLowerCase();
+                if(attr[0] == 'href') href = attr[1];      
+            }
+        })
+
+
+        if(href == '') continue;
+        
+        rel = rel.replace(/"/g, '')
+        href = href.replace(/"/g, '')
+        href = href.replace(/>/g, '')
+
+        // let relMatch = link.match(/rel="(.*)"/)
+        // let rel = relMatch ? relMatch[1].toLowerCase() : ''
+        // let hrefMatch = link.match(/href="(.*)"/)
+        // let href = hrefMatch ? hrefMatch[1] : ''
+        /** 判断多种icon格式
          * 1. 'shortcut icon'
          * 2. 'SHORTCUT ICON'
          * 3. 'apple-touch-icon'
          * 4. 'icon'
          * 5. 没有icon
          *  */ 
-        rel = rel.split('"')[0]
-        href = href.split('"')[0]
-        // console.log(rel);
-        // console.log(href);
-        if(href == '') continue;
-        if(rel == 'shortcut icon' || rel == 'icon shortcut' || rel == 'apple-touch-icon' || rel == 'icon' || /apple-touch-icon/.test(rel)) {
-            /** 判断icon地址的格式
-             * 1. 'https://…………'
-             * 2. '/favico……'
-             * 3. '//example.com/a…………'
+        // console.log(i);
+        // console.log(rel, href);
+        
+        if(rel == 'shortcut' || rel == 'icon' || rel == 'apple-touch-icon' || /apple-touch-icon/.test(rel)) {
+            // console.log(href);
+            /** 判断多种href格式
+             *  1. https://example.com:4000/icon.png
+             *  2. //example.com:4000/icon.png
+             *  3. /icon.png
+             *  4. ./icon.png
              */
             if(/http/.test(href)) return href;
             else if(/^\/\//.test(href))  return protocol + href;
             else if(/^\//.test(href)) return protocol + '//' + host + port + href;
+            else if(/^\.\//.test(href)) return targetUrl + href.slice(1);
             else return protocol + '//' + host + port + '/' + href
         }
     }
@@ -79,8 +99,9 @@ app.get('/api', (req, res) => {
         // console.log(data);
         let response = data.data
         let value;
-        if(target === 'icon') value = getIcon(response, {protocol, host, port});
-        else if(target === 'name') value = getTitle(response)
+        if(target === 'icon') value = getIcon(response, {protocol, host, port, targetUrl});
+        else if(target === 'name') value = getTitle(response);
+
         res.send({
             status: 200,
             response: '成功获取',
