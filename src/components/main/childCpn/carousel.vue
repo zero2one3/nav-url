@@ -1,15 +1,16 @@
 <template>
   <div class="carousel-container">
     <span>本站由</span>
-    <strong class="">Lpyexplore</strong>
-    <span>基于Vue3开发，项目详细讲解地址为：</span>
-    <a href="#">掘金地址</a>
+    <span class=""> Lpyexplore </span>
+    <span>基于Vue3开发，会一直长期维护，</span>
     <span>若各位有更好的</span>
-    <strong class="">建议</strong>
+    <strong class="strong2"> 建议 </strong>
     <span>或</span>
-    <strong class="">问题反馈</strong>
+    <strong class="strong2"> 问题反馈 </strong>
     <span>请联系VX：</span>
-    <strong class="">Lpyexplore333</strong>
+    <strong class="strong1">Lpyexplore333</strong>
+    <span>，项目源码地址：</span>
+    <a href="https://github.com/Lpyexplore/nav-url" target="_blank">项目源码链接</a>
   </div>
 </template>
 
@@ -22,9 +23,17 @@ export default {
 <style scoped>
 .carousel-container{
   position: absolute;
-  width: 100%;
-  top: 50%;
+  width: calc(100% - 94px);
+  height: 100%;
+  top: 0;
   left: 60px;
-  transform: translate(0, -50%);
+  overflow: hidden;
+  word-break: break-all;
+}
+.strong1{
+  color: rgb(202, 163, 32);
+}
+.strong2{
+  color: rgb(204, 62, 27);
 }
 </style>

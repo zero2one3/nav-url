@@ -57,13 +57,13 @@ import {ref, inject} from 'vue'
 import {useStore} from 'vuex'
 import urlAlert from '../public/urlAlert/urlAlert'
 import tagAlert from '../public/tabAlert/tabAlert'
-// import carousel from './childCpn/carousel'
+import carousel from './childCpn/carousel'
 import search from './childCpn/search'
 export default {
     components: {
         urlAlert,
         tagAlert,
-        // carousel,
+        carousel,
         search,
     },
     setup() {
@@ -334,10 +334,15 @@ export default {
 }
 .url-name{
     display: block;
-    height: 26.5%;
+    height: 25.5%;
     text-align: center;
     color: #666;
     overflow: hidden;
+    box-sizing: border-box;
+    padding: 0 10px;
+    word-break: break-all;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
 }
 .add-more{
     text-align: center;
