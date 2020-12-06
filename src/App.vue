@@ -30,11 +30,10 @@ export default {
         // 自动设置默认信息
         else {
             let obj = {
-            navName: "Quick Url",
+            navName: "Nav Url",
             catalogue : [
                 {id:'1' , name: "常用网站", icon: "align-justify", URLS: [
                   {id:'1.1' , url: 'http://www.baidu.com', icon: 'http://www.baidu.com/favicon.ico', name: '百度'},
-                  {id:'1.2' , url: 'https://blog.csdn.net/L_PPP', icon: 'https://csdnimg.cn/public/favicon.ico', name: 'CSDN'},
                   {id:'1.3', url: 'https://juejin.im/', icon: 'https://b-gold-cdn.xitu.io/favicons/v2/favicon.ico', name: '掘金'},
                   {id:'1.4', url: 'https://gitee.com/', icon: 'https://gitee.com/assets/favicon.ico', name: '码云'},
                 ]},

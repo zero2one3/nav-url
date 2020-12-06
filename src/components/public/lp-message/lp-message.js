@@ -28,6 +28,7 @@ export const createMessage = (options) => {
     const el = instance.el
     const props = cpn.props  
     props.seed = instances.length
+    
     // 初始化参数
     Object.keys(options).forEach(key => {
         props[key] = options[key]

@@ -1,7 +1,6 @@
 import lp_dialog from './lp-dialog.vue'
 import {defineComponent, createVNode, render, toRef, watch} from 'vue'
 
-
 const confirmConstructor = defineComponent(lp_dialog)
 
 export const createDialog = (options) => {
