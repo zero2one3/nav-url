@@ -37,17 +37,13 @@ function getIcon(s, obj) {
             }
         })
 
-
+        // 处理一些特殊情况
         if(href == '') continue;
-        
         rel = rel.replace(/"/g, '')
         href = href.replace(/"/g, '')
         href = href.replace(/>/g, '')
+        href = href.charAt(href.length - 1) == '/' ? href.slice(0, href.length - 1) : href
 
-        // let relMatch = link.match(/rel="(.*)"/)
-        // let rel = relMatch ? relMatch[1].toLowerCase() : ''
-        // let hrefMatch = link.match(/href="(.*)"/)
-        // let href = hrefMatch ? hrefMatch[1] : ''
         /** 判断多种icon格式
          * 1. 'shortcut icon'
          * 2. 'SHORTCUT ICON'
@@ -55,8 +51,6 @@ function getIcon(s, obj) {
          * 4. 'icon'
          * 5. 没有icon
          *  */ 
-        // console.log(i);
-        // console.log(rel, href);
         
         if(rel == 'shortcut' || rel == 'icon' || rel == 'apple-touch-icon' || /apple-touch-icon/.test(rel)) {
             // console.log(href);
