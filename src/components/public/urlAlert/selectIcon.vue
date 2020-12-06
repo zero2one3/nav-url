@@ -133,10 +133,10 @@ export default {
                 })
             })
             .finally(() => {
-                store.commit('changeUrlInfo', {
-                    key: 'isLoadingIcon',
-                    value: false
-                })
+                store.commit('changeUrlInfo', [
+                    {key: 'isLoadingIcon', value: false},
+                    {key: 'imgErr', value: false}
+                ])
             })
 
         }
@@ -151,7 +151,6 @@ export default {
                 ])
             }
         }
-
 
         return {
             state,
