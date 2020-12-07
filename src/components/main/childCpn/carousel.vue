@@ -1,9 +1,6 @@
 <template>
   <div class="carousel-container">
-    <span>本站由</span>
-    <span class=""> Lpyexplore </span>
-    <span>基于Vue3开发，会一直长期维护，</span>
-    <span>若各位有更好的</span>
+    <span>对于本站有更好的</span>
     <strong class="strong2"> 建议 </strong>
     <span>或</span>
     <strong class="strong2"> 问题反馈 </strong>
