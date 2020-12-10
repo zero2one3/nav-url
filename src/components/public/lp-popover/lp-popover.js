@@ -30,13 +30,6 @@ export default function createPopover(app) {
             
             el.style.position = 'relative'
             
-        },
-        beforeUnmount() {
-            
         }
-    })
-
-    
-
-    
+    })  
 }

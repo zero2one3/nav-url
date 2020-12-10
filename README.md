@@ -14,7 +14,7 @@ There are many social networking sites and tool websites on the Internet now. If
 
 该图是我该项目当前的预览图
 
-![图2: 当前展示图](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/current.png)
+![图2: 当前展示图](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/current1.png)
 
 以下两张图是该项目一些基本操作
 
@@ -31,7 +31,7 @@ There are many social networking sites and tool websites on the Internet now. If
 3. 支持**一键保存导出数据** 、**一键导入数据**
 4. 页面简单大方
 5. 内部嵌入了独立接口用于自动获取目标网站的 `icon` 图标
-6. 项目中用 `Vue3 API` 封装了 `button` 、`input` 、`message` 组件 
+6. 项目中用 `Vue3 API` 封装了 `button` 、`input` 、`dialog` 、 `popover` 、 `message` 组件 
 7. 支持URL搜索功能
 8. 页面滚动动画
 
@@ -41,7 +41,7 @@ There are many social networking sites and tool websites on the Internet now. If
 3. Support **saving export data with one key** and **importing data with one key**
 4. The page is simple and generous
 5. An independent interface is embedded inside to automatically acquire the `icon` icon of the target website
-6. In the project, `button`, `input` and `message` components are encapsulated with `vue3 API`
+6. In the project, `button`, `input`, `dialog`, `popover` and `message` components are encapsulated with `vue3 API`
 7. Support URL search function
 8. Page scrolling animation
 

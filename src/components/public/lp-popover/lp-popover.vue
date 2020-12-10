@@ -25,7 +25,7 @@ export default {
             type: String,
             default: '我是一段内容'
         },
-        position: {
+        position: {  // 出现的位置, top | bottom | left | right
             type: String,
             default: 'bottom'
         },
