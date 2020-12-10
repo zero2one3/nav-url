@@ -14,7 +14,7 @@ There are many social networking sites and tool websites on the Internet now. If
 
 该图是我该项目当前的预览图
 
-![图2: 当前展示图](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/current1.png)
+![图2: 当前展示图](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/current1.jpg)
 
 以下两张图是该项目一些基本操作
 
