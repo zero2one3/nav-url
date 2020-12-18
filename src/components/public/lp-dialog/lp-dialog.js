@@ -4,7 +4,7 @@ import {defineComponent, createVNode, render, toRef, watch} from 'vue'
 const confirmConstructor = defineComponent(lp_dialog)
 
 export const createDialog = (options) => {
-    if(!Object.prototype.toString.call(options) === '[Object Object]') {
+    if(Object.prototype.toString.call(options) !== '[object Object]') {
         console.error('Please enter an object as a parameter');
     }
 
