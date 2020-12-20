@@ -22,10 +22,9 @@ export const createMessage = (options) => {
     const container = document.createElement('div')
     render(instance, container)
 
-    document.querySelector('#app').appendChild(instance.el)
+    // document.querySelector('#app').appendChild(instance.el)
 
     const cpn = instance.component
-    const el = instance.el
     const props = cpn.props  
     props.seed = instances.length
     
@@ -52,16 +51,16 @@ export const createMessage = (options) => {
 
     // 移除消息框
     setTimeout(() => {
-        close(el)
+        close(props)
     }, props.lastTime + 200)
     
 }
 
 // 关闭某个弹框
-const close = (el) => {
+const close = (props) => {
     instances.shift()
     instances.forEach((v) => {
         v.component.props.seed -= 1
     })
-    document.querySelector('#app').removeChild(el)
+    props.isDestory = true
 }

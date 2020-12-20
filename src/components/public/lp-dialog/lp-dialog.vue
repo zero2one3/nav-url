@@ -1,19 +1,21 @@
 <template>
-  <div class="lp-confirm-container" ref="lpConfirmAlert">
-      <div class="lp-confirm-box">
-          <div class="lp-confirm-title">
-              <span class="lp-confirm-title-txt">{{ title }}</span>
-              <span class="lp-confirm-title-close" @click="closeConfirm">&#10006;</span>
-          </div>
-          <div class="lp-confirm-content">
-              <span class="lp-confirm-content-txt">{{ content }}</span>
-          </div>
-          <div class="lp-confirm-btn-groups">
-              <lp-button type="primary" class="lp-confirm-btn" @_click="sureConfirm">确定</lp-button>
-              <lp-button type="default" class="lp-confirm-btn lp-confirm-btn-cancel" @_click="closeConfirm">取消</lp-button>
-          </div>
-      </div>
-  </div>
+  <teleport to="body">
+      <div class="lp-confirm-container" ref="lpConfirmAlert">
+        <div class="lp-confirm-box">
+            <div class="lp-confirm-title">
+                <span class="lp-confirm-title-txt">{{ title }}</span>
+                <span class="lp-confirm-title-close" @click="closeConfirm">&#10006;</span>
+            </div>
+            <div class="lp-confirm-content">
+                <span class="lp-confirm-content-txt">{{ content }}</span>
+            </div>
+            <div class="lp-confirm-btn-groups">
+                <lp-button type="primary" class="lp-confirm-btn" @_click="sureConfirm">确定</lp-button>
+                <lp-button type="default" class="lp-confirm-btn lp-confirm-btn-cancel" @_click="closeConfirm">取消</lp-button>
+            </div>
+        </div>
+    </div>
+  </teleport>
 </template>
 
 <script>

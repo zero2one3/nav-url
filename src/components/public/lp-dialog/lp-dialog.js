@@ -17,7 +17,6 @@ export const createDialog = (options) => {
 
     const container = document.createElement('div')
     render(instance, container)
-    document.querySelector('#app').appendChild(instance.el)
 
     const props = instance.component.props
     Object.keys(options).forEach(key => {

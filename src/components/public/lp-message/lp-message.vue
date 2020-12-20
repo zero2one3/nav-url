@@ -1,34 +1,36 @@
 <template>
-    <div class="message_container"
-         :class="[
-            {'show': isShow},
-            {'hide': !isShow},
-            {'enter': isEnter},
-            {'leave': isLeave},
-            type
-         ]" 
-         :style="{
-             'top': `${seed * 70}px`
-         }">
-        <div class="content">
+    <teleport to="body" v-if="!isDestory">
+        <div class="message_container"
+            :class="[
+                {'show': isShow},
+                {'hide': !isShow},
+                {'enter': isEnter},
+                {'leave': isLeave},
+                type
+            ]" 
+            :style="{
+                'top': `${seed * 70}px`
+            }">
+            <div class="content">
 
-            <i :class="[
-                    `lp-message-${type}`, 
-                    'icon', 
-                    'fa', 
-                    {'fa-info-circle': type == 'info'},
-                    {'fa-check-circle': type == 'success'},
-                    {'fa-times-circle': type == 'err'},
-                    {'fa-exclamation-triangle': type == 'warning'},
-                ]"/>
+                <i :class="[
+                        `lp-message-${type}`, 
+                        'icon', 
+                        'fa', 
+                        {'fa-info-circle': type == 'info'},
+                        {'fa-check-circle': type == 'success'},
+                        {'fa-times-circle': type == 'err'},
+                        {'fa-exclamation-triangle': type == 'warning'},
+                    ]"/>
 
-            <div class="txt"
-                 :class="[`txt_${type}`]">
-                {{content}}
+                <div class="txt"
+                    :class="[`txt_${type}`]">
+                    {{content}}
+                </div>
             </div>
-        </div>
 
-    </div>
+        </div>
+    </teleport>
 </template>
 
 <script>
@@ -62,6 +64,10 @@
             seed: {
                 type: Number,
                 default: 0
+            },
+            isDestory: {
+                type: Boolean,
+                default: false
             }
         }
     }
