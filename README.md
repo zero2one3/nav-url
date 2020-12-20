@@ -14,13 +14,13 @@ There are many social networking sites and tool websites on the Internet now. If
 
 该图是我该项目当前的预览图
 
-![图2: 当前展示图](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/current1.jpg)
+![图2: 当前展示图](https://gitee.com/lpyexplore/my-images/blob/master/nav-url/current1.jpg)
 
 以下两张图是该项目一些基本操作
 
-![图3：基本功能预览](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/gif1.gif)
+![图3：基本功能预览](https://gitee.com/lpyexplore/my-images/blob/master/nav-url/gif1.gif)
 
-![图4：配置导入导出预览](https://github.com/Lpyexplore/myImgs/blob/master/nav-url/gif2.gif)
+![图4：配置导入导出预览](https://gitee.com/lpyexplore/my-images/blob/master/nav-url/gif2.gif)
 
 # Characteristics（特色）
 
