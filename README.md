@@ -9,18 +9,18 @@ There are many social networking sites and tool websites on the Internet now. If
 现在的互联网上有很多社交网站、工具网站，如果觉得网站还不错，我会把它收藏起来，但是浏览器的收藏夹实在太杂乱了，而且特别小，所以用起来特别得不方便，同时因为我爱整理东西，所以一直想有个类似 **图1** 的网站导航栏。综合上述原因，再加上Vue3近几个月刚发布，就用 `Vue3` 做了这样一个项目
 
 图1：设想图
-![](https://gitee.com/lpyexplore/my-images/raw/master/nav-url/origin.png)
+![](showImg/origin.png)
 
 
 该图是我该项目当前的预览图
 
-![](https://gitee.com/lpyexplore/my-images/raw/master/nav-url/current1.jpg)
+![](showImg/current1.jpg)
 
 以下两张图是该项目一些基本操作
 
-![](https://gitee.com/lpyexplore/my-images/raw/master/nav-url/gif1.gif)
+![](showImg/gif1.gif)
 
-![](https://gitee.com/lpyexplore/my-images/raw/master/nav-url/gif2.gif)
+![](showImg/gif2.gif)
 
 # Characteristics（特色）
 
