@@ -7,7 +7,7 @@
       </div>
       <div id="content">
           <div v-for="(tab, i) in catalogue" 
-               :key="i" 
+               :key="tab.id" 
                class="each-content" 
                v-show="!moduleSearch.isSearch || (moduleSearch.isSearch && judgeTabIsShow(i))">
               <div :id="tab.id" class="tab-title">
@@ -25,14 +25,19 @@
                   </span>
                   <tagAlert name="修改标签"></tagAlert>
               </div>
-              <ul class="url-boxes">
-                  <li v-for="(urls, j) in tab.URLS" 
-                      :key="j" 
+              <ul class="url-boxes" 
+                  @dragstart="urlBoxDragStart"
+                  @dragend="urlBoxDragEnd">
+                  <li v-for="urls in tab.URLS" 
+                      :key="urls.id" 
                       class="each-url-box" 
-                      v-show="!moduleSearch.isSearch || (moduleSearch.isSearch && judgeUrlIsShow(i, j))">
+                      v-show="!moduleSearch.isSearch || (moduleSearch.isSearch && judgeUrlIsShow(i, j))"
+                      :draggable="tab.id == editWhich ? true : false"
+                      @dragenter="urlBoxEnter($event, tab.id)"
+                      :data-id="urls.id">
                       <a :href="urls.url" target="_blank" class="url-link">
                           <div class="round-box">
-                              <img :src="urls.icon" :alt="urls.name" class="url-icon" @load="imgLoadSuccess" @error="imgLoadErr">
+                              <img :src="urls.icon" :alt="urls.name" class="url-icon" @load="imgLoadSuccess" @error="imgLoadErr" draggable="false">
                               <svg t="1604809784875" class="icon url-icon err-url-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2514" width="80%" height="80%"><path d="M511.58 513.75m-415.89 0a415.89 415.89 0 1 0 831.78 0 415.89 415.89 0 1 0-831.78 0Z" fill="#353F51" p-id="2515"></path><path d="M511.58 173.48c187.63 0 340.27 152.64 340.27 340.27S699.21 854.02 511.58 854.02 171.31 701.38 171.31 513.75s152.65-340.27 340.27-340.27m0-75.61C281.9 97.87 95.7 284.07 95.7 513.75s186.2 415.89 415.89 415.89 415.89-186.2 415.89-415.89S741.27 97.87 511.58 97.87z" fill="#70798B" p-id="2516"></path><path d="M511.58 173.48c52.68 0 132.33 135.71 132.33 340.27s-79.65 340.27-132.33 340.27-132.32-135.71-132.32-340.27 79.64-340.27 132.32-340.27m0-75.61c-114.84 0-207.94 186.2-207.94 415.89s93.1 415.89 207.94 415.89 207.94-186.2 207.94-415.89S626.43 97.87 511.58 97.87z" fill="#70798B" p-id="2517"></path><path d="M133.51 362.52h756.16v75.62H133.51zM133.51 589.37h756.16v75.62H133.51z" fill="#70798B" p-id="2518"></path></svg>  
                           </div>
                           <span class="url-name">{{ urls.name }}</span>
@@ -42,7 +47,8 @@
                           <i class="fas fa-edit edit-icon" @click="editUrl(urls)"/>
                       </span>
                   </li>
-                  <li class="each-url-box add-more" @click="addMoreUrl(tab.id)">
+                  <li class="each-url-box add-more" 
+                      @click="addMoreUrl(tab.id)">
                       <i class="fas fa-plus"/>
                   </li>
               </ul>
@@ -59,6 +65,7 @@ import urlAlert from '../public/urlAlert/urlAlert'
 import tagAlert from '../public/tabAlert/tabAlert'
 import carousel from './childCpn/carousel'
 import search from './childCpn/search'
+import { exchangeElements } from '../../utils/utils'
 export default {
     components: {
         urlAlert,
@@ -161,7 +168,6 @@ export default {
                 {key: 'alertType', value: '修改网址'}
             ])
         }
-
         
         function judgeTabIsShow(i) {
             const URLS = catalogue[i]['URLS']
@@ -179,6 +185,48 @@ export default {
             return false;
         }
 
+        let elementNodeDragged = null   // 被移动的地址框元素
+        let elementNodeLocated = null  // 移入的地址框元素
+        let draggedId = -1   // 被移动地址框的id
+        
+        // 地址框开始拖拽
+        function urlBoxDragStart(e) {
+            const el = e.target
+            if(el.nodeName !== 'LI') return;
+            // 记录当前被拖拽地址框元素
+            elementNodeDragged = el    
+            // 将被拖拽对象隐藏
+            el.style.display = 'fixed'
+            el.style.opacity = 0
+        }
+
+        // 地址框拖拽结束
+        function urlBoxDragEnd(e) {
+            let el = e.target
+            el.style.display = 'inline-block'
+            el.style.opacity = 1
+            // 获取当前正在编辑标签中所有url的排序
+            let timer = setTimeout(() => {
+                const result = []
+                const children = elementNodeLocated.parentNode.children
+                let length = children.length
+                for(let i = 0; i < length - 1; i++) {
+                    result.push(children[i].getAttribute('data-id'))
+                }
+                store.commit('dragEndToUpdate', {tabId: editWhich.value, result})
+                clearTimeout(timer)
+            }, 500)
+        }
+
+        // 被拖动的地址框触碰到其它的地址框
+        function urlBoxEnter(e, tabId) {
+            if(tabId != editWhich.value) return;
+            let el = e.target
+            while(el.nodeName !== 'LI') el = el.parentNode;        // 若子元素触发dragenter事件，则查找到父元素li标签
+            if(el === elementNodeDragged) return;     // 避免自己拖拽进入自己的情况
+            if(elementNodeLocated !== el) elementNodeLocated = el    // 记录被移入的地址框元素
+            exchangeElements(elementNodeDragged, el)     //  地址框位置互换
+        }
 
         return {
             catalogue, 
@@ -195,6 +243,9 @@ export default {
             editWhich,
             judgeTabIsShow,
             judgeUrlIsShow,
+            urlBoxDragStart,
+            urlBoxDragEnd,
+            urlBoxEnter,
         }
     }
 }
@@ -276,6 +327,7 @@ export default {
 }
 .url-boxes{
     display: inline-block;
+    position: relative;
 }
 .each-url-box{
     display: inline-block;

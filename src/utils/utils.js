@@ -1,4 +1,4 @@
-/* 节流函数 */
+// 防抖
 function debounce(fn, delay = 3000) {
     let timer = null
 
@@ -12,21 +12,24 @@ function debounce(fn, delay = 3000) {
     }
 }
 
+// 将导航所有信息全部重新导入到vuex中
 function writeToVuex(store, obj) {
     store.state.navName = obj.navName
     store.state.catalogue = obj.catalogue
 }
 
-
-function updateLocalstorage(store) {
+// 将Vuex中的信息更新到localStorage中（未经过防抖处理）
+function updateLocalStorage(store) {
     window.localStorage.navInfos = JSON.stringify({
         navName: store.state.navName,
         catalogue: store.state.catalogue
     })
 }
 
-let updateLocal = debounce(updateLocalstorage)
+// 将Vuex中的信息更新到localStorage中（经过防抖处理）
+let updateLocal = debounce(updateLocalStorage)
 
+// 判断字符串长度是否符合大小规定
 function judgeString(s) {
     let count = 12
     let characters = s.match(/\w/g)
@@ -36,9 +39,27 @@ function judgeString(s) {
     return count >= 0 ? true : false
 }
 
+// 交换两个元素的位置
+function exchangeElements(el1, el2) {
+    let sibling1 = el1.nextElementSibling,
+        sibling2 = el2.nextElementSibling,
+        parentNode = el1.parentNode
+
+    // el1 在 el2前面，且相邻
+    if(sibling1 === el2) parentNode.insertBefore(el2, el1);
+    // el2 在 el1前面，且相邻
+    else if(sibling2 === el1) parentNode.insertBefore(el1, el2)
+    // el1 和 el2 不相邻
+    else {
+        parentNode.insertBefore(el2, sibling1)
+        parentNode.insertBefore(el1, sibling2)
+    }
+}
+
 export {
-    writeToVuex,  // 将导航所有信息全部重新导入到vuex中
-    updateLocal,  // 将Vuex中的信息更新到localstorage中 
-    debounce,     // 防抖
-    judgeString,  // 判断字符串长度是否符合大小规定
+    writeToVuex,  
+    updateLocal,  
+    debounce,     
+    judgeString,  
+    exchangeElements,  
 }

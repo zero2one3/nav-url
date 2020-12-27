@@ -1,5 +1,5 @@
 import Vuex from '../../node_modules/vuex/dist/vuex.cjs'
-import {updateLocal} from '../utils/utils'
+import { updateLocal } from '../utils/utils'
 import moduleTab from './module/tab'
 import moduleUrl from './module/url'
 import moduleSearch from './module/search'
@@ -121,6 +121,23 @@ const store = Vuex.createStore({
                     }    
                 }
             }
+        },
+        // 拖拽结束后，更新对应标签内地址框的位置变动
+        dragEndToUpdate(state, payload) {
+            let { tabId, result } = payload
+            const catalogue = state.catalogue
+            let length = catalogue.length
+            for(let i = 0; i < length; i++) {
+                if(catalogue[i].id != tabId) continue;
+                const URLS = catalogue[i].URLS
+                const newURLS = new Array(URLS.length)
+                URLS.forEach(v => {
+                    newURLS[result.indexOf(v.id)] = v
+                })
+                catalogue[i].URLS = newURLS
+                break;
+            }
+            updateLocal(store)
         }
     },
     modules: {
