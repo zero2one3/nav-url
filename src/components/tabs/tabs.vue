@@ -94,8 +94,7 @@ export default {
                 store.commit('changeSearchWord', '')
             } else {
                 store.commit('changeIsSearch', true)
-            }
-                      
+            }         
         }
 
         // 跳转到指定标签

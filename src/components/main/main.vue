@@ -28,7 +28,7 @@
               <ul class="url-boxes" 
                   @dragstart="urlBoxDragStart"
                   @dragend="urlBoxDragEnd">
-                  <li v-for="urls in tab.URLS" 
+                  <li v-for="(urls, j) in tab.URLS" 
                       :key="urls.id" 
                       class="each-url-box" 
                       v-show="!moduleSearch.isSearch || (moduleSearch.isSearch && judgeUrlIsShow(i, j))"
