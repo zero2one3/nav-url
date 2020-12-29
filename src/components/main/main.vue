@@ -65,7 +65,7 @@ import urlAlert from '../public/urlAlert/urlAlert'
 import tagAlert from '../public/tabAlert/tabAlert'
 import carousel from './childCpn/carousel'
 import search from './childCpn/search'
-import { exchangeElements } from '../../utils/utils'
+import { exchangeElements, debounce } from '../../utils/utils'
 export default {
     components: {
         urlAlert,
@@ -200,22 +200,24 @@ export default {
             el.style.opacity = 0
         }
 
+        // 拖拽后更新Vuex中的正确排序
+        let dragEndToUpdate = debounce(function() {
+            // 获取当前正在编辑标签中所有url的排序
+            const result = []
+            const children = elementNodeLocated.parentNode.children
+            let length = children.length
+            for(let i = 0; i < length - 1; i++) {
+                result.push(children[i].getAttribute('data-id'))
+            }
+            store.commit('dragEndToUpdate', {tabId: editWhich.value, result}) 
+        }, 500)
+
         // 地址框拖拽结束
         function urlBoxDragEnd(e) {
             let el = e.target
             el.style.display = 'inline-block'
             el.style.opacity = 1
-            // 获取当前正在编辑标签中所有url的排序
-            let timer = setTimeout(() => {
-                const result = []
-                const children = elementNodeLocated.parentNode.children
-                let length = children.length
-                for(let i = 0; i < length - 1; i++) {
-                    result.push(children[i].getAttribute('data-id'))
-                }
-                store.commit('dragEndToUpdate', {tabId: editWhich.value, result})
-                clearTimeout(timer)
-            }, 500)
+            dragEndToUpdate()
         }
 
         // 被拖动的地址框触碰到其它的地址框
