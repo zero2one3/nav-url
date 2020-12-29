@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
 import {useStore} from 'vuex'
 import tabAlert from '../public/tabAlert/tabAlert'
 import saveConfig from './childCpn/saveConfig'
