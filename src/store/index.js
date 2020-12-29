@@ -107,9 +107,12 @@ const store = Vuex.createStore({
                             trueId = `${id}.1`
                         } 
                         else {
-                            let lastId = URLS[length2 - 1].id.split('.')
-                            lastId[1] = (+lastId[1] + 1).toString()
-                            trueId = lastId.join('.')
+                            let max = 0
+                            URLS.forEach(v => {      
+                                let currentId = +v.id.split('.')[1]                       
+                                max = currentId > max ? currentId : max
+                            })
+                            trueId = `${id}.${max + 1}`
                         }
                         URLS.push({
                             id: trueId,
@@ -134,11 +137,6 @@ const store = Vuex.createStore({
                 const newURLS = new Array(URLS.length)
                 URLS.forEach(v => {
                     newURLS[result.indexOf(v.id)] = v
-                })
-                // 将id重新复制排序，避免下次添加url时，id不唯一
-                result.sort((a, b) => +a.split('.')[1] - +b.split('.')[1])
-                newURLS.forEach((v, i) => {
-                    v.id = result[i]
                 })
                 catalogue[i].URLS = newURLS
                 break;
