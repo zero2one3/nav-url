@@ -61,11 +61,11 @@
 <script>
 import {ref, inject} from 'vue'
 import {useStore} from 'vuex'
-import urlAlert from '../public/urlAlert/urlAlert'
-import tagAlert from '../public/tabAlert/tabAlert'
-import carousel from './childCpn/carousel'
-import search from './childCpn/search'
-import { exchangeElements, debounce } from '../../utils/utils'
+import urlAlert from '@/components/public/urlAlert/urlAlert'
+import tagAlert from '@/components/public/tabAlert/tabAlert'
+import carousel from '../carousel/index'
+import search from '../search/index'
+import { exchangeElements, debounce } from '@/utils/utils'
 export default {
     components: {
         urlAlert,

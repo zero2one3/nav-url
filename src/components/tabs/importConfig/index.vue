@@ -19,7 +19,7 @@
 
 <script>
 import {ref, inject} from 'vue'
-import lpButton from '../../public/lp-button/lp-button'
+import lpButton from '@/components/public/lp-button/lp-button'
 export default {
     props: {
       isShow: {

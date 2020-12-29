@@ -18,7 +18,7 @@
 <script>
 import {useStore} from 'vuex'
 import {reactive} from 'vue'
-import lpInput from '../../public/lp-input/lp-input'
+import lpInput from '@/components/public/lp-input/lp-input'
 export default {
     components: {
         lpInput

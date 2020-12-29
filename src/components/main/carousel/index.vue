@@ -17,7 +17,7 @@ export default {
   setup() {
     const wxPopoverDate = reactive({
         title: '个人微信号',
-        content: `<img src="${require('../../../assets/img/myWx.png')}" style='width: 130px; height: 130px'></img>`
+        content: `<img src="${require('@/assets/img/myWx.png')}" style='width: 130px; height: 130px'></img>`
     })
 
     return {wxPopoverDate}

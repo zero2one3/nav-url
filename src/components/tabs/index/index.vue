@@ -43,9 +43,9 @@
 <script>
 import {ref, onMounted} from 'vue'
 import {useStore} from 'vuex'
-import tabAlert from '../public/tabAlert/tabAlert'
-import saveConfig from './childCpn/saveConfig'
-import importConfig from './childCpn/importConfig'
+import tabAlert from '@/components/public/tabAlert/tabAlert'
+import saveConfig from '@/components/tabs/saveConfig/index'
+import importConfig from '@/components/tabs/importConfig/index'
 export default {
     name: 'tabs',
     components: {
