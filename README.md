@@ -34,6 +34,7 @@ There are many social networking sites and tool websites on the Internet now. If
 6. 项目中用 `Vue3 API` 封装了 `button` 、`input` 、`dialog` 、 `popover` 、 `message` 组件 
 7. 支持URL搜索功能
 8. 页面滚动动画
+9. 在编辑状态下，可以进行拖拽排列
 
 ### English
 1. Implemented by the latest `Vue3` and `Vuex4`
@@ -44,7 +45,7 @@ There are many social networking sites and tool websites on the Internet now. If
 6. In the project, `button`, `input`, `dialog`, `popover` and `message` components are encapsulated with `vue3 API`
 7. Support URL search function
 8. Page scrolling animation
-
+9. In editing state, you can drag and drop to arrange
 
 # Schedule（进度）
 
@@ -52,16 +53,16 @@ There are many social networking sites and tool websites on the Internet now. If
 
 还有一些未完善的功能，会陆续完成：
 1. 页面账号信息存储
-2. URL的拖拽
-3. 更多的常用网站图标供用户选择
+2. 更多的常用网站图标供用户选择
+3. 支持更丰富的搜索规则，便于用户搜索
 4. ……更多
 
 ### English
 There are still some imperfect functions that will be completed one after another:
 
 1. Page account information storage
-2. Drag and drop of URL
-3. More common website icons for users to choose
+2. More common website icons for users to choose
+3. Support more abundant search rules for users to search
 4. ……more
 
 # Use（使用）
@@ -76,7 +77,14 @@ There are still some imperfect functions that will be completed one after anothe
 1. You can access this address: [http://lpyexplore.gitee.io/nav-infos/](http://lpyexplore.gitee.io/nav-infos/)
 2. Set the URL as the default address for every browser opening
 
+# Version（版本）
+
+- **0.1.0 :** 项目第一次发布（涵盖特色：1 ～ 8）
+- **0.1.1 :** 增加 `特色9`，在编辑状态下支持手动拖拽排列
+- **0.1.2 :** 修复了搜索框无法弹出的bug 【目前存在添加 `url` 无法成功的bug, 正在修复中……】
+
+
 # The end（最后）
 
 Welcome everyone to give me more advice
-欢迎大家给我多提提意见
+欢迎大家给我多提提意见，可加我微信：`Lpyexplore333`，或在 `github` 上提 **Issues**
