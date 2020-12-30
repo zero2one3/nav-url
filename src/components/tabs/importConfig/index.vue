@@ -67,7 +67,7 @@ export default {
 
         // 关闭弹窗
         function closeAlert() {
-          emit('closeImportConfigAlert', false)
+          emit('closeAlert', false)
           hasFile.value = 0
         }
 

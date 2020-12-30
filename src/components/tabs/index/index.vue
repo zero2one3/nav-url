@@ -4,15 +4,15 @@
           {{ navInfos.navName }}
       </div>
       <ul id="tabs">
-          <li class="tab tab-search" @click="showSearch">
+          <li class="tab tab-search" @click="controlSearchBox">
               <i class="fas fa-search tab-icon"/>
               <span>快速搜索</span>
           </li>
-          <li class="tab tab-save" @click="showSaveConfigAlert">
+          <li class="tab tab-save" @click="controlSaveConfigAlert(true)">
               <i class="fas fa-share-square tab-icon"></i>
               <span>保存配置</span>
           </li>
-          <li class="tab tab-import" @click="showImportConfigAlert">
+          <li class="tab tab-import" @click="controlImportConfigAlert(true)">
               <i class="fas fa-cog tab-icon"></i>
               <span>导入配置</span>
           </li>
@@ -34,18 +34,25 @@
       <!--    添加标签弹框     -->
       <tabAlert name="新增标签"/>
       <!--    保存配置弹框     -->
-      <save-config @closeSaveConfigAlert="closeSaveConfigAlert" :isShow="isShowSaveAlert"/>
+      <save-config @closeAlert="controlSaveConfigAlert" :isShow="isShowSaveAlert"/>
       <!--    导入配置弹框     -->
-      <import-config @closeImportConfigAlert="closeImportConfigAlert" :isShow="isShowImportAlert"/>
+      <import-config @closeAlert="controlImportConfigAlert" :isShow="isShowImportAlert"/>
   </aside>
 </template>
 
 <script>
-import {ref, onMounted} from 'vue'
+/* API */
 import {useStore} from 'vuex'
+/* 组件 */
 import tabAlert from '@/components/public/tabAlert/tabAlert'
 import saveConfig from '@/components/tabs/saveConfig/index'
 import importConfig from '@/components/tabs/importConfig/index'
+/* 功能模块 */
+import handleAddTabAlert from './function/addTabAlert'
+import handleSaveConfigAlert from './function/saveConfigAlert'
+import handleImportConfigAlert from './function/importConfigAlert'
+import handleSearchBox from './function/search'
+import handleTabClick from './function/tabClick'
 export default {
     name: 'tabs',
     components: {
@@ -56,75 +63,30 @@ export default {
     setup() {
         const store = useStore()     
         let navInfos = store.state    // Vuex的state对象
-        let isShowSaveAlert = ref(false)           // 保存配置弹框是否展示
-        let isShowImportAlert = ref(false)         // 导入配置弹框是否展示
+
+        // 控制 “添加标签弹框” 的展示
+        let { addTabShow } = handleAddTabAlert()
         
-        // 展示"添加标签弹框"
-        function addTabShow() {
-            store.commit('changeTabInfo', [
-                {key: 'isShowAddTabAlert', value: true},
-                {key: 'alertType', value: '新增标签'}
-            ])
-        }
+        // 控制 "保存配置弹框" 的展示
+        let { isShowSaveAlert, controlSaveConfigAlert } = handleSaveConfigAlert()
 
-        // 关闭"保存配置弹框"
-        function closeSaveConfigAlert(value) {
-            isShowSaveAlert.value = value
-        }
+        // 控制 "导入配置弹框" 的展示
+        let { isShowImportAlert, controlImportConfigAlert } = handleImportConfigAlert()
 
-        // 展示"保存配置弹框"
-        function showSaveConfigAlert() {
-            isShowSaveAlert.value = true
-        }
+        // 控制 "搜索框" 的展示
+        let { controlSearchBox } = handleSearchBox()
 
-        // 展示"导入配置弹框"
-        function showImportConfigAlert() {
-            isShowImportAlert.value = true
-        }
-
-        // 关闭"导入配置弹框"
-        function closeImportConfigAlert(value) {
-            isShowImportAlert.value = value
-        }
-
-        // 展示搜索框
-        function showSearch() {
-            if(store.state.moduleSearch.isSearch) {
-                store.commit('changeIsSearch', false)
-                store.commit('changeSearchWord', '')
-            } else {
-                store.commit('changeIsSearch', true)
-            }         
-        }
-
-        // 跳转到指定标签
-        function toID(id) {
-            const content = document.getElementById('content')
-            const el = document.getElementById(`${id}`)
-            let start = content.scrollTop
-            let end = el.offsetTop - 80
-            let each = start > end ? -1 * Math.abs(start - end) / 20 : Math.abs(start - end) / 20
-            let count = 0
-            let timer = setInterval(() => {
-                if(count < 20) {
-                    content.scrollTop += each
-                    count ++
-                } else {
-                    clearInterval(timer)
-                }
-            }, 10) 
-        }
-        
+        // 点击标签，进行跳转
+        let { toID } = handleTabClick()
+          
         return {
             navInfos,
             addTabShow, 
             isShowSaveAlert, 
-            closeSaveConfigAlert, 
-            showSaveConfigAlert,
+            controlSaveConfigAlert,
             isShowImportAlert,
-            showImportConfigAlert,
-            closeImportConfigAlert,
-            showSearch,
+            controlImportConfigAlert,
+            controlSearchBox,
             toID
         }
     }

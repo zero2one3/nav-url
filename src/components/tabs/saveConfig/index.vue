@@ -42,7 +42,7 @@ export default {
 
         // 关闭弹窗
         function closeAlert() {
-          emit('closeSaveConfigAlert', false)
+          emit('closeAlert', false)
         }
 
         return {result, saveConfig, closeAlert}
