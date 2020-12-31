@@ -1,7 +1,7 @@
 <template>
-  <div class="save-config-container" v-show="isShow">
+  <div class="save-config-container" v-show="isShowSaveAlert">
     <div class="save-config-alert">
-      <div class="close-save-config-alert" @click="closeAlert"></div>
+      <div class="close-save-config-alert" @click="handleSaveConfigAlert(false)"></div>
       <div class="save-config-alert-title">保存配置</div>
       <div class="save-config-alert-remind">说明：保存下载成功后会生成一个json文件，请注意保存，方便之后一键导入</div>
       <lp-button type="primary" class="save-config-btn" @_click="saveConfig">Save</lp-button>
@@ -10,42 +10,20 @@
 </template>
 
 <script>
-import {ref} from 'vue'
+/* 组件 */
 import lpButton from '@/components/public/lp-button/lp-button'
+/* 功能模块 */
+import saveConfigFunction from '../function/saveConfig'
 export default {
-    props: {
-      isShow: {
-        type: Boolean,
-        default: false
-      }
-    },
+
     components: {
         lpButton
     },
-    setup(props, {emit}) {
-        const result = ref('none')     // 保存的结果
+    setup() {
 
-        // 封装的下载数据函数
-        function downLoadFile(fileName, content) {
-            var aTag = document.createElement('a');
-            var blob = new Blob([content]);
-            aTag.download = fileName;
-            aTag.href = URL.createObjectURL(blob);
-            aTag.click();
-            URL.revokeObjectURL(blob);
-        }
+        const { isShowSaveAlert, handleSaveConfigAlert, saveConfig } = saveConfigFunction()
 
-        // 调用下载接口
-        function saveConfig() {
-          downLoadFile('nav.config.json', window.localStorage.navInfos)
-        }
-
-        // 关闭弹窗
-        function closeAlert() {
-          emit('closeAlert', false)
-        }
-
-        return {result, saveConfig, closeAlert}
+        return { isShowSaveAlert, saveConfig, handleSaveConfigAlert }
     }
 }
 </script>

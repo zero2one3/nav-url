@@ -1,7 +1,7 @@
 <template>
-  <div class="import-config-container" v-show="isShow">
+  <div class="import-config-container" v-show="isShowImportAlert">
     <div class="import-config-alert">
-      <div class="close-import-config-alert" @click="closeAlert"></div>
+      <div class="close-import-config-alert" @click="handleImportConfigAlert(false)"></div>
       <div class="import-config-alert-title">导入配置</div>
       <div class="import-config-alert-remind">说明：需要上传之前保存导出的xxx.json配置文件，文件中的信息会完全覆盖当前信息</div>
       <form action="" class="form">
@@ -18,86 +18,35 @@
 </template>
 
 <script>
-import {ref, inject} from 'vue'
+/* API */
+import { inject } from 'vue'
+/* 组件 */
 import lpButton from '@/components/public/lp-button/lp-button'
+/* 功能模块 */
+import importConfigFunction from '../function/importConfig'
 export default {
-    props: {
-      isShow: {
-        type: Boolean,
-        default: true
-      }
-    },
     components: {
         lpButton
     },
-    setup(props, {emit}) {
-        const result = ref('none')     // 导入的结果
-        const isUpload = ref(false)    // 判断是否上传配置文件
-        const isImport = ref(false)    // 判断配置是否导入成功
-        const isLoading = ref(false)   // 判断按钮是否处于加载状态
-        const inputFile = ref(null)    // 获取文件标签
-        const hasFile = ref(0)         // 判断文件的传入情况。0：未传入  1: 格式错误  2：格式正确
+    setup() {
         const $message = inject('message')
-
-        // 导入配置
-        function importConfig() {
-          let reader = new FileReader()
-          let files = inputFile.value.files
-          if(hasFile.value == 0) {
-            $message({
-              type: 'warning',
-              content: '请先上传配置文件'
-            })
-          }
-          else if(hasFile.value == 1) {
-            $message({
-              type: 'warning',
-              content: '请上传正确格式的文件，例如xx.json'
-            })
-          }
-          else if(hasFile.value == 2) {
-            reader.readAsText(files[0])
-            reader.onload = function() {
-              let data = this.result
-              window.localStorage.navInfos = data
-              location.reload()
-            }
-          }
-        }
-
-        // 关闭弹窗
-        function closeAlert() {
-          emit('closeAlert', false)
-          hasFile.value = 0
-        }
-
-        function fileChange(e) {
-          let files = e.target.files
-          if(files.length === 0) {
-            $message({
-              type: 'warning',
-              content: '请先上传配置文件'
-            })
-          }
-          else {
-            let targetFile = files[0]
-            if(!/\.json$/.test(targetFile.name)) {
-              hasFile.value = 1
-              $message({
-                type: 'warning',
-                content: '请确认文件格式是否正确'
-              })
-            } else {
-              hasFile.value = 2
-              $message({
-                type: 'success',
-                content: '文件格式正确'
-              })
-            }
-          }
-        }
+        const { 
+          isShowImportAlert,
+          handleImportConfigAlert,
+          result,  
+          isUpload, 
+          isImport, 
+          isLoading, 
+          importConfig, 
+          closeAlert, 
+          inputFile, 
+          fileChange, 
+          hasFile 
+        } = importConfigFunction($message)
         
         return {
+          isShowImportAlert,
+          handleImportConfigAlert,
           result, 
           isUpload,
           isImport, 

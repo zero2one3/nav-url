@@ -9,7 +9,7 @@
 
 import {useStore} from 'vuex'
 import {writeToVuex} from '@/utils/utils'
-import tabs from '@/components/tabs/index/index'
+import tabs from '@/components/tabs/index'
 import content from '@/components/main/index/index'
 import {createMessage} from '@/components/public/lp-message/lp-message.js'
 import {createDialog} from '@/components/public/lp-dialog/lp-dialog.js'

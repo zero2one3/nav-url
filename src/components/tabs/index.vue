@@ -4,15 +4,15 @@
           {{ navInfos.navName }}
       </div>
       <ul id="tabs">
-          <li class="tab tab-search" @click="controlSearchBox">
+          <li class="tab tab-search" @click="handleSearchBox">
               <i class="fas fa-search tab-icon"/>
               <span>快速搜索</span>
           </li>
-          <li class="tab tab-save" @click="controlSaveConfigAlert(true)">
+          <li class="tab tab-save" @click="handleSaveConfigAlert(true)">
               <i class="fas fa-share-square tab-icon"></i>
               <span>保存配置</span>
           </li>
-          <li class="tab tab-import" @click="controlImportConfigAlert(true)">
+          <li class="tab tab-import" @click="handleImportConfigAlert(true)">
               <i class="fas fa-cog tab-icon"></i>
               <span>导入配置</span>
           </li>
@@ -27,32 +27,33 @@
                   <i class="fas fa-angle-right tab-icon tab-angle-right"/>
                 </span>
           </li>
-          <li class="tab add-tab" @click="addTabShow">
+          <li class="tab add-tab" @click="showAddTab">
               <i class="fas fa-plus"/>
           </li>
       </ul>
       <!--    添加标签弹框     -->
       <tabAlert name="新增标签"/>
       <!--    保存配置弹框     -->
-      <save-config @closeAlert="controlSaveConfigAlert" :isShow="isShowSaveAlert"/>
+      <save-config />
       <!--    导入配置弹框     -->
-      <import-config @closeAlert="controlImportConfigAlert" :isShow="isShowImportAlert"/>
+      <import-config />
   </aside>
 </template>
 
 <script>
 /* API */
-import {useStore} from 'vuex'
+import { useStore } from 'vuex'
+import { inject } from 'vue'
 /* 组件 */
 import tabAlert from '@/components/public/tabAlert/tabAlert'
-import saveConfig from '@/components/tabs/saveConfig/index'
-import importConfig from '@/components/tabs/importConfig/index'
+import saveConfig from './cpn/saveConfig'
+import importConfig from './cpn/importConfig'
 /* 功能模块 */
-import handleAddTabAlert from './function/addTabAlert'
-import handleSaveConfigAlert from './function/saveConfigAlert'
-import handleImportConfigAlert from './function/importConfigAlert'
-import handleSearchBox from './function/search'
-import handleTabClick from './function/tabClick'
+import AddTabFunction from './function/addTab'
+import saveConfigFunction from './function/saveConfig'
+import importConfigFunction from './function/importConfig'
+import searchFunction from './function/search'
+import tabClickFunction from './function/tabClick'
 export default {
     name: 'tabs',
     components: {
@@ -60,33 +61,31 @@ export default {
         saveConfig,
         importConfig
     },
-    setup() {
-        const store = useStore()     
-        let navInfos = store.state    // Vuex的state对象
+    setup() {   
+        let navInfos = useStore().state    // Vuex的state对象
+        const $message = inject('message')      // 获取message组件方法
 
-        // 控制 “添加标签弹框” 的展示
-        let { addTabShow } = handleAddTabAlert()
+        // 添加标签
+        let { showAddTab } = AddTabFunction()
         
         // 控制 "保存配置弹框" 的展示
-        let { isShowSaveAlert, controlSaveConfigAlert } = handleSaveConfigAlert()
+        let { handleSaveConfigAlert } = saveConfigFunction()
 
         // 控制 "导入配置弹框" 的展示
-        let { isShowImportAlert, controlImportConfigAlert } = handleImportConfigAlert()
+        let { handleImportConfigAlert } = importConfigFunction($message)
 
         // 控制 "搜索框" 的展示
-        let { controlSearchBox } = handleSearchBox()
+        let { handleSearchBox } = searchFunction()
 
         // 点击标签，进行跳转
-        let { toID } = handleTabClick()
+        let { toID } = tabClickFunction()
           
         return {
             navInfos,
-            addTabShow, 
-            isShowSaveAlert, 
-            controlSaveConfigAlert,
-            isShowImportAlert,
-            controlImportConfigAlert,
-            controlSearchBox,
+            showAddTab, 
+            handleSaveConfigAlert,
+            handleImportConfigAlert,
+            handleSearchBox,
             toID
         }
     }

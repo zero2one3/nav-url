@@ -2,10 +2,13 @@
 
 import { useStore } from 'vuex'
 
-export default function handleSearchBox() {
-    const store = useStore()
+// 变量
+const store = useStore()
 
-    function controlSearchBox() {
+export default function searchFunction() {
+
+    // 控制搜索框的展示
+    function handleSearchBox() {
         if(store.state.moduleSearch.isSearch) {
             store.commit('changeIsSearch', false)
             store.commit('changeSearchWord', '')
@@ -15,6 +18,6 @@ export default function handleSearchBox() {
     }
 
     return {
-        controlSearchBox,
+        handleSearchBox,
     }
 }
