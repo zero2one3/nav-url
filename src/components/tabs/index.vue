@@ -27,7 +27,7 @@
                   <i class="fas fa-angle-right tab-icon tab-angle-right"/>
                 </span>
           </li>
-          <li class="tab add-tab" @click="showAddTab">
+          <li class="tab add-tab" @click="showNewAddTab">
               <i class="fas fa-plus"/>
           </li>
       </ul>
@@ -45,15 +45,15 @@
 import { useStore } from 'vuex'
 import { inject } from 'vue'
 /* 组件 */
-import tabAlert from '@/components/public/tabAlert/tabAlert'
+import tabAlert from '@/components/public/tabAlert/index'
 import saveConfig from './cpn/saveConfig'
 import importConfig from './cpn/importConfig'
 /* 功能模块 */
-import AddTabFunction from './function/addTab'
 import saveConfigFunction from './function/saveConfig'
 import importConfigFunction from './function/importConfig'
-import searchFunction from './function/search'
+import searchFunction from '@/components/main/function/search'
 import tabClickFunction from './function/tabClick'
+import tabAlertFunction from '@/components/public/tabAlert/function/tabAlert'
 export default {
     name: 'tabs',
     components: {
@@ -65,8 +65,8 @@ export default {
         let navInfos = useStore().state    // Vuex的state对象
         const $message = inject('message')      // 获取message组件方法
 
-        // 添加标签
-        let { showAddTab } = AddTabFunction()
+        // 展示新增标签弹框
+        let { showNewAddTab } = tabAlertFunction()
         
         // 控制 "保存配置弹框" 的展示
         let { handleSaveConfigAlert } = saveConfigFunction()
@@ -82,7 +82,7 @@ export default {
           
         return {
             navInfos,
-            showAddTab, 
+            showNewAddTab, 
             handleSaveConfigAlert,
             handleImportConfigAlert,
             handleSearchBox,

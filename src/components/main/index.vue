@@ -1,7 +1,7 @@
 <template>
   <div id="content-container">
       <div id="notice">
-          <i class="fas fa-bell"></i>
+          <i class="fas fa-bell" />
           <carousel/>
           <search></search>
       </div>
@@ -12,18 +12,16 @@
                v-show="!moduleSearch.isSearch || (moduleSearch.isSearch && judgeTabIsShow(i))">
               <div :id="tab.id" class="tab-title">
                   <i :class="['fas', `fa-${tab.icon}`, 'tab-icon']"/>
-                  <span class="tab-name">
-                      {{tab.name}}
-                  </span>
+                  <span class="tab-name">{{tab.name}}</span>
                   <span :class="['edit-tab-name', {'tabIsEdit': tab.id == editWhich}]">
-                      <i class="fas fa-trash-alt delete-icon" @click="deleteTag(tab.id)"/>
-                      <i class="fas fa-edit edit-icon" @click="editTagAlertShow(tab)"/>
+                      <i class="fas fa-trash-alt delete-icon" @click="deleteTab(tab.id)"/>
+                      <i class="fas fa-edit edit-icon" @click="showEditAddTab(tab)"/>
                   </span>
                   <span :class="['edit', {'isEdit': tab.id == editWhich}]" 
-                        @click="enterEdit(tab.id)">
+                        @click="handleEdit(tab.id)">
                     {{ tab.id == editWhich? '退出' : '编辑' }}
                   </span>
-                  <tagAlert name="修改标签"></tagAlert>
+                  <tabAlert name="修改标签"></tabAlert>
               </div>
               <ul class="url-boxes" 
                   @dragstart="urlBoxDragStart"
@@ -44,11 +42,11 @@
                       </a>
                       <span :class="['edit-container', {'urlIsEdit': tab.id == editWhich}]">
                           <i class="fas fa-trash-alt delete-icon" @click="deleteUrl(urls.id)"/>
-                          <i class="fas fa-edit edit-icon" @click="editUrl(urls)"/>
+                          <i class="fas fa-edit edit-icon" @click="showEditUrlAlert(urls)"/>
                       </span>
                   </li>
                   <li class="each-url-box add-more" 
-                      @click="addMoreUrl(tab.id)">
+                      @click="showNewUrlAlert(tab.id)">
                       <i class="fas fa-plus"/>
                   </li>
               </ul>
@@ -59,17 +57,23 @@
 </template>
 
 <script>
-import {ref, inject} from 'vue'
+/* API */
+import { inject } from 'vue'
 import {useStore} from 'vuex'
-import urlAlert from '@/components/public/urlAlert/urlAlert'
-import tagAlert from '@/components/public/tabAlert/tabAlert'
-import carousel from '../carousel/index'
-import search from '../search/index'
-import { exchangeElements, debounce } from '@/utils/utils'
+/* 组件 */
+import urlAlert from '@/components/public/urlAlert/index'
+import tabAlert from '@/components/public/tabAlert/index'
+import carousel from './cpn/carousel'
+import search from './cpn/search'
+/* 功能模块 */
+import editFunction from './function/edit'
+import urlAlertFunction from '@/components/public/urlAlert/function/urlAlert'
+import tabAlertFunction from '@/components/public/tabAlert/function/tabAlert'
+import searchFunction from './function/search'
 export default {
     components: {
         urlAlert,
-        tagAlert,
+        tabAlert,
         carousel,
         search,
     },
@@ -77,20 +81,28 @@ export default {
         const store = useStore()
         const catalogue = store.state.catalogue
         const moduleUrl = store.state.moduleUrl
-        const moduleSearch = store.state.moduleSearch
         const $message = inject('message')
         const $confirm = inject('confirm')
-        const editWhich = ref(-1)
-        
-        
-        // 弹出添加URL的框
-        function addMoreUrl(id) {
-            store.commit('changeUrlInfo', [
-                {key: 'isShow', value: true},
-                {key: 'whichTag', value: id},
-                {key: 'alertType', value: '新增网址'}
-            ])
-        }
+
+        // url框的拖拽相关变量及功能
+        let { 
+            editWhich, 
+            handleEdit, 
+            deleteTab, 
+            deleteUrl, 
+            urlBoxDragStart, 
+            urlBoxDragEnd, 
+            urlBoxEnter 
+        } = editFunction($message, $confirm)
+
+        // 弹出 “新增”、“修改” url弹框
+        let { showNewUrlAlert, showEditUrlAlert } = urlAlertFunction()
+
+        // 搜索功能相关的变量及方法
+        let { moduleSearch, judgeTabIsShow, judgeUrlIsShow } = searchFunction()
+
+        // 展示修改tab的弹框
+        let { showEditAddTab } = tabAlertFunction()
 
         // 处理无icon或icon加载失败的图片，令其使用默认svg图标
         function imgLoadErr(e) {
@@ -99,149 +111,25 @@ export default {
             el.nextSibling.style.display = 'inline-block'
         }
 
+        // 图片加载成功后的处理
         function imgLoadSuccess(e) {
             let el = e.target
             el.style.display = 'inline-block'
             el.nextSibling.style.display = 'none'
         }
 
-        // 进入编辑状态
-        function enterEdit(id) {
-            if(id != editWhich.value) {
-                editWhich.value = id
-            } else {
-                editWhich.value = -1
-            }     
-        }
-
-        // 修改标签弹框弹出
-        function editTagAlertShow(tab) {
-            store.commit('changeTabInfo', [
-                {key: 'isShowAddTabAlert', value: true},
-                {key: 'tagName', value: tab.name},
-                {key: 'trueIcon', value: tab.icon},
-                {key: 'isSelected', value: true},
-                {key: 'currentIcon', value: tab.icon},
-                {key: 'id', value: tab.id},
-                {key: 'alertType', value: '修改标签'}
-            ])
-        }
-
-        // 删除标签以及标签下的所有网址
-        function deleteTag(id) {
-            $confirm({
-                content: '确定删除该标签以及该标签下所有网址吗？'
-            })
-            .then(() => {
-                store.commit('remove', id)
-                $message({
-                    type: 'success',
-                    content: '标签页及子网址删除成功'
-                })
-            })
-            .catch(() => {})
-        }
-
-        // 删除某个网址
-        function deleteUrl(id) {
-            $confirm({
-                content: '确定删除该网址吗？'
-            })
-            .then(() => {
-                store.commit('remove', id)
-                $message({
-                    type: 'success',
-                    content: '网址删除成功'
-                })
-            })
-            .catch(() => {})      
-        }
-
-        // 弹出修改URL的弹框
-        function editUrl(url) {
-            store.commit('changeUrlInfo', [
-                {key: 'url', value: url.url},
-                {key: 'icon', value: url.icon},
-                {key: 'id', value: url.id},
-                {key: 'name', value: url.name},
-                {key: 'isShow', value: true},
-                {key: 'alertType', value: '修改网址'}
-            ])
-        }
-        
-        function judgeTabIsShow(i) {
-            const URLS = catalogue[i]['URLS']
-            let length = URLS.length
-            for(let j = 0; j < length; j++) {
-                if(moduleSearch.searchWord == '') return false;
-                else if(URLS[j].name.toLowerCase().indexOf(moduleSearch.searchWord.toLowerCase()) !== -1) return true;
-            }
-            return false
-        }
-
-        function judgeUrlIsShow(i, j) {
-            const url = catalogue[i]['URLS'][j]
-            if(url.name.toLowerCase().indexOf(moduleSearch.searchWord.toLowerCase()) !== -1) return true;
-            return false;
-        }
-
-        let elementNodeDragged = null   // 被移动的地址框元素
-        let elementNodeLocated = null  // 移入的地址框元素
-        let draggedId = -1   // 被移动地址框的id
-        
-        // 地址框开始拖拽
-        function urlBoxDragStart(e) {
-            const el = e.target
-            if(el.nodeName !== 'LI') return;
-            // 记录当前被拖拽地址框元素
-            elementNodeDragged = el    
-            // 将被拖拽对象隐藏
-            el.style.display = 'fixed'
-            el.style.opacity = 0
-        }
-
-        // 拖拽后更新Vuex中的正确排序
-        let dragEndToUpdate = debounce(function() {
-            // 获取当前正在编辑标签中所有url的排序
-            const result = []
-            const children = elementNodeLocated.parentNode.children
-            let length = children.length
-            for(let i = 0; i < length - 1; i++) {
-                result.push(children[i].getAttribute('data-id'))
-            }
-            store.commit('dragEndToUpdate', {tabId: editWhich.value, result}) 
-        }, 500)
-
-        // 地址框拖拽结束
-        function urlBoxDragEnd(e) {
-            let el = e.target
-            el.style.display = 'inline-block'
-            el.style.opacity = 1
-            dragEndToUpdate()
-        }
-
-        // 被拖动的地址框触碰到其它的地址框
-        function urlBoxEnter(e, tabId) {
-            if(tabId != editWhich.value) return;
-            let el = e.target
-            while(el.nodeName !== 'LI') el = el.parentNode;        // 若子元素触发dragenter事件，则查找到父元素li标签
-            if(el === elementNodeDragged) return;     // 避免自己拖拽进入自己的情况
-            if(elementNodeLocated !== el) elementNodeLocated = el    // 记录被移入的地址框元素
-            exchangeElements(elementNodeDragged, el)     //  地址框位置互换
-        }
-
         return {
             catalogue, 
-            addMoreUrl, 
+            showNewUrlAlert, 
             moduleUrl, 
             moduleSearch,
             imgLoadErr,
             imgLoadSuccess, 
-            enterEdit, 
-            editTagAlertShow,
-            deleteTag,
+            handleEdit, 
+            showEditAddTab,
+            deleteTab,
             deleteUrl,
-            editUrl,
+            showEditUrlAlert,
             editWhich,
             judgeTabIsShow,
             judgeUrlIsShow,

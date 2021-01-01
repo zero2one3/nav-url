@@ -31,10 +31,12 @@
 </template>
 
 <script>
-import {reactive, inject} from 'vue'
-import {useStore} from 'vuex'
-import request from '../../../network/request'
-import lpButton from '../../public/lp-button/lp-button'
+/* API */
+import { inject } from 'vue'
+/* 组件 */
+import lpButton from '@/components/public/lp-button/lp-button'
+/* 功能模块 */
+import urlAlertFunction from '../function/urlAlert'
 export default {
     components: {
         lpButton
@@ -50,107 +52,9 @@ export default {
         }
     },
     setup() {
-        const store = useStore()  
-        const state = store.state.moduleUrl
         const $message = inject('message')
 
-        // 获取网页名称
-        function getUrlName() {
-            if(state.url == '') {
-                $message({
-                    type: 'warning',
-                    content: '请先输入URL'
-                })
-                return;
-            }
-            store.commit('changeUrlInfo', {
-                key: 'isLoadingName',
-                value: true
-            })
-
-            request({
-                params: {
-                    target: 'name',
-                    targetUrl: state.url
-                }
-            })
-            .then(res => {
-                store.commit('changeUrlInfo', {key: 'name', value: res.data.data})
-                $message({
-                    type: 'success',
-                    content: '网页名称获取成功'
-                })
-            })
-            .catch((err) => {
-                console.log(err);
-                $message({
-                    type: 'err',
-                    content: '网络超时或目标网站拒绝此次请求'
-                })
-            })
-            .finally(() => {
-                store.commit('changeUrlInfo', {key: 'isLoadingName', value: false})
-            })
-        }
-        // 获取网页图标
-        function getUrlIcon() {
-            if(state.url == '') {
-                $message({
-                    type: 'warning',
-                    content: '请先输入URL'
-                })
-                return;
-            }
-
-            store.commit('changeUrlInfo', {
-                key: 'isLoadingIcon',
-                value: true
-            })
-
-            request({
-                params: {
-                    target: 'icon',
-                    targetUrl: state.url
-                }
-            })
-            .then(res => {
-                let icon = res.data.data
-                let otherIcon = res.data.otherIcon
-                if(icon == null) icon = otherIcon;
-                store.commit('changeUrlInfo', [
-                    {key: 'icon', value: icon},
-                    {key: 'otherIcon', value: otherIcon}
-                ])
-                $message({
-                    type: 'success',
-                    content: '图标获取成功'
-                })
-            })
-            .catch(() => {
-                $message({
-                    type: 'err',
-                    content: '网络超时或目标网站拒绝此次请求'
-                })
-            })
-            .finally(() => {
-                store.commit('changeUrlInfo', [
-                    {key: 'isLoadingIcon', value: false},
-                    {key: 'imgErr', value: false}
-                ])
-            })
-
-        }
-        // 图片加载错误
-        function imgloadErr() {
-            if(state.otherIcon == '') {
-                state.imgErr = true
-            } else {
-                store.commit('changeUrlInfo', [
-                    {key: 'icon', value: state.otherIcon},
-                    {key: 'otherIcon', value: ''}
-                ])
-            }
-        }
+        let { state, getUrlIcon, getUrlName, imgloadErr } = urlAlertFunction($message)
 
         return {
             state,

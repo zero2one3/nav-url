@@ -15,7 +15,7 @@
 
 <script>
 import {useStore} from 'vuex'
-import iconList from '../iconList/iconList'
+import iconList from '@/components/public/iconList/iconList'
 export default {
     props: {
         boxHeight: {

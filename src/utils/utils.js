@@ -14,8 +14,7 @@ function debounce(fn, delay = 3000) {
 
 // 将导航所有信息全部重新导入到vuex中
 function writeToVuex(store, obj) {
-    store.state.navName = obj.navName
-    store.state.catalogue = obj.catalogue
+    store.commit('init', obj)
 }
 
 // 将Vuex中的信息更新到localStorage中（未经过防抖处理）

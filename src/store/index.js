@@ -1,15 +1,48 @@
 import Vuex from '../../node_modules/vuex/dist/vuex.cjs'
-import { updateLocal } from '../utils/utils'
+import { updateLocal } from '@/utils/utils'
 import moduleTab from './module/tab'
 import moduleUrl from './module/url'
 import moduleSearch from './module/search'
 
 const store = Vuex.createStore({
     state: {
-        navName: '',
-        catalogue: null
+        navName: 'Quick Url',
+        catalogue: [
+            {id:'1' , name: "常用网站", icon: "align-justify", URLS: [
+                {id:'1.1' , url: 'https://github.com/Lpyexplore/nav-url', icon: 'https://github.com/fluidicon.png', name: 'github'},
+                {id:'1.2' , url: 'https://juejin.cn/post/6897030228867022856', icon: 'https://b-gold-cdn.xitu.io/favicons/v2/favicon-32x32.png', name: 'Vue3 API教程'},
+            ]}
+        ]
+    },
+    getters: {
+        // 判断标签是否显示
+        judgeTabIsShow: (state) => (i) => {
+            const searchWord = state.moduleSearch.searchWord
+            const URLS = state.catalogue[i]['URLS']
+            let length = URLS.length
+            for(let j = 0; j < length; j++) {
+                if(searchWord == '') return false;
+                else if(URLS[j].name.toLowerCase().indexOf(searchWord.toLowerCase()) !== -1) return true;
+            }
+            return false
+        },
+        // 判断url是否显示
+        judgeUrlIsShow: (state) => (i, j) => {
+            const searchWord = state.moduleSearch.searchWord
+            const url = state.catalogue[i]['URLS'][j]
+            if(searchWord == '') return false;
+            let matchResult = url.name.toLowerCase().indexOf(searchWord.toLowerCase())
+            if(matchResult !== -1) return true;
+            return false;
+        },
     },
     mutations: {
+        // 初始化
+        init(state, payload) {
+            let { navName, catalogue } = payload
+            state.navName = navName
+            state.catalogue = catalogue
+        },
         // 更新
         update(state, payload) {
             let {key, value} = payload

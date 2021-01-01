@@ -8,35 +8,27 @@
         <lp-input class="search-input" 
                   placeholder="输入搜索关键词"
                   :value="moduleSearch.searchWord"
-                  @_input="input"/>
+                  @_input="inputSearchContent"/>
         <div class="close-search">
-            <span class="close-search-txt" @click="closeSearch">关闭</span>
+            <span class="close-search-txt" @click="handleSearchBox">关闭</span>
         </div>
   </div>
 </template>
 
 <script>
-import {useStore} from 'vuex'
-import {reactive} from 'vue'
+/* 组件 */
 import lpInput from '@/components/public/lp-input/lp-input'
+/* 功能模块 */
+import searchFunction from '../function/search'
 export default {
     components: {
         lpInput
     },
     setup() {
-        const store = useStore()
-        const moduleSearch = store.state.moduleSearch
 
-        function input(value) {
-            store.commit('changeSearchWord', value)
-        }
+        let { moduleSearch, inputSearchContent, handleSearchBox } = searchFunction()
 
-        function closeSearch() {
-            store.commit('changeIsSearch', false)
-            store.commit('changeSearchWord', '')
-        }
-
-        return {store, moduleSearch, input, closeSearch}
+        return { moduleSearch, inputSearchContent, handleSearchBox }
     }
 }
 </script>

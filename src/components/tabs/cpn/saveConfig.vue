@@ -21,7 +21,7 @@ export default {
     },
     setup() {
 
-        const { isShowSaveAlert, handleSaveConfigAlert, saveConfig } = saveConfigFunction()
+        let { isShowSaveAlert, handleSaveConfigAlert, saveConfig } = saveConfigFunction()
 
         return { isShowSaveAlert, saveConfig, handleSaveConfigAlert }
     }
