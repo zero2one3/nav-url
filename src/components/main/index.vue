@@ -21,7 +21,6 @@
                         @click="handleEdit(tab.id)">
                     {{ tab.id == editWhich? '退出' : '编辑' }}
                   </span>
-                  <tabAlert name="修改标签"></tabAlert>
               </div>
               <ul class="url-boxes" 
                   @dragstart="urlBoxDragStart"
@@ -59,13 +58,14 @@
 <script>
 /* API */
 import { inject } from 'vue'
-import {useStore} from 'vuex'
+import { useStore } from 'vuex'
 /* 组件 */
 import urlAlert from '@/components/public/urlAlert/index'
 import tabAlert from '@/components/public/tabAlert/index'
 import carousel from './cpn/carousel'
 import search from './cpn/search'
 /* 功能模块 */
+import baseFunction from './function/base'
 import editFunction from './function/edit'
 import urlAlertFunction from '@/components/public/urlAlert/function/urlAlert'
 import tabAlertFunction from '@/components/public/tabAlert/function/tabAlert'
@@ -83,6 +83,9 @@ export default {
         const moduleUrl = store.state.moduleUrl
         const $message = inject('message')
         const $confirm = inject('confirm')
+
+        // 一些基础的方法
+        let { imgLoadErr, imgLoadSuccess } = baseFunction()
 
         // url框的拖拽相关变量及功能
         let { 
@@ -103,20 +106,6 @@ export default {
 
         // 展示修改tab的弹框
         let { showEditAddTab } = tabAlertFunction()
-
-        // 处理无icon或icon加载失败的图片，令其使用默认svg图标
-        function imgLoadErr(e) {
-            let el = e.target
-            el.style.display = 'none'
-            el.nextSibling.style.display = 'inline-block'
-        }
-
-        // 图片加载成功后的处理
-        function imgLoadSuccess(e) {
-            let el = e.target
-            el.style.display = 'inline-block'
-            el.nextSibling.style.display = 'none'
-        }
 
         return {
             catalogue, 

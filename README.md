@@ -35,6 +35,7 @@ There are many social networking sites and tool websites on the Internet now. If
 7. 支持URL搜索功能
 8. 页面滚动动画
 9. 在编辑状态下，可以进行拖拽排列
+10. 按照项目功能进行代码抽离，便于项目的维护、迭代、管理
 
 ### English
 1. Implemented by the latest `Vue3` and `Vuex4`
@@ -46,6 +47,7 @@ There are many social networking sites and tool websites on the Internet now. If
 7. Support URL search function
 8. Page scrolling animation
 9. In editing state, you can drag and drop to arrange
+10. Code extraction according to project functions is convenient for project maintenance, iteration and management
 
 # Schedule（进度）
 
@@ -94,7 +96,6 @@ There are still some imperfect functions that will be completed one after anothe
 - **0.1.3 :**
 
 1. 修复了拖拽排列后id顺序打乱而导致新添加的url框的id不唯一
-
 
 
 # The end（最后）

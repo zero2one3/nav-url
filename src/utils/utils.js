@@ -26,7 +26,7 @@ function updateLocalStorage(store) {
 }
 
 // 将Vuex中的信息更新到localStorage中（经过防抖处理）
-let updateLocal = debounce(updateLocalStorage)
+let updateLocal = debounce(updateLocalStorage, 1000)
 
 // 判断字符串长度是否符合大小规定
 function judgeString(s) {

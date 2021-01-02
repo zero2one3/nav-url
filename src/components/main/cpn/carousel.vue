@@ -20,7 +20,7 @@ export default {
         content: `<img src="${require('@/assets/img/myWx.png')}" style='width: 130px; height: 130px'></img>`
     })
 
-    return {wxPopoverDate}
+    return { wxPopoverDate }
   }
 }
 </script>

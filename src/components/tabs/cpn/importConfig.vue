@@ -30,6 +30,7 @@ export default {
     },
     setup() {
         const $message = inject('message')
+        
         const { 
           isShowImportAlert,
           handleImportConfigAlert,

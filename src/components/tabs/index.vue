@@ -32,7 +32,7 @@
           </li>
       </ul>
       <!--    添加标签弹框     -->
-      <tabAlert name="新增标签"/>
+      <tabAlert/>
       <!--    保存配置弹框     -->
       <save-config />
       <!--    导入配置弹框     -->
