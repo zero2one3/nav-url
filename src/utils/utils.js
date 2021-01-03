@@ -1,5 +1,5 @@
 // 防抖
-function debounce(fn, delay = 3000) {
+function debounce(fn, delay = 1000) {
     let timer = null
 
     return function(...args) {
@@ -26,7 +26,7 @@ function updateLocalStorage(store) {
 }
 
 // 将Vuex中的信息更新到localStorage中（经过防抖处理）
-let updateLocal = debounce(updateLocalStorage, 1000)
+let updateLocal = debounce(updateLocalStorage)
 
 // 判断字符串长度是否符合大小规定
 function judgeString(s) {

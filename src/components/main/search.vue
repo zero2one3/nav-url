@@ -19,7 +19,7 @@
 /* 组件 */
 import lpInput from '@/components/public/lp-input/lp-input'
 /* 功能模块 */
-import searchFunction from '../function/search'
+import searchFunction from '@/use/search'
 export default {
     components: {
         lpInput

@@ -27,9 +27,9 @@ import { inject } from 'vue'
 /* 组件 */
 import lpButton from '@/components/public/lp-button/lp-button'
 import lpInput from '@/components/public/lp-input/lp-input'
-import selectIcon from './cpn/selectIcon'
+import selectIcon from './selectIcon'
 /* 功能模块 */
-import urlAlertFunction from './function/urlAlert'
+import urlAlertFunction from '@/use/urlAlert'
 export default {
     components: {
         lpButton,

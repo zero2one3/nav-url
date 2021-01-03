@@ -1,10 +1,9 @@
 // url框的拖拽排列
-
 import { ref } from 'vue'
 import { exchangeElements, debounce } from '@/utils/utils'
 import store from '@/store/index'
-//变量
 
+//变量
 let elementNodeDragged = null,     // 被移动的地址框元素
     elementNodeLocated = null,     // 移入的地址框元素
     editWhich = ref(-1)            // 记录正在编辑的tab索引

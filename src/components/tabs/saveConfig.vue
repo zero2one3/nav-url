@@ -13,7 +13,7 @@
 /* 组件 */
 import lpButton from '@/components/public/lp-button/lp-button'
 /* 功能模块 */
-import saveConfigFunction from '../function/saveConfig'
+import saveConfigFunction from '@/use/saveConfig'
 export default {
 
     components: {

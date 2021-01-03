@@ -1,6 +1,7 @@
-// 组件中一些基础的方法
+// 一些基础公用的方法
 
 export default function baseFunction() {
+
     // 处理无icon或icon加载失败的图片，令其使用默认svg图标
     function imgLoadErr(e) {
         let el = e.target

@@ -23,7 +23,7 @@ import { inject } from 'vue'
 /* 组件 */
 import lpButton from '@/components/public/lp-button/lp-button'
 /* 功能模块 */
-import importConfigFunction from '../function/importConfig'
+import importConfigFunction from '@/use/importConfig'
 export default {
     components: {
         lpButton

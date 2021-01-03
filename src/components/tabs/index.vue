@@ -46,14 +46,14 @@ import { useStore } from 'vuex'
 import { inject } from 'vue'
 /* 组件 */
 import tabAlert from '@/components/public/tabAlert/index'
-import saveConfig from './cpn/saveConfig'
-import importConfig from './cpn/importConfig'
+import saveConfig from './saveConfig'
+import importConfig from './importConfig'
 /* 功能模块 */
-import saveConfigFunction from './function/saveConfig'
-import importConfigFunction from './function/importConfig'
-import searchFunction from '@/components/main/function/search'
-import tabClickFunction from './function/tabClick'
-import tabAlertFunction from '@/components/public/tabAlert/function/tabAlert'
+import saveConfigFunction from '@/use/saveConfig'
+import importConfigFunction from '@/use/importConfig'
+import searchFunction from '@/use/search'
+import tabClickFunction from '@/use/tabClick'
+import tabAlertFunction from '@/use/tabAlert'
 export default {
     name: 'tabs',
     components: {

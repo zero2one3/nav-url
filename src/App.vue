@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import init from './init'
+import init from '@/use/init'
 import tabs from '@/components/tabs/index'
 import content from '@/components/main/index'
 import { createMessage } from '@/components/public/lp-message/lp-message.js'

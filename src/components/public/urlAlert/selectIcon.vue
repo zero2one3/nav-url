@@ -36,7 +36,7 @@ import { inject } from 'vue'
 /* 组件 */
 import lpButton from '@/components/public/lp-button/lp-button'
 /* 功能模块 */
-import urlAlertFunction from '../function/urlAlert'
+import urlAlertFunction from '@/use/urlAlert'
 export default {
     components: {
         lpButton

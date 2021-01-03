@@ -62,14 +62,14 @@ import { useStore } from 'vuex'
 /* 组件 */
 import urlAlert from '@/components/public/urlAlert/index'
 import tabAlert from '@/components/public/tabAlert/index'
-import carousel from './cpn/carousel'
-import search from './cpn/search'
+import carousel from './carousel'
+import search from './search'
 /* 功能模块 */
-import baseFunction from './function/base'
-import editFunction from './function/edit'
-import urlAlertFunction from '@/components/public/urlAlert/function/urlAlert'
-import tabAlertFunction from '@/components/public/tabAlert/function/tabAlert'
-import searchFunction from './function/search'
+import baseFunction from '@/use/base'
+import editFunction from '@/use/edit'
+import urlAlertFunction from '@/use/urlAlert'
+import tabAlertFunction from '@/use/tabAlert'
+import searchFunction from '@/use/search'
 export default {
     components: {
         urlAlert,
