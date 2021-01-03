@@ -78,16 +78,14 @@ export default {
         search,
     },
     setup() {
-        const store = useStore()
-        const catalogue = store.state.catalogue
-        const moduleUrl = store.state.moduleUrl
+        const catalogue = useStore().state.catalogue
         const $message = inject('message')
         const $confirm = inject('confirm')
 
         // 一些基础的方法
         let { imgLoadErr, imgLoadSuccess } = baseFunction()
 
-        // url框的拖拽相关变量及功能
+        // url框编辑下的相关变量及功能
         let { 
             editWhich, 
             handleEdit, 
@@ -110,7 +108,6 @@ export default {
         return {
             catalogue, 
             showNewUrlAlert, 
-            moduleUrl, 
             moduleSearch,
             imgLoadErr,
             imgLoadSuccess, 

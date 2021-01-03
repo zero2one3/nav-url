@@ -5,7 +5,6 @@ import store from '@/store/index'
 // 变量
 const moduleSearch = store.state.moduleSearch     // 搜索相关的全局状态
 
-
 export default function searchFunction() {
 
     // 搜索框的输入改变

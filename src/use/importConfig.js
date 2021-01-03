@@ -1,5 +1,4 @@
 // 导入配置功能
-
 import { ref } from 'vue'
 
 const isShowImportAlert = ref(false),   // 导入配置弹框是否展示
@@ -10,7 +9,6 @@ const isShowImportAlert = ref(false),   // 导入配置弹框是否展示
       inputFile = ref(null),            // 获取文件元素
       hasFile = ref(0)                  // 判断文件的传入情况。0：未传入  1: 格式错误  2：格式正确
       
-
 export default function importConfigFunction($message) {
   
     // 控制弹框的展示

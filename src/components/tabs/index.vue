@@ -52,7 +52,7 @@ import importConfig from './importConfig'
 import saveConfigFunction from '@/use/saveConfig'
 import importConfigFunction from '@/use/importConfig'
 import searchFunction from '@/use/search'
-import tabClickFunction from '@/use/tabClick'
+import baseFunction from '@/use/base'
 import tabAlertFunction from '@/use/tabAlert'
 export default {
     name: 'tabs',
@@ -78,7 +78,7 @@ export default {
         let { handleSearchBox } = searchFunction()
 
         // 点击标签，进行跳转
-        let { toID } = tabClickFunction()
+        let { toID } = baseFunction()
           
         return {
             navInfos,
