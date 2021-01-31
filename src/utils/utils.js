@@ -12,6 +12,22 @@ function debounce(fn, delay = 1000) {
     }
 }
 
+// 节流函数
+function throttle(fn, delay = 1000) {
+    let timer = null
+    let status = false
+
+    return function(...args) {
+        if(status) return;
+        status = true
+        timer = setTimeout(() => {
+            fn.apply(this, args)
+            status = false
+            clearTimeout(timer)
+        }, delay)
+    }
+}
+
 // 将导航所有信息全部重新导入到vuex中
 function writeToVuex(store, obj) {
     store.commit('init', obj)
@@ -58,7 +74,8 @@ function exchangeElements(el1, el2) {
 export {
     writeToVuex,  
     updateLocal,  
-    debounce,     
+    debounce,   
+    throttle,  
     judgeString,  
     exchangeElements,  
 }
