@@ -97,6 +97,10 @@ There are still some imperfect functions that will be completed one after anothe
 
 1. 修复了拖拽排列后id顺序打乱而导致新添加的url框的id不唯一
 
+- **0.1.4：**
+
+1. 对标签页的图标选择页面进行了下拉加载更多
+2. 对左侧标签点击主页面的滚动动画做了优化
 
 # The end（最后）
 
