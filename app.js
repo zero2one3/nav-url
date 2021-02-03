@@ -43,7 +43,7 @@ function getIcon(s, obj) {
         href = href.replace(/"/g, '')
         href = href.replace(/>/g, '')
         href = href.charAt(href.length - 1) == '/' ? href.slice(0, href.length - 1) : href
-
+        
         /** 判断多种icon格式
          * 1. 'shortcut icon'
          * 2. 'SHORTCUT ICON'

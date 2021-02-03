@@ -28,8 +28,8 @@ export default function baseFunction() {
             if(count < 20) {
                 content.scrollTop += each
                 count ++
+                window.requestAnimationFrame(scroll);
             }
-            window.requestAnimationFrame(scroll);
         }
         scroll()
     }
