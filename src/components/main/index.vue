@@ -5,7 +5,7 @@
           <carousel/>
           <search></search>
       </div>
-      <div id="content" v-lazyLoad>
+      <div id="content" ref="scrollContent" @scroll="lazyLoad">
           <div v-for="(tab, i) in catalogue" 
                :key="tab.id" 
                class="each-content" 
@@ -63,7 +63,7 @@
 
 <script>
 /* API */
-import { inject } from 'vue'
+import { inject, onMounted } from 'vue'
 import { useStore } from 'vuex'
 
 /* 组件 */
@@ -77,6 +77,7 @@ import editFunction from '@/use/edit'
 import urlAlertFunction from '@/use/urlAlert'
 import tabAlertFunction from '@/use/tabAlert'
 import searchFunction from '@/use/search'
+import { throttle } from '@/utils/utils'
 export default {
     components: {
         urlAlert,
@@ -90,7 +91,7 @@ export default {
         const $confirm = inject('confirm')
 
         // 一些基础的方法
-        let { imgLoadErr, imgLoadSuccess } = trackImgFunction()
+        let { imgLoadErr, imgLoadSuccess, lazyLoad, scrollContent } = trackImgFunction()
 
         // url框编辑下的相关变量及功能
         let { 
@@ -112,12 +113,18 @@ export default {
         // 展示修改tab的弹框
         let { showEditAddTab } = tabAlertFunction()
 
+        onMounted(() => {
+            lazyLoad()
+        })
+
         return {
             catalogue, 
             showNewUrlAlert, 
             moduleSearch,
             imgLoadErr,
-            imgLoadSuccess, 
+            imgLoadSuccess,
+            lazyLoad: throttle(lazyLoad, 500),
+            scrollContent,
             handleEdit, 
             showEditAddTab,
             deleteTab,

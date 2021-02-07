@@ -1,9 +1,10 @@
 // 新增以及修改url的相关功能
 
-import {  } from 'vue'
+import { nextTick } from 'vue'
 
 import store from '@/store/index'
 import request from '@/network/request'
+import trackImgFunction from '@/use/trackImg'
 
 // 变量
 const state = store.state.moduleUrl    // url相关全局状态
@@ -66,6 +67,7 @@ export default function urlAlertFunction($message) {
                     whichTag: state.whichTag
                 }
             })
+            nextTick(() => trackImgFunction().lazyLoad())
             $message({
                 type: 'success',
                 content: '网址添加成功'

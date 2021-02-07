@@ -1,5 +1,9 @@
 // 一些处理图片的方法
-import { throttle } from '@/utils/utils'
+import { ref } from 'vue'
+
+// 缓存图片懒加载的节点
+const map = new WeakMap()
+const scrollContent = ref(null)
 
 export default function trackImgFunction() {
 
@@ -17,37 +21,26 @@ export default function trackImgFunction() {
         el.nextSibling.style.display = 'none'
     }
 
+    function lazyLoad() {
+        const el = scrollContent.value
+        const imgs = el.querySelectorAll('.url-icon')
+        let len = imgs.length
+        console.log(len);
+        let { clientHeight } = el
+        for(let i = 0; i < len; i ++) {
+            let img = imgs[i]
+            if(map.has(img)) continue;
+            if(img.getBoundingClientRect().top <= clientHeight) {
+                img.src = img.getAttribute('data-src');
+                map.set(img, 1)
+            }
+        }
+    }
+
     return {
         imgLoadErr,
-        imgLoadSuccess
+        imgLoadSuccess,
+        lazyLoad,
+        scrollContent
     }
-}
-
-export function lazyLoad(Vue) {
-    Vue.directive('lazyLoad', {
-        mounted (el) {
-            const imgs = el.querySelectorAll('.url-icon')
-            let len = imgs.length
-            const map = new WeakMap()
-
-            let load = () => {
-                let { clientHeight } = el
-                for(let i = 0; i < len; i ++) {
-                    let img = imgs[i]
-                    if(Object.keys(map).length === len) {
-                        // 移除scroll
-                        el.removeEventListener('scroll')
-                        break;
-                    }
-                    if(map.get(img)) continue;
-                    if(img.getBoundingClientRect().top <= clientHeight) {
-                        img.src = img.getAttribute('data-src');
-                        map.set(img, 1)
-                    }
-                }
-            }
-            load()   // 优先执行一次
-            el.addEventListener('scroll', throttle(load, 500))
-        }
-    })
 }
