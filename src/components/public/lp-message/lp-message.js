@@ -1,7 +1,6 @@
 import lp_message from "./lp-message.vue"
-import { defineComponent, createVNode, render } from 'vue'
+import { createVNode, render } from 'vue'
 
-let MessageConstructor = defineComponent(lp_message)
 let instance;
 const instances = []
 
@@ -14,7 +13,7 @@ export const createMessage = (options) => {
     options = options ? options : {}
 
     instance = createVNode(
-        MessageConstructor,
+        lp_message,
         options
     )
 
@@ -27,11 +26,6 @@ export const createMessage = (options) => {
     const cpn = instance.component
     const props = cpn.props  
     props.seed = instances.length
-    
-    // 初始化参数
-    Object.keys(options).forEach(key => {
-        props[key] = options[key]
-    })
 
     // 加入到instances中管理
     instances.push(instance)

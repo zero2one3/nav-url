@@ -20,8 +20,8 @@
 
 <script>
 import lpButton from '../lp-button/lp-button'
-import {ref} from 'vue'
-export default {
+import {ref, defineComponent} from 'vue'
+export default defineComponent({
     components: {
         lpButton
     },
@@ -55,7 +55,7 @@ export default {
 
         return {removeElement, closeConfirm, sureConfirm, status, lpConfirmAlert}
     }
-}
+})
 </script>
 
 <style scoped>

@@ -5,7 +5,7 @@
           <carousel/>
           <search></search>
       </div>
-      <div id="content">
+      <div id="content" v-lazyLoad>
           <div v-for="(tab, i) in catalogue" 
                :key="tab.id" 
                class="each-content" 
@@ -34,7 +34,13 @@
                       :data-id="urls.id">
                       <a :href="urls.url" target="_blank" class="url-link">
                           <div class="round-box">
-                              <img :src="urls.icon" :alt="urls.name" class="url-icon" @load="imgLoadSuccess" @error="imgLoadErr" draggable="false">
+                              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAbFBMVEUAAABRUVFRUVFRUVFRUVFSUlJSUlJRUVFRUVFRUVFRUVFRUVFRUVFRUVFQUFBSUlJQUFBRUVFQUFBRUVFRUVFRUVFQUFBRUVFQUFBRUVFRUVFVVVVVVVVNTU1RUVFRUVFRUVFQUFBVVVVRUVH7fq3cAAAAI3RSTlMAi++UYjoV+fTFvauiVDIqHd/aybh4cmpcTEQkBwXo5cx8DKz3rEYAAAEaSURBVHja7dfHUsMwFEBRpfcESCWFpv//RxZkMLZs7zAz4pz13XjkZz8FAAAAAAAAAAAAAAAAAAAAAAD4NevDoj/bj9qjh+Hy8Wmwemivzr23/nK4CX/hYxC/bE8t1SHe9Vqi0fweLcahc6NJ/LZrisbbInq8NFW9IpqcQsdW8aen+ugWS2711UspWodu9WPJqjaal6NB83kUXkOnBrFsWjfMw1jxHFKbaSV6Dx0ax0LzLM+q0azlQApdDvw5Vs3T6DqtRpNrWu1iem7dOcaqfhqtY2LUPGyFfejOMiY2NSOSOCbRJY0WoZkHyf3VymbYs/n8ZvNDzGdFyWdpzGaNz+dilc9VFwAAAAAAAAAAAAAAAAAAAACA/+ETQgdy2yXwzBAAAAAASUVORK5CYII=" 
+                                   :data-src="urls.icon"
+                                   :alt="urls.name" 
+                                   class="url-icon" 
+                                   @load="imgLoadSuccess" 
+                                   @error="imgLoadErr" 
+                                   draggable="false">
                               <svg t="1604809784875" class="icon url-icon err-url-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2514" width="80%" height="80%"><path d="M511.58 513.75m-415.89 0a415.89 415.89 0 1 0 831.78 0 415.89 415.89 0 1 0-831.78 0Z" fill="#353F51" p-id="2515"></path><path d="M511.58 173.48c187.63 0 340.27 152.64 340.27 340.27S699.21 854.02 511.58 854.02 171.31 701.38 171.31 513.75s152.65-340.27 340.27-340.27m0-75.61C281.9 97.87 95.7 284.07 95.7 513.75s186.2 415.89 415.89 415.89 415.89-186.2 415.89-415.89S741.27 97.87 511.58 97.87z" fill="#70798B" p-id="2516"></path><path d="M511.58 173.48c52.68 0 132.33 135.71 132.33 340.27s-79.65 340.27-132.33 340.27-132.32-135.71-132.32-340.27 79.64-340.27 132.32-340.27m0-75.61c-114.84 0-207.94 186.2-207.94 415.89s93.1 415.89 207.94 415.89 207.94-186.2 207.94-415.89S626.43 97.87 511.58 97.87z" fill="#70798B" p-id="2517"></path><path d="M133.51 362.52h756.16v75.62H133.51zM133.51 589.37h756.16v75.62H133.51z" fill="#70798B" p-id="2518"></path></svg>  
                           </div>
                           <span class="url-name">{{ urls.name }}</span>
@@ -59,13 +65,14 @@
 /* API */
 import { inject } from 'vue'
 import { useStore } from 'vuex'
+
 /* 组件 */
 import urlAlert from '@/components/public/urlAlert/index'
 import tabAlert from '@/components/public/tabAlert/index'
 import carousel from './carousel'
 import search from './search'
 /* 功能模块 */
-import baseFunction from '@/use/base'
+import trackImgFunction from '@/use/trackImg'
 import editFunction from '@/use/edit'
 import urlAlertFunction from '@/use/urlAlert'
 import tabAlertFunction from '@/use/tabAlert'
@@ -83,7 +90,7 @@ export default {
         const $confirm = inject('confirm')
 
         // 一些基础的方法
-        let { imgLoadErr, imgLoadSuccess } = baseFunction()
+        let { imgLoadErr, imgLoadSuccess } = trackImgFunction()
 
         // url框编辑下的相关变量及功能
         let { 

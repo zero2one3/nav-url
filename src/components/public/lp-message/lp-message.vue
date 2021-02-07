@@ -34,43 +34,44 @@
 </template>
 
 <script>
-    export default {
-        name: "lp-message",
-        props: {
-            type: {
-                type: String,
-                default: 'info'
-            },
-            lastTime: {
-                type: Number,
-                default: 2500
-            },
-            content: {
-                type: String,
-                default: '这是一条提示信息'
-            },
-            isShow: {
-                type: Boolean,
-                default: false
-            },
-            isLeave: {
-                type: Boolean,
-                default: false
-            },
-            isEnter: {
-                type: Boolean,
-                default: false
-            },
-            seed: {
-                type: Number,
-                default: 0
-            },
-            isDestory: {
-                type: Boolean,
-                default: false
-            }
+import { defineComponent } from 'vue'
+export default defineComponent({
+    name: "lp-message",
+    props: {
+        type: {
+            type: String,
+            default: 'info'
+        },
+        lastTime: {
+            type: Number,
+            default: 2500
+        },
+        content: {
+            type: String,
+            default: '这是一条提示信息'
+        },
+        isShow: {
+            type: Boolean,
+            default: false
+        },
+        isLeave: {
+            type: Boolean,
+            default: false
+        },
+        isEnter: {
+            type: Boolean,
+            default: false
+        },
+        seed: {
+            type: Number,
+            default: 0
+        },
+        isDestory: {
+            type: Boolean,
+            default: false
         }
     }
+})
 </script>
 
 <style scoped>
